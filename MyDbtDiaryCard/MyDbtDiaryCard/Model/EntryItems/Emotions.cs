@@ -12,12 +12,12 @@ namespace MyDbtDiaryCard.Model.EntryItems
         //converter?
         [PrimaryKey, ForeignKey(typeof(DayEntry))]
         public DateTime Date { get; set; }
-        public int Anger { get; set; }
-        public int Sadness { get; set; }
-        public int Fear { get; set; }
-        public int Shame { get; set; }
-        public int Joy { get; set; }
-        public int Love { get; set; }
+        public int Anger { get; set; } = -1;
+        public int Sadness { get; set; } = -1;
+        public int Fear { get; set; } = -1;
+        public int Shame { get; set; } = -1;
+        public int Joy { get; set; } = -1;
+        public int Love { get; set; } = -1;
 
         public Emotions(DateTime date)
         {

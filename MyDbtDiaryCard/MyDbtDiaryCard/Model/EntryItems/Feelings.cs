@@ -11,9 +11,9 @@ namespace MyDbtDiaryCard.Model.EntryItems
     {
         [PrimaryKey, ForeignKey(typeof(DayEntry))]
         public DateTime Date { get; set; }
-        public int EmotionMisery { get; set; }
-        public int PhysicalMisery { get; set; }
-        public int Excitation { get; set; }
+        public int EmotionMisery { get; set; } = -1;
+        public int PhysicalMisery { get; set; } = -1;
+        public int Excitation { get; set; } = -1;
         public string Additional { get; set; }
 
         public Feelings(DateTime date)
