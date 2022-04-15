@@ -34,7 +34,8 @@
                         </Grid>
 
                         <Label Text="Additional:"/>
-                        <Editor Text="{Binding Day.DayFeelings.Additional}" IsEnabled="False" AutoSize="TextChanges"/>
+                        <Editor Text="{Binding Day.DayFeelings.Additional}" 
+                                IsEnabled="False" AutoSize="TextChanges"/>
 
                     </StackLayout>
                 </Frame>
@@ -44,7 +45,7 @@
 
                         <Label Text="Emotions" Style="{StaticResource ItemsTitleStyle}"/>
 
-                        <Grid RowDefinitions="3" ColumnDefinitions="2">
+                        <Grid RowDefinitions="6" ColumnDefinitions="2">
 
                             <Label Text="Anger:" Grid.Column="1" Grid.Row="1"/>
                             <Label Text="{Binding Day.DayEmotions.Anger}" Grid.Column="2" Grid.Row="1"/>
@@ -52,30 +53,45 @@
                             <Label Text="Sadness:" Grid.Column="1" Grid.Row="2"/>
                             <Label Text="{Binding Day.DayEmotions.Sadness}" Grid.Column="2" Grid.Row="2"/>
 
+                            <Label Text="Fear:" Grid.Column="1" Grid.Row="3"/>
+                            <Label Text="{Binding Day.DayEmotions.Fear}" Grid.Column="2" Grid.Row="3"/>
+
+                            <Label Text="Shame:" Grid.Column="1" Grid.Row="4"/>
+                            <Label Text="{Binding Day.DayEmotions.Shame}" Grid.Column="2" Grid.Row="4"/>
+
+                            <Label Text="Love:" Grid.Column="1" Grid.Row="5"/>
+                            <Label Text="{Binding Day.DayEmotions.Love}" Grid.Column="2" Grid.Row="5"/>
+
+                            <Label Text="Joy:" Grid.Column="1" Grid.Row="6"/>
+                            <Label Text="{Binding Day.DayEmotions.Joy}" Grid.Column="2" Grid.Row="6"/>
+
                         </Grid>
                     </StackLayout>
                 </Frame>
 
 
                 <StackLayout>
-                    <Button x:Name="btnAddEntry"
-                    Text="Add Entry"
-                    HorizontalOptions="Center"
-                    Command ="{Binding AddEntryCommand}"/>
 
-                    <Button x:Name="btnEditEntry"
+                    <StackLayout>
+                        <Button x:Name="btnEditEntry"
                     IsVisible="{Binding IsDayEntryExists}"
                     Text="Edit Entry"
                     HorizontalOptions="Center"
                     Command ="{Binding AddEntryCommand}"/>
 
-                    <Button x:Name="btnRemoveEntry"
-                     Text="Remove Entry"
-                     HorizontalOptions="Center"/>
-
+                        <Button x:Name="btnAddEntry"
+                    IsVisible="{Binding IsDayEntryExists,
+                        Converter={StaticResource ReverseBoolCvt},
+                        Mode=OneWay}"
+                    Text="Add Entry"
+                    HorizontalOptions="Center"
+                    Command ="{Binding AddEntryCommand}"/>
+                    </StackLayout>
+                    
                     <Button Text="Drop Database"
                     HorizontalOptions="Center"
                     Command ="{Binding DropDbCommand}"/>
+                    
                 </StackLayout>
                 
             </StackLayout>

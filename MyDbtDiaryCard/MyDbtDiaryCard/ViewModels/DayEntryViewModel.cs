@@ -32,7 +32,6 @@ namespace MyDbtDiaryCard.ViewModels
             }
         }
 
-
         public ICommand AddEntryCommand { get; set; }
         public ICommand DeleteEntryCommand { get; set; }
         public ICommand DropDbCommand { get; set; }

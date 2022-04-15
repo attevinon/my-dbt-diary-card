@@ -9,12 +9,12 @@
         
         <Style TargetType="Picker" x:Key="GeneralPicker">
             <Setter Property="ItemsSource" Value="{Binding GeneralScale}"/>
-            <Setter Property="BindingContext" Value="{Binding Converter={StaticResource ScaleCvt}}"/>
+            <Setter Property="SelectedIndex" Value="{Binding Converter={StaticResource ScaleToIndexCvt}}"/>
         </Style>
         
         <Style TargetType="Picker" x:Key="UrgesPicker">
             <Setter Property="ItemsSource" Value="{Binding UrgesScale}"/>
-            <Setter Property="BindingContext" Value="{Binding Converter={StaticResource ScaleCvt}}"/>
+            <Setter Property="SelectedIndex" Value="{Binding Converter={StaticResource ScaleToIndexCvt}}"/>
         </Style>
 
     </ContentPage.Resources>
@@ -95,6 +95,9 @@
                 </Frame>
 
                 <Button x:Name="btnSave" Command="{Binding SaveCommand}" Text="Save"/>
+                
+                <Button x:Name="btnDelete" Command="{Binding DeleteCommand}" Text="Delete"
+                        IsVisible="{Binding IsEntryExistsInDb}"/>
 
             </StackLayout>
         </ScrollView>

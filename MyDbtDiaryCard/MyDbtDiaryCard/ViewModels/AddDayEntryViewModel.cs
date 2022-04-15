@@ -16,7 +16,7 @@ namespace MyDbtDiaryCard.ViewModels
         private static readonly IDataService _dataService;
         readonly private DateTime _date;
         private DayEntry day;
-        private bool isEntryExistsInDb;
+
         public string StringDate => _date.ToString("d");
         public List<string> GeneralScale { get; set; }
         public List<string> UrgesScale { get; set; }
@@ -24,6 +24,11 @@ namespace MyDbtDiaryCard.ViewModels
         public ICommand SaveCommand { get; set; }
         public ICommand DeleteCommand { get; set; }
         public ICommand CancelCommand { get; set; }
+
+        static AddDayEntryViewModel()
+        {
+            _dataService = SQLiteDataService.GetDataService();
+        }
 
         public AddDayEntryViewModel(INavigationService navigation, DateTime date) : base(navigation)
         {
@@ -36,10 +41,17 @@ namespace MyDbtDiaryCard.ViewModels
             DeleteCommand = new ActionCommand(async () => await DeleteEntryAsync());
             CancelCommand = new ActionCommand(async () => await NavigationService.GoBack());
 
-            GeneralScale = new List<string> { "0", "1", "2", "3", "4", "5", "-" };
-            UrgesScale = new List<string> { "0", "1", "2", "3", "4", "5", "-", "X"};
+            GeneralScale = new List<string> { "-", "0", "1", "2", "3", "4", "5"};
+            UrgesScale = new List<string> { "-", "0", "1", "2", "3", "4", "5", "X"};
 
             FindDay();
+        }
+
+        private bool isEntryExistsInDb;
+        public bool IsEntryExistsInDb
+        {
+            get { return isEntryExistsInDb; }
+            set { SetProperty(ref isEntryExistsInDb, value); }
         }
 
         private Feelings feelings;
@@ -82,16 +94,16 @@ namespace MyDbtDiaryCard.ViewModels
             
             if (day == null)
             {
-                isEntryExistsInDb = false;
+                IsEntryExistsInDb = false;
                 return;
             }
 
-            feelings = day.DayFeelings;
-            emotions = day.DayEmotions;
+            DayFeelings = day?.DayFeelings;
+            DayEmotions = day?.DayEmotions;
         }
         private async Task SaveEntryAsync()
         {
-            if(!isEntryExistsInDb)
+            if(!IsEntryExistsInDb)
                 day = new DayEntry(_date);
 
             day.SetDayEmotions(DayEmotions);
@@ -108,6 +120,8 @@ namespace MyDbtDiaryCard.ViewModels
                 return;
 
             await _dataService.DeleteDayEntryAsync(day);
+
+            NavigationService.GoBack();
         }
 
         //cancel command

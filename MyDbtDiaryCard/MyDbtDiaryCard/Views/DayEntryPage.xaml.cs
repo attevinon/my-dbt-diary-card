@@ -16,7 +16,7 @@ namespace MyDbtDiaryCard.Views
         public DayEntryPage()
         {
             InitializeComponent();
-            var dayEntryVM = new DayEntryViewModel(App.NavigationService); //?????
+            var dayEntryVM = new DayEntryViewModel(App.NavigationService);
             BindingContext = dayEntryVM;
 
             btnAddEntry.IsVisible = !dayEntryVM.IsDayEntryExists;
