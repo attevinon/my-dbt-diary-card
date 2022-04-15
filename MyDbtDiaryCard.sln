@@ -5,7 +5,15 @@ VisualStudioVersion = 17.1.32319.34
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyDbtDiaryCard.Android", "MyDbtDiaryCard\MyDbtDiaryCard.Android\MyDbtDiaryCard.Android.csproj", "{1F79FF40-11FF-4CDA-BA18-73A5BA4F51F9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyDbtDiaryCard", "MyDbtDiaryCard\MyDbtDiaryCard\MyDbtDiaryCard.csproj", "{23D0E00A-AD98-46D1-B3BE-53B22EA41786}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyDbtDiaryCard", "MyDbtDiaryCard\MyDbtDiaryCard\MyDbtDiaryCard.csproj", "{23D0E00A-AD98-46D1-B3BE-53B22EA41786}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "submodules", "submodules", "{66E7BAFD-4D69-4DA0-8265-9CFC031962F7}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OxyPlot.Xamarin.Forms", "oxyplot-xamarin\Source\OxyPlot.Xamarin.Forms\OxyPlot.Xamarin.Forms.csproj", "{D80C6E71-5A5B-4674-AC82-5A70E5921F92}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OxyPlot.Xamarin.Forms.Platform.Android", "oxyplot-xamarin\Source\OxyPlot.Xamarin.Forms.Platform.Android\OxyPlot.Xamarin.Forms.Platform.Android.csproj", "{60D23CA9-4AF6-4179-A3F5-6AEBC907337E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OxyPlot.Xamarin.Android", "oxyplot-xamarin\Source\OxyPlot.Xamarin.Android\OxyPlot.Xamarin.Android.csproj", "{3296D69F-F4B7-44A5-AEB9-7A179E65F8DD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -25,9 +33,26 @@ Global
 		{23D0E00A-AD98-46D1-B3BE-53B22EA41786}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{23D0E00A-AD98-46D1-B3BE-53B22EA41786}.Release|Any CPU.Build.0 = Release|Any CPU
 		{23D0E00A-AD98-46D1-B3BE-53B22EA41786}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{D80C6E71-5A5B-4674-AC82-5A70E5921F92}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D80C6E71-5A5B-4674-AC82-5A70E5921F92}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D80C6E71-5A5B-4674-AC82-5A70E5921F92}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D80C6E71-5A5B-4674-AC82-5A70E5921F92}.Release|Any CPU.Build.0 = Release|Any CPU
+		{60D23CA9-4AF6-4179-A3F5-6AEBC907337E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{60D23CA9-4AF6-4179-A3F5-6AEBC907337E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{60D23CA9-4AF6-4179-A3F5-6AEBC907337E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{60D23CA9-4AF6-4179-A3F5-6AEBC907337E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3296D69F-F4B7-44A5-AEB9-7A179E65F8DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3296D69F-F4B7-44A5-AEB9-7A179E65F8DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3296D69F-F4B7-44A5-AEB9-7A179E65F8DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3296D69F-F4B7-44A5-AEB9-7A179E65F8DD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{D80C6E71-5A5B-4674-AC82-5A70E5921F92} = {66E7BAFD-4D69-4DA0-8265-9CFC031962F7}
+		{60D23CA9-4AF6-4179-A3F5-6AEBC907337E} = {66E7BAFD-4D69-4DA0-8265-9CFC031962F7}
+		{3296D69F-F4B7-44A5-AEB9-7A179E65F8DD} = {66E7BAFD-4D69-4DA0-8265-9CFC031962F7}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {44DAA8E1-FF1C-4573-8EBA-8EE78A542849}
