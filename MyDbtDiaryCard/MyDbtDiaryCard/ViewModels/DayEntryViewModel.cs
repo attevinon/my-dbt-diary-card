@@ -41,7 +41,7 @@ namespace MyDbtDiaryCard.ViewModels
             AddEntryCommand = new ActionCommand(async () => await ShowAddDayEntryPage());
             DropDbCommand = new ActionCommand(async () => await DropDb());
 
-            ChangeDay();
+            FindDay();
         }
 
         private DateTime pickedDate = DateTime.Today;
@@ -52,16 +52,16 @@ namespace MyDbtDiaryCard.ViewModels
             {
                 if (value > DateTime.Today)
                     return;
+                //notigication "you can't be from future" and nothing changes
 
                 SetProperty(ref pickedDate, value);
-                ChangeDay();
+                FindDay();
             }
         }
 
         private async Task ShowAddDayEntryPage()
         {
             await NavigationService.NavigateAsync("AddDayEntryPage", pickedDate);
-            ChangeDay();
         }
 
         private async Task DropDb()
@@ -69,11 +69,13 @@ namespace MyDbtDiaryCard.ViewModels
             SQLiteDataService.DataService.DropAllDataAsync();
         }
 
-        private async void ChangeDay()
+        private async void FindDay()
         {
             Day = await SQLiteDataService.DataService.GetDayEntryForDateAsync(PickedDate);
 
             IsDayEntryExists = Day != null;
         }
+
+        //refresh page somehow after adding new entry 
     }
 }

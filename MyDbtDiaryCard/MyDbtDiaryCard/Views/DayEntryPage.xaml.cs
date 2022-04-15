@@ -18,8 +18,6 @@ namespace MyDbtDiaryCard.Views
             InitializeComponent();
             var dayEntryVM = new DayEntryViewModel(App.NavigationService);
             BindingContext = dayEntryVM;
-
-            btnAddEntry.IsVisible = !dayEntryVM.IsDayEntryExists;
         }
     }
 }

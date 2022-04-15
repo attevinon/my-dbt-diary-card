@@ -14,7 +14,9 @@ namespace MyDbtDiaryCard.ViewModels
     internal class AddDayEntryViewModel : BaseViewModel
     {
         private static readonly IDataService _dataService;
-        readonly private DateTime _date;
+
+        private readonly DateTime _date;
+
         private DayEntry day;
 
         public string StringDate => _date.ToString("d");
@@ -98,6 +100,7 @@ namespace MyDbtDiaryCard.ViewModels
                 return;
             }
 
+            IsEntryExistsInDb = true;
             DayFeelings = day?.DayFeelings;
             DayEmotions = day?.DayEmotions;
         }
