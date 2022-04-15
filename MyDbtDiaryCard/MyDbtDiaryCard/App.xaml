@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Application xmlns="http://xamarin.com/schemas/2014/forms"
+			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:cvt="clr-namespace:MyDbtDiaryCard.Converters"
+             x:Class="MyDbtDiaryCard.App">
+
+    <Application.Resources>
+
+        <cvt:ScaleToIndexConverter x:Key="ScaleCvt"/>
+
+        <Style TargetType="Label">
+            <Setter Property="FontSize" Value="Medium"/>
+            <Setter Property="VerticalOptions" Value="Center"/>
+        </Style>
+        
+        <Style TargetType="Label" x:Key="ItemsTitleStyle">
+            <Setter Property="FontSize" Value="Large"/>
+            <Setter Property="HorizontalTextAlignment" Value="Center"/>
+        </Style>
+        
+        <Style TargetType="Label" x:Key="PageTitleStyle">
+            <Setter Property="FontSize" Value="Title"/>
+        </Style>
+        
+    </Application.Resources>
+    
+</Application>

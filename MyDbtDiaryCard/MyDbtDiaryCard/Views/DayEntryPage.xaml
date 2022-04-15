@@ -1,0 +1,85 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:MyDbtDiaryCard.ViewModels" x:DataType="local:DayEntryViewModel"
+             x:Class="MyDbtDiaryCard.Views.DayEntryPage"
+             Title="Today">
+
+    <StackLayout>
+        
+        <StackLayout>
+            <Label Text="Day: " Style="{StaticResource PageTitleStyle}"/>
+            <DatePicker Date="{Binding PickedDate}" Format="D"/>
+        </StackLayout>
+        
+        <ScrollView>
+            <StackLayout>
+
+                <Frame>
+                    <StackLayout>
+
+                        <Label Text="Feelings" Style="{StaticResource ItemsTitleStyle}"/>
+
+                        <Grid RowDefinitions="3" ColumnDefinitions="2">
+                            
+                            <Label Text="Emotional Misery:" Grid.Column="1" Grid.Row="1"/>
+                            <Label Text="{Binding Day.DayFeelings.EmotionMisery}" Grid.Column="2" Grid.Row="1"/>
+
+                            <Label Text="Physical Misery:" Grid.Column="1" Grid.Row="2"/>
+                            <Label Text="{Binding Day.DayFeelings.PhysicalMisery}" Grid.Column="2" Grid.Row="2"/>
+
+                            <Label Text="Excitation:" Grid.Column="1" Grid.Row="3"/>
+                            <Label Text="{Binding Day.DayFeelings.Excitation}" Grid.Column="2" Grid.Row="3"/>
+
+                        </Grid>
+
+                        <Label Text="Additional:"/>
+                        <Editor Text="{Binding Day.DayFeelings.Additional}" IsEnabled="False" AutoSize="TextChanges"/>
+
+                    </StackLayout>
+                </Frame>
+
+                <Frame>
+                    <StackLayout>
+
+                        <Label Text="Emotions" Style="{StaticResource ItemsTitleStyle}"/>
+
+                        <Grid RowDefinitions="3" ColumnDefinitions="2">
+
+                            <Label Text="Anger:" Grid.Column="1" Grid.Row="1"/>
+                            <Label Text="{Binding Day.DayEmotions.Anger}" Grid.Column="2" Grid.Row="1"/>
+
+                            <Label Text="Sadness:" Grid.Column="1" Grid.Row="2"/>
+                            <Label Text="{Binding Day.DayEmotions.Sadness}" Grid.Column="2" Grid.Row="2"/>
+
+                        </Grid>
+                    </StackLayout>
+                </Frame>
+
+
+                <StackLayout>
+                    <Button x:Name="btnAddEntry"
+                    Text="Add Entry"
+                    HorizontalOptions="Center"
+                    Command ="{Binding AddEntryCommand}"/>
+
+                    <Button x:Name="btnEditEntry"
+                    IsVisible="{Binding IsDayEntryExists}"
+                    Text="Edit Entry"
+                    HorizontalOptions="Center"
+                    Command ="{Binding AddEntryCommand}"/>
+
+                    <Button x:Name="btnRemoveEntry"
+                     Text="Remove Entry"
+                     HorizontalOptions="Center"/>
+
+                    <Button Text="Drop Database"
+                    HorizontalOptions="Center"
+                    Command ="{Binding DropDbCommand}"/>
+                </StackLayout>
+                
+            </StackLayout>
+        </ScrollView>
+
+    </StackLayout>
+</ContentPage>

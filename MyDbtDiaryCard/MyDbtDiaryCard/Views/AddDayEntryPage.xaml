@@ -1,0 +1,104 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:MyDbtDiaryCard.ViewModels"
+             x:DataType="local:AddDayEntryViewModel"
+             x:Class="MyDbtDiaryCard.Views.AddDayEntryPage"
+             Title="{Binding StringDate}">
+    <ContentPage.Resources>
+        
+        <Style TargetType="Picker" x:Key="GeneralPicker">
+            <Setter Property="ItemsSource" Value="{Binding GeneralScale}"/>
+            <Setter Property="BindingContext" Value="{Binding Converter={StaticResource ScaleCvt}}"/>
+        </Style>
+        
+        <Style TargetType="Picker" x:Key="UrgesPicker">
+            <Setter Property="ItemsSource" Value="{Binding UrgesScale}"/>
+            <Setter Property="BindingContext" Value="{Binding Converter={StaticResource ScaleCvt}}"/>
+        </Style>
+
+    </ContentPage.Resources>
+    
+    <StackLayout>
+
+        <ScrollView>
+
+            <StackLayout x:Name="Items">
+
+                <Frame x:Name="Feelings">
+                    <StackLayout>
+
+                        <Label Text="Feelings" Style="{StaticResource ItemsTitleStyle}"/>
+
+                        <Grid RowDefinitions="3" ColumnDefinitions="2">
+                            <Label Text="Emotional Misery:" Grid.Column="1" Grid.Row="1"/>
+                            <Picker Style="{StaticResource GeneralPicker}"
+                                    Title="Emotional Misery" Grid.Column="2" Grid.Row="1"
+                                    SelectedIndex="{Binding DayFeelings.EmotionMisery}"/>
+
+                            <Label Text="Physical Misery:" Grid.Column="1" Grid.Row="2"/>
+                            <Picker Style="{StaticResource GeneralPicker}" 
+                                    Title="Physical Misery" Grid.Column="2" Grid.Row="2"
+                                    SelectedIndex="{Binding DayFeelings.PhysicalMisery}"/>
+
+                            <Label Text="Excitation:" Grid.Column="1" Grid.Row="3"/>
+                            <Picker Style="{StaticResource GeneralPicker}"
+                                    Title="Excitation" Grid.Column="2" Grid.Row="3"
+                                    SelectedIndex="{Binding DayFeelings.Excitation}"/>
+                        </Grid>
+
+                        <Label Text="Additional comments:"/>
+                        <Editor Text="{Binding DayFeelings.Additional}" AutoSize="TextChanges"/>
+
+                    </StackLayout>
+                </Frame>
+
+                <Frame x:Name="Emotions">
+                    <StackLayout>
+
+                        <Label Text="Emotions" Style="{StaticResource ItemsTitleStyle}"/>
+
+                        <Grid RowDefinitions="6" ColumnDefinitions="2">
+                            <Label Text="Anger: " Grid.Column="1" Grid.Row="1"/>
+                            <Picker Style="{StaticResource GeneralPicker}"
+                                    Title="Anger" Grid.Column="2" Grid.Row="1"
+                                    SelectedIndex="{Binding DayEmotions.Anger}"/>
+
+                            <Label Text="Sadness:" Grid.Column="1" Grid.Row="2"/>
+                            <Picker Style="{StaticResource GeneralPicker}" 
+                                    Title="Sadness" Grid.Column="2" Grid.Row="2"
+                                    SelectedIndex="{Binding DayEmotions.Sadness}"/>
+
+                            <Label Text="Fear: " Grid.Column="1" Grid.Row="3"/>
+                            <Picker Style="{StaticResource GeneralPicker}"
+                                    Title="Fear" Grid.Column="2" Grid.Row="3"
+                                    SelectedIndex="{Binding DayEmotions.Fear}"/>
+
+                            <Label Text="Shame: " Grid.Column="1" Grid.Row="4"/>
+                            <Picker Style="{StaticResource GeneralPicker}"
+                                    Title="Shame" Grid.Column="2" Grid.Row="4"
+                                    SelectedIndex="{Binding DayEmotions.Shame}"/>
+
+                            <Label Text="Joy: " Grid.Column="1" Grid.Row="5"/>
+                            <Picker Style="{StaticResource GeneralPicker}"
+                                    Title="Joy" Grid.Column="2" Grid.Row="5"
+                                    SelectedIndex="{Binding DayEmotions.Joy}"/>
+
+                            <Label Text="Love: " Grid.Column="1" Grid.Row="6"/>
+                            <Picker Style="{StaticResource GeneralPicker}"
+                                    Title="Love" Grid.Column="2" Grid.Row="6"
+                                    SelectedIndex="{Binding DayEmotions.Love}"/>
+
+                        </Grid>
+
+                    </StackLayout>
+                </Frame>
+
+                <Button x:Name="btnSave" Command="{Binding SaveCommand}" Text="Save"/>
+
+            </StackLayout>
+        </ScrollView>
+        
+    </StackLayout>
+
+</ContentPage>
