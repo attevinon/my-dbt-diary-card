@@ -161,8 +161,8 @@ namespace MyDbtDiaryCard.Services.DataService
         {
             try
             {
-                await connection.DeleteAsync(dayEntryToRemove?.DayFeelings);
-                await connection.DeleteAsync(dayEntryToRemove?.DayEmotions);
+                await connection.DeleteAsync(dayEntryToRemove.DayFeelings);
+                await connection.DeleteAsync(dayEntryToRemove.DayEmotions);
                 var res = await connection.DeleteAsync(dayEntryToRemove);
 
                 return res == 1;
