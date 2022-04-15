@@ -6,7 +6,9 @@
 
     <Application.Resources>
 
-        <cvt:ScaleToIndexConverter x:Key="ScaleCvt"/>
+        <cvt:ScaleToIndexConverter x:Key="ScaleToIndexCvt"/>
+        <cvt:ReverseBooleanConverter x:Key="ReverseBoolCvt"/>
+        <cvt:ScaleToStringConverter x:Key="ScaleToStringCvt"/>
 
         <Style TargetType="Label">
             <Setter Property="FontSize" Value="Medium"/>

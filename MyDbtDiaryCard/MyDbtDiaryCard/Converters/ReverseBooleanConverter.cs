@@ -6,26 +6,16 @@ using Xamarin.Forms;
 
 namespace MyDbtDiaryCard.Converters
 {
-    internal class ScaleToIndexConverter : IValueConverter
+    internal class ReverseBooleanConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is int intvalue)
-            {
-                return intvalue + 1;
-            }
-
-            return 0;
+            return !(bool)value;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is int intvalue)
-            {
-                return intvalue - 1;
-            }
-
-            return null;
+            return !(bool)value;
         }
     }
 }

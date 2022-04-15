@@ -4,27 +4,28 @@ using System.Globalization;
 using System.Text;
 using Xamarin.Forms;
 
+
 namespace MyDbtDiaryCard.Converters
 {
-    internal class ScaleToIndexConverter : IValueConverter
+    internal class ScaleToStringConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is int intvalue)
+            if(value is int _value)
             {
-                return intvalue + 1;
+                if (_value == -1)
+                    return "-";
+                if (_value == 6)
+                    return "X";
+
+                return _value;
             }
 
-            return 0;
+            return null;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is int intvalue)
-            {
-                return intvalue - 1;
-            }
-
             return null;
         }
     }
