@@ -29,7 +29,7 @@ namespace MyDbtDiaryCard.ViewModels
             var entries = new Model.EntriesStats();
             entries.Initialize(DaysCount);
 
-            var charts = new BaseChart(entries);
+            var charts = new BaseChart(daysCount, entries);
 
             FeelingsChart = charts.CreateFeelingsChart();
         }

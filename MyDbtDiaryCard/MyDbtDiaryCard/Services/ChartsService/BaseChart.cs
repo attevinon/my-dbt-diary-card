@@ -2,7 +2,6 @@
 using OxyPlot;
 using OxyPlot.Axes;
 using OxyPlot.Series;
-using OxyPlot.Xamarin;
 using System.Collections.Generic;
 using System.Text;
 using MyDbtDiaryCard.Model;
@@ -13,56 +12,76 @@ namespace MyDbtDiaryCard.Services.ChartsService
     {
         public DateTime[] Dates { get; }
         private EntriesStats EntriesStatsOfPeriod { get; }
+        private bool isInitialized;
 
-        public BaseChart(EntriesStats entriesStats)
+        public BaseChart(int daysCount, EntriesStats entriesStats = null)
         {
             EntriesStatsOfPeriod = entriesStats;
             Dates = entriesStats.Dates;
+
+            if(Dates == null)
+            {
+                Dates = new DateTime[daysCount];
+                for (int i = 0; i < Dates.Length; i++)
+                {
+                    Dates[i] = DateTime.Today.AddDays(-i);
+                }
+
+                isInitialized = false;
+
+                Array.Reverse(Dates);
+            }
         }
 
         private PlotModel CreateBaseLineSeriesModel(bool isBiggerScale = false)
         {
             var plotModel = new PlotModel()
             {
-                PlotType = PlotType.XY,
                 IsLegendVisible = true
             };
 
-            plotModel.Axes.Add(
-                new DateTimeAxis() 
+            try
+            {
+                plotModel.Axes.Add(new DateTimeAxis()
                 {
                     Position = AxisPosition.Bottom,
                     Minimum = DateTimeAxis.ToDouble(Dates[0]) * 0.9,
-                    Maximum = DateTimeAxis.ToDouble(Dates[Dates.Length]) * 1.1,
+                    Maximum = DateTimeAxis.ToDouble(Dates[Dates.Length-1]) * 1.1,
                     IntervalType = DateTimeIntervalType.Days,
                     StringFormat = "dd/MM",
                     TitleFormatString = "dd/MMM"
                     //unit?
                 });
 
-            if (isBiggerScale)
-            {
-                plotModel.Axes.Add(
-                    new LinearAxis()
-                    {
-                        Position = AxisPosition.Left,
-                        Minimum = 0,
-                        Maximum = 6 * 1.1,
-                        IntervalLength = 1,
-                        LabelFormatter = new Func<double, string>(
-                             (double d) => d == 6 ?  "X" : d.ToString())
-                    });
+
+                if (isBiggerScale)
+                {
+                    plotModel.Axes.Add(
+                        new LinearAxis()
+                        {
+                            Position = AxisPosition.Left,
+                            Minimum = 0,
+                            Maximum = 6 * 1.1,
+                            IntervalLength = 1,
+                            LabelFormatter = new Func<double, string>(
+                                 (double d) => d == 6 ? "X" : d.ToString())
+                        });
+                }
+                else
+                {
+                    plotModel.Axes.Add(
+                        new LinearAxis()
+                        {
+                            Position = AxisPosition.Left,
+                            Minimum = 0,
+                            Maximum = 5 * 1.1,
+                            IntervalLength = 1
+                        });
+                }
             }
-            else
+            catch (Exception ex)
             {
-                plotModel.Axes.Add(
-                    new LinearAxis()
-                    {
-                        Position = AxisPosition.Left,
-                        Minimum = 0,
-                        Maximum = 5 * 1.1,
-                        IntervalLength = 1
-                    });
+                Console.WriteLine(ex.Message);
             }
 
             return plotModel;
@@ -72,6 +91,9 @@ namespace MyDbtDiaryCard.Services.ChartsService
         {
             //title adds in view
             var feelingsChart = CreateBaseLineSeriesModel();
+
+            if (!isInitialized)
+                return feelingsChart;
 
             var emMiseryLine = new LineSeries() { Color = OxyColors.Gold };
             var phMiseryLine = new LineSeries() { Color = OxyColors.CornflowerBlue };
