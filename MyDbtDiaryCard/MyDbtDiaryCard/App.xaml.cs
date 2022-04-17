@@ -19,7 +19,7 @@ namespace MyDbtDiaryCard
             /*File.Delete(Path.Combine(Environment.GetFolderPath(
                         Environment.SpecialFolder.LocalApplicationData), "MyDbtDiaryDatabase.db3"));*/
 
-            SQLiteDataService.GetDataService().Initialize(
+            DataService.GetDataManager().InitializeAsync(
                 Path.Combine(Environment.GetFolderPath(
                         Environment.SpecialFolder.LocalApplicationData),"MyDbtDiaryDb.db3"));
 
