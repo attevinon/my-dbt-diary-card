@@ -1,4 +1,5 @@
 ﻿using MyDbtDiaryCard.Model;
+using MyDbtDiaryCard.Model.Abstractions;
 using MyDbtDiaryCard.Model.EntryItems;
 using MyDbtDiaryCard.Services.Commands;
 using MyDbtDiaryCard.Services.DataService;
@@ -13,7 +14,7 @@ namespace MyDbtDiaryCard.ViewModels
 {
     internal class AddDayEntryViewModel : BaseViewModel
     {
-        private static readonly IDataService _dataService;
+        private static readonly IDayEntryRepository _dayEntryData;
 
         private readonly DateTime _date;
 
@@ -29,7 +30,7 @@ namespace MyDbtDiaryCard.ViewModels
 
         static AddDayEntryViewModel()
         {
-            _dataService = SQLiteDataService.GetDataService();
+            _dayEntryData = DataService.GetDataManager().DayEntryData;
         }
 
         public AddDayEntryViewModel(INavigationService navigation, DateTime date) : base(navigation)
@@ -91,7 +92,7 @@ namespace MyDbtDiaryCard.ViewModels
 
         private async void FindDay()
         {
-            day = await _dataService.GetDayEntryForDateAsync(_date);
+            day = await _dayEntryData.GetDayEntryForDateAsync(_date);
 
             
             if (day == null)
@@ -112,7 +113,7 @@ namespace MyDbtDiaryCard.ViewModels
             day.SetDayEmotions(DayEmotions);
             day.SetDayFeelings(DayFeelings);
 
-            await _dataService.AddDayEntryAsync(day);
+            await _dayEntryData.AddDayEntryAsync(day);
 
             await NavigationService.GoBack();
         }
@@ -122,9 +123,9 @@ namespace MyDbtDiaryCard.ViewModels
             if (!isEntryExistsInDb)
                 return;
 
-            await _dataService.DeleteDayEntryAsync(day);
+            await _dayEntryData.DeleteDayEntryAsync(day);
 
-            NavigationService.GoBack();
+            await NavigationService.GoBack();
         }
 
         //cancel command

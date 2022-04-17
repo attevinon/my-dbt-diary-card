@@ -19,6 +19,7 @@ namespace MyDbtDiaryCard.Services.DataService
         public async Task InitializeAsync(string dbPath)
         {
             var connection = new SQLiteAsyncConnection(dbPath);
+            await connection.EnableWriteAheadLoggingAsync();
 
             //_lazyDayEntry = new Lazy<IDayEntryRepository>(() => new DayEntryRepository(connection));
 

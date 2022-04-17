@@ -1,4 +1,5 @@
 ﻿using MyDbtDiaryCard.Model;
+using MyDbtDiaryCard.Model.Abstractions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,12 +8,12 @@ using System.Threading.Tasks;
 
 namespace MyDbtDiaryCard.Services.DataService
 {
-    internal class MockDataService : IDataService
+    internal class MockDataService : IDayEntryRepository
     {
         public bool HasBeenInitialized { get; private set; }
         private List<DayEntry> DayEntries { get; set; }
 
-        public async Task Initialize(string dbPath)
+        public async Task Init()
         {
             var date = new DateTime(2022, 04, 14);
 
@@ -165,7 +166,7 @@ namespace MyDbtDiaryCard.Services.DataService
             return day;
         }
 
-        public async Task<List<DayEntry>> GetDayEntriesPerPeriod(DateTime startDate, DateTime endDate)
+        public async Task<List<DayEntry>> GetDayEntriesPerPeriodAsync(DateTime startDate, DateTime endDate)
         {
             var entries = DayEntries
                 .Where(d => d.Date >= startDate && d.Date <= endDate)
@@ -176,7 +177,7 @@ namespace MyDbtDiaryCard.Services.DataService
         }
 
 
-        public async Task<List<DayEntry>> GetTheLatestDayEntries(int daysCount)
+        public async Task<List<DayEntry>> GetTheLatestDayEntriesAsync(int daysCount)
         {
             var entries = DayEntries
                 .OrderByDescending(d => d.Date)
@@ -186,9 +187,9 @@ namespace MyDbtDiaryCard.Services.DataService
             return entries;
         }
 
-        public Task DropAllDataAsync()
+        public async Task<List<DayEntry>> GetAllDayEntries()
         {
-            throw new NotImplementedException();
+            return DayEntries;
         }
 
         public async Task<bool> DeleteDayEntryAsync(DayEntry dayEntryToRemove)
@@ -197,9 +198,6 @@ namespace MyDbtDiaryCard.Services.DataService
             return true;
         }
 
-        public async Task<List<DayEntry>> GetAllDayEntries()
-        {
-            return DayEntries;
-        }
+
     }
 }

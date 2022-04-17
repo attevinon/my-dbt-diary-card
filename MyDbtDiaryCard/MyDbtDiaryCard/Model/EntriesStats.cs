@@ -1,4 +1,5 @@
-﻿using MyDbtDiaryCard.Model.EntryItems;
+﻿using MyDbtDiaryCard.Model.Abstractions;
+using MyDbtDiaryCard.Model.EntryItems;
 using MyDbtDiaryCard.Services.DataService;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,7 @@ namespace MyDbtDiaryCard.Model
 {
     internal class EntriesStats
     {
-        readonly IDataService _dataService;
+        private readonly IDayEntryRepository _dayEntryDataService;
 
         List<DayEntry> daysOfPeriod;
         public int DaysCount { get; private set; }
@@ -19,14 +20,14 @@ namespace MyDbtDiaryCard.Model
 
         public EntriesStats()
         {
-            _dataService = SQLiteDataService.GetDataService();
+            _dayEntryDataService = DataService.GetDataManager().DayEntryData;
         }
         public async Task Initialize(DateTime startOfPeriod, DateTime endOfPeriod)
         {
             if (daysOfPeriod != null)
                 return;
 
-            daysOfPeriod = await _dataService.GetDayEntriesPerPeriod(startOfPeriod, endOfPeriod);
+            daysOfPeriod = await _dayEntryDataService.GetDayEntriesPerPeriodAsync(startOfPeriod, endOfPeriod);
             SetProperties();
         }
 
@@ -35,7 +36,7 @@ namespace MyDbtDiaryCard.Model
             if (daysOfPeriod != null)
                 return;
 
-            daysOfPeriod = await _dataService.GetTheLatestDayEntries(daysCount);
+            daysOfPeriod = await _dayEntryDataService.GetTheLatestDayEntriesAsync(daysCount);
             SetProperties();
         }
 
