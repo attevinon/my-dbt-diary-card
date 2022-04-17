@@ -9,14 +9,15 @@
     
     <ContentPage.Content>
         <StackLayout>
-            <ScrollView>
-                <StackLayout>
-                    <Frame>
-                        <oxy:PlotView Model="{Binding FeelingsChart}"/>
-                    </Frame>
-                </StackLayout>
-            </ScrollView>
+            
+            <Label Text=" ГРАФИК ТУТ ДОЛЖЕН БЫТЬ ГРАФИК"/>
 
+            <Frame>
+                <AbsoluteLayout HeightRequest="200">
+                    <oxy:PlotView x:Name="feelingsChart" Model="{Binding FeelingsChart}"/>
+                </AbsoluteLayout>
+            </Frame>
+            
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

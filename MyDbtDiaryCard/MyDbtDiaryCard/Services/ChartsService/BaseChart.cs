@@ -31,13 +31,20 @@ namespace MyDbtDiaryCard.Services.ChartsService
 
                 Array.Reverse(Dates);
             }
+            else
+            {
+                isInitialized = true;
+            }
+
         }
 
         private PlotModel CreateBaseLineSeriesModel(bool isBiggerScale = false)
         {
             var plotModel = new PlotModel()
             {
-                IsLegendVisible = true
+                LegendPosition = LegendPosition.BottomCenter,
+                LegendPlacement = LegendPlacement.Outside,
+                LegendItemAlignment = HorizontalAlignment.Center
             };
 
             try
@@ -45,13 +52,11 @@ namespace MyDbtDiaryCard.Services.ChartsService
                 plotModel.Axes.Add(new DateTimeAxis()
                 {
                     Position = AxisPosition.Bottom,
-                    Minimum = DateTimeAxis.ToDouble(Dates[0]) * 0.9,
-                    Maximum = DateTimeAxis.ToDouble(Dates[Dates.Length-1]) * 1.1,
                     IntervalType = DateTimeIntervalType.Days,
-                    StringFormat = "dd/MM",
-                    TitleFormatString = "dd/MMM"
+                    IsZoomEnabled = false,
+                    StringFormat = "dd/MM"
                     //unit?
-                });
+                }) ;
 
 
                 if (isBiggerScale)
@@ -61,10 +66,12 @@ namespace MyDbtDiaryCard.Services.ChartsService
                         {
                             Position = AxisPosition.Left,
                             Minimum = 0,
-                            Maximum = 6 * 1.1,
-                            IntervalLength = 1,
+                            Maximum = 7,
+                            IsZoomEnabled = false,
+                            IsPanEnabled = false,
                             LabelFormatter = new Func<double, string>(
                                  (double d) => d == 6 ? "X" : d.ToString())
+
                         });
                 }
                 else
@@ -73,9 +80,10 @@ namespace MyDbtDiaryCard.Services.ChartsService
                         new LinearAxis()
                         {
                             Position = AxisPosition.Left,
-                            Minimum = 0,
-                            Maximum = 5 * 1.1,
-                            IntervalLength = 1
+                            Minimum = -0.1,
+                            Maximum = 6,
+                            IsPanEnabled = false,
+                            IsZoomEnabled = false
                         });
                 }
             }
@@ -95,17 +103,24 @@ namespace MyDbtDiaryCard.Services.ChartsService
             if (!isInitialized)
                 return feelingsChart;
 
-            var emMiseryLine = new LineSeries() { Color = OxyColors.Gold };
-            var phMiseryLine = new LineSeries() { Color = OxyColors.CornflowerBlue };
-            var excitationLine = new LineSeries() { Color = OxyColors.IndianRed };
+            var emMiseryLine = new LineSeries() { Color = OxyColors.Gold,
+                Title = "Emotional misery"
+            };
+            var phMiseryLine = new LineSeries() { Color = OxyColors.CornflowerBlue, Title = "Physical misery" };
+            var excitationLine = new LineSeries() { Color = OxyColors.IndianRed, Title = "Excitation" };
 
             foreach (var daysFeelings in EntriesStatsOfPeriod.FeelingsArray)
             {
                 var date = daysFeelings.Date;
-                emMiseryLine.Points.Add(DateTimeAxis.CreateDataPoint(date, daysFeelings?.EmotionMisery ?? double.NaN));
-                phMiseryLine.Points.Add(DateTimeAxis.CreateDataPoint(date, daysFeelings?.PhysicalMisery ?? double.NaN));
-                excitationLine.Points.Add(DateTimeAxis.CreateDataPoint(date, daysFeelings?.Excitation ?? double.NaN));
+
+                emMiseryLine.Points.Add(new DataPoint(DateTimeAxis.ToDouble(date), daysFeelings?.EmotionMisery ?? double.NaN));
+                phMiseryLine.Points.Add(new DataPoint(DateTimeAxis.ToDouble(date), daysFeelings?.PhysicalMisery ?? double.NaN));
+                excitationLine.Points.Add(new DataPoint(DateTimeAxis.ToDouble(date), daysFeelings?.Excitation ?? double.NaN));
             }
+
+            feelingsChart.Series.Add(emMiseryLine);
+            feelingsChart.Series.Add(phMiseryLine);
+            feelingsChart.Series.Add(excitationLine);
 
             return feelingsChart;
         }

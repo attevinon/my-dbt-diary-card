@@ -66,12 +66,12 @@ namespace MyDbtDiaryCard.ViewModels
 
         private async Task DropDb()
         {
-            SQLiteDataService.DataService.DropAllDataAsync();
+
         }
 
         private async void FindDay()
         {
-            Day = await SQLiteDataService.DataService.GetDayEntryForDateAsync(PickedDate);
+            Day = await DataService.GetDataManager().DayEntryData.GetDayEntryForDateAsync(PickedDate);
 
             IsDayEntryExists = Day != null;
         }

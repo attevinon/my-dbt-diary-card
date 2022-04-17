@@ -16,7 +16,8 @@ namespace MyDbtDiaryCard.Views
         public OverviewPage()
         {
             InitializeComponent();
-            BindingContext = new OverviewViewModel(App.NavigationService);
+            var vm = new OverviewViewModel(App.NavigationService);
+            BindingContext = vm;
         }
     }
 }

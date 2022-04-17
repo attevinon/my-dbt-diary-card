@@ -43,6 +43,7 @@ namespace MyDbtDiaryCard.Model
         private void SetProperties()
         {
             DaysCount = daysOfPeriod.Count;
+            Dates = GetDataStats();
             FeelingsArray = GetFeelingsStatistic();
             EmotionsArray = GetEmotionsStatistics();
         }
@@ -71,6 +72,18 @@ namespace MyDbtDiaryCard.Model
             }
 
             return emotionsChart;
+        }
+
+        private DateTime[] GetDataStats()
+        {
+            var dates = new DateTime[daysOfPeriod.Count];
+
+            for (int i = 0; i < daysOfPeriod.Count; i++)
+            {
+                dates[i] = daysOfPeriod[i].Date;
+            }
+
+            return dates;
         }
     }
 }
