@@ -4,6 +4,11 @@
              xmlns:local="clr-namespace:MyDbtDiaryCard.ViewModels" x:DataType="local:DayEntryViewModel"
              x:Class="MyDbtDiaryCard.Views.DayEntryPage"
              Title="Today">
+    <ContentPage.Resources>
+        <Style TargetType="Label" x:Key="lblScale">
+            <Setter Property="Text" Value="{Binding Converter={StaticResource ScaleToStringCvt}}"/>
+        </Style>
+    </ContentPage.Resources>
 
     <StackLayout>
         
@@ -23,13 +28,13 @@
                         <Grid RowDefinitions="3" ColumnDefinitions="2">
                             
                             <Label Text="Emotional Misery:" Grid.Column="1" Grid.Row="1"/>
-                            <Label Text="{Binding Day.DayFeelings.EmotionMisery}" Grid.Column="2" Grid.Row="1"/>
+                            <Label Style="{StaticResource lblScale}" Text="{Binding Day.DayFeelings.EmotionMisery}" Grid.Column="2" Grid.Row="1"/>
 
                             <Label Text="Physical Misery:" Grid.Column="1" Grid.Row="2"/>
-                            <Label Text="{Binding Day.DayFeelings.PhysicalMisery}" Grid.Column="2" Grid.Row="2"/>
+                            <Label Style="{StaticResource lblScale}" Text="{Binding Day.DayFeelings.PhysicalMisery}" Grid.Column="2" Grid.Row="2"/>
 
                             <Label Text="Excitation:" Grid.Column="1" Grid.Row="3"/>
-                            <Label Text="{Binding Day.DayFeelings.Excitation}" Grid.Column="2" Grid.Row="3"/>
+                            <Label Style="{StaticResource lblScale}" Text="{Binding Day.DayFeelings.Excitation}" Grid.Column="2" Grid.Row="3"/>
 
                         </Grid>
 
@@ -48,22 +53,22 @@
                         <Grid RowDefinitions="6" ColumnDefinitions="2">
 
                             <Label Text="Anger:" Grid.Column="1" Grid.Row="1"/>
-                            <Label Text="{Binding Day.DayEmotions.Anger}" Grid.Column="2" Grid.Row="1"/>
+                            <Label Text="{Binding Day.DayEmotions.Anger, Converter={StaticResource ScaleToStringCvt}}" Grid.Column="2" Grid.Row="1"/>
 
                             <Label Text="Sadness:" Grid.Column="1" Grid.Row="2"/>
-                            <Label Text="{Binding Day.DayEmotions.Sadness}" Grid.Column="2" Grid.Row="2"/>
+                            <Label Text="{Binding Day.DayEmotions.Sadness, Converter={StaticResource ScaleToStringCvt}}" Grid.Column="2" Grid.Row="2"/>
 
                             <Label Text="Fear:" Grid.Column="1" Grid.Row="3"/>
-                            <Label Text="{Binding Day.DayEmotions.Fear}" Grid.Column="2" Grid.Row="3"/>
+                            <Label Text="{Binding Day.DayEmotions.Fear, Converter={StaticResource ScaleToStringCvt}}" Grid.Column="2" Grid.Row="3"/>
 
                             <Label Text="Shame:" Grid.Column="1" Grid.Row="4"/>
-                            <Label Text="{Binding Day.DayEmotions.Shame}" Grid.Column="2" Grid.Row="4"/>
+                            <Label Text="{Binding Day.DayEmotions.Shame, Converter={StaticResource ScaleToStringCvt}}" Grid.Column="2" Grid.Row="4"/>
 
                             <Label Text="Love:" Grid.Column="1" Grid.Row="5"/>
-                            <Label Text="{Binding Day.DayEmotions.Love}" Grid.Column="2" Grid.Row="5"/>
+                            <Label Text="{Binding Day.DayEmotions.Love, Converter={StaticResource ScaleToStringCvt}}" Grid.Column="2" Grid.Row="5"/>
 
                             <Label Text="Joy:" Grid.Column="1" Grid.Row="6"/>
-                            <Label Text="{Binding Day.DayEmotions.Joy}" Grid.Column="2" Grid.Row="6"/>
+                            <Label Text="{Binding Day.DayEmotions.Joy, Converter={StaticResource ScaleToStringCvt}}" Grid.Column="2" Grid.Row="6"/>
 
                         </Grid>
                     </StackLayout>
