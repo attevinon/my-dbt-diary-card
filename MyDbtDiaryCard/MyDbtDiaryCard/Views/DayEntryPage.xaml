@@ -64,8 +64,8 @@
                             <Label Text="Shame:" Grid.Column="1" Grid.Row="4"/>
                             <Label Text="{Binding Day.DayEmotions.Shame, Converter={StaticResource ScaleToStringCvt}}" Grid.Column="2" Grid.Row="4"/>
 
-                            <Label Text="Love:" Grid.Column="1" Grid.Row="5"/>
-                            <Label Text="{Binding Day.DayEmotions.Love, Converter={StaticResource ScaleToStringCvt}}" Grid.Column="2" Grid.Row="5"/>
+                            <Label Text="Pride:" Grid.Column="1" Grid.Row="5"/>
+                            <Label Text="{Binding Day.DayEmotions.Pride, Converter={StaticResource ScaleToStringCvt}}" Grid.Column="2" Grid.Row="5"/>
 
                             <Label Text="Joy:" Grid.Column="1" Grid.Row="6"/>
                             <Label Text="{Binding Day.DayEmotions.Joy, Converter={StaticResource ScaleToStringCvt}}" Grid.Column="2" Grid.Row="6"/>

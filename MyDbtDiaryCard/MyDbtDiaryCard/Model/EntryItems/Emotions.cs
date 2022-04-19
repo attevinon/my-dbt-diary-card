@@ -16,8 +16,8 @@ namespace MyDbtDiaryCard.Model.EntryItems
         public int Sadness { get; set; } = -1;
         public int Fear { get; set; } = -1;
         public int Shame { get; set; } = -1;
+        public int Pride { get; set; } = -1;
         public int Joy { get; set; } = -1;
-        public int Love { get; set; } = -1;
 
         public Emotions(DateTime date)
         {

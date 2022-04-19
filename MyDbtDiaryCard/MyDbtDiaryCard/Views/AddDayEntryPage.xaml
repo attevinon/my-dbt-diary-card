@@ -84,10 +84,10 @@
                                     Title="Joy" Grid.Column="2" Grid.Row="5"
                                     SelectedIndex="{Binding DayEmotions.Joy}"/>
 
-                            <Label Text="Love: " Grid.Column="1" Grid.Row="6"/>
+                            <Label Text="Pride: " Grid.Column="1" Grid.Row="6"/>
                             <Picker Style="{StaticResource GeneralPicker}"
-                                    Title="Love" Grid.Column="2" Grid.Row="6"
-                                    SelectedIndex="{Binding DayEmotions.Love}"/>
+                                    Title="Pride" Grid.Column="2" Grid.Row="6"
+                                    SelectedIndex="{Binding DayEmotions.Pride}"/>
 
                         </Grid>
 

@@ -31,7 +31,7 @@ namespace MyDbtDiaryCard.Services.DataService
                     Anger = 3,
                     Sadness = 0,
                     Fear = 1,
-                    Love = 2,
+                    Pride = 2,
                     Joy = 4
                 }
             });
@@ -49,7 +49,7 @@ namespace MyDbtDiaryCard.Services.DataService
                     Anger = 4,
                     Sadness = 1,
                     Fear = 2,
-                    Love = 0,
+                    Pride = 0,
                     Joy = 3
                 }
             });
@@ -67,7 +67,8 @@ namespace MyDbtDiaryCard.Services.DataService
                     Anger = 3,
                     Sadness = 2,
                     Fear = 1,
-                    Love = 2,
+                    Pride = 2,
+                    Shame = 4,
                     Joy = 4
                 }
             });
@@ -85,7 +86,8 @@ namespace MyDbtDiaryCard.Services.DataService
                     Anger = 2,
                     Sadness = 3,
                     Fear = 1,
-                    Love = 0,
+                    Pride = 0,
+                    Shame = 4,
                     Joy = 1
                 }
             });
@@ -103,7 +105,7 @@ namespace MyDbtDiaryCard.Services.DataService
                     Anger = 1,
                     Sadness = 4,
                     Fear = 2,
-                    Love = 0,
+                    Pride = 0,
                     Joy = 1
                 }
             });
@@ -121,7 +123,7 @@ namespace MyDbtDiaryCard.Services.DataService
                     Anger = 2,
                     Sadness = 5,
                     Fear = 1,
-                    Love = 0,
+                    Shame = 4,
                     Joy = 0
                 }
             });
@@ -139,10 +141,48 @@ namespace MyDbtDiaryCard.Services.DataService
                     Anger = 1,
                     Sadness = 4,
                     Fear = 0,
-                    Love = 1,
+                    Shame = 5,
+                    Pride = 1,
                     Joy = 2
                 }
             });
+
+            DayEntries.Add(new DayEntry(date.AddDays(-8))
+            {
+                DayFeelings = new Model.EntryItems.Feelings(date.AddDays(-8))
+                {
+                    EmotionMisery = 5,
+                    PhysicalMisery = 0,
+                    Excitation = 1
+                },
+                DayEmotions = new Model.EntryItems.Emotions(date.AddDays(-8))
+                {
+                    Anger = 2,
+                    Sadness = 5,
+                    Fear = 1,
+                    Shame = 4,
+                    Joy = 0
+                }
+            });
+
+            DayEntries.Add(new DayEntry(date.AddDays(-9))
+            {
+                DayFeelings = new Model.EntryItems.Feelings(date.AddDays(-9))
+                {
+                    EmotionMisery = 4,
+     
+                    Excitation = 2
+                },
+                DayEmotions = new Model.EntryItems.Emotions(date.AddDays(-9))
+                {
+                    Anger = 1,
+                    Sadness = 4,
+                    Fear = 0,
+                    Shame = 3,
+                    Joy = 1
+                }
+            });
+
 
             HasBeenInitialized = true;
         }
