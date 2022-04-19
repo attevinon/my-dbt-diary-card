@@ -12,11 +12,11 @@ namespace MyDbtDiaryCard.Model
     {
         private readonly IDayEntryRepository _dayEntryDataService;
 
-        List<DayEntry> daysOfPeriod;
+        private List<DayEntry> daysOfPeriod;
         public int DaysCount { get; private set; }
         public DateTime[] Dates { get; private set; }
-        public Feelings[] FeelingsArray { get; private set; }
-        public Emotions[] EmotionsArray { get; private set; }
+        public (int[] anger, int[] sadness, int[] fear, int[] shame, int[] pride, int[] joy) EmotionsStats { get; set; }
+        public (int[] emMisery, int[] phMisery, int[] excitation) FeelingsStats { get; set; }
 
         public EntriesStats()
         {
@@ -44,35 +44,52 @@ namespace MyDbtDiaryCard.Model
         {
             DaysCount = daysOfPeriod.Count;
             Dates = GetDataStats();
-            FeelingsArray = GetFeelingsStatistic();
-            EmotionsArray = GetEmotionsStatistics();
+            EmotionsStats = GetEmotionsStats();
+            FeelingsStats = GetFeelingsStats();
         }
 
+        private (int[], int[], int[], int[], int[], int[]) GetEmotionsStats()
+        {
+            var anger = new int[daysOfPeriod.Count];
+            var sadness = new int[daysOfPeriod.Count];
+            var fear = new int[daysOfPeriod.Count];
+            var shame = new int[daysOfPeriod.Count];
+            var pride = new int[daysOfPeriod.Count];
+            var joy = new int[daysOfPeriod.Count];
+
+            for (int i = 0; i < DaysCount; i++)
+            {
+                var emotions = daysOfPeriod[i]?.DayEmotions ?? new Emotions();
+
+                anger[i] = emotions.Anger;
+                sadness[i] = emotions.Sadness;
+                fear[i] = emotions.Fear;
+                shame[i] = emotions.Shame;
+                pride[i] = emotions.Pride;
+                joy[i] = emotions.Joy;
+            }
+
+            return (anger, sadness, fear, shame, pride, joy);
+        }
+
+        private (int[], int[], int[]) GetFeelingsStats()
+        {
+            var emMisery = new int[daysOfPeriod.Count];
+            var phMisery = new int[daysOfPeriod.Count];
+            var excitation = new int[daysOfPeriod.Count];
+
+            for (int i = 0; i < DaysCount; i++)
+            {
+                var feelings = daysOfPeriod[i]?.DayFeelings ?? new Feelings();
+
+                emMisery[i] = feelings.EmotionMisery;
+                phMisery[i] = feelings.PhysicalMisery;
+                excitation[i] = feelings.Excitation;
+            }
+
+            return (emMisery, phMisery, excitation);
+        }
         //method to save days info
-
-        private Feelings[] GetFeelingsStatistic()
-        {
-            var feelingsChart = new Feelings[daysOfPeriod.Count];
-
-            for (int i = 0; i < daysOfPeriod.Count; i++)
-            {
-                feelingsChart[i] = daysOfPeriod[i].DayFeelings;
-            }
-
-            return feelingsChart;
-        }
-
-        private Emotions[] GetEmotionsStatistics()
-        {
-            var emotionsChart = new Emotions[daysOfPeriod.Count];
-
-            for (int i = 0; i < daysOfPeriod.Count; i++)
-            {
-                emotionsChart[i] = daysOfPeriod[i].DayEmotions;
-            }
-
-            return emotionsChart;
-        }
 
         private DateTime[] GetDataStats()
         {
