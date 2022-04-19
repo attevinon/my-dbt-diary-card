@@ -98,7 +98,7 @@ namespace MyDbtDiaryCard.ViewModels
             if (day == null)
             {
                 IsEntryExistsInDb = false;
-                return;
+                day = new DayEntry(_date);
             }
 
             IsEntryExistsInDb = true;
@@ -107,9 +107,6 @@ namespace MyDbtDiaryCard.ViewModels
         }
         private async Task SaveEntryAsync()
         {
-            if(!IsEntryExistsInDb)
-                day = new DayEntry(_date);
-
             day.SetDayEmotions(DayEmotions);
             day.SetDayFeelings(DayFeelings);
 
