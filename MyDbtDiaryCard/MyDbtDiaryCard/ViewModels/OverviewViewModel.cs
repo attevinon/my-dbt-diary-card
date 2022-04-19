@@ -23,15 +23,24 @@ namespace MyDbtDiaryCard.ViewModels
             set { SetProperty(ref feelingsChart, value); }
         }
 
+        private PlotModel emotionsChart;
+        public PlotModel EmotionsChart
+        {
+            get { return emotionsChart; }
+            set { SetProperty(ref emotionsChart, value); }
+        }
+
 
         public OverviewViewModel(INavigationService navigation) : base(navigation)
         {
             var entries = new Model.EntriesStats();
             entries.Initialize(DaysCount);
 
-            var charts = new BaseChart(daysCount, entries);
+            var chartsDirector = new ChartsDirector(entries);
 
-            FeelingsChart = charts.CreateFeelingsChart();
+            var builder = new LineChartBuilder();
+            EmotionsChart = chartsDirector.BuildEmotionsChart(builder);
+            FeelingsChart = chartsDirector.BuildFeelingsChart(builder);
         }
     }
 }
