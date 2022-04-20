@@ -42,5 +42,17 @@ namespace MyDbtDiaryCard.Services.ChartsService
             return chartBuilder.GetChart();
         }
 
+        public PlotModel BuildUrgesChart(ILineChartBuilder chartBuilder)
+        {
+            chartBuilder.Reset();
+            chartBuilder.SetPlotModel(_stats.Dates);
+            chartBuilder.SetLeftAxis(true);
+            chartBuilder.SetSeries(_stats.UrgesStats.selfharm, OxyColors.Red, "SelfHarm");
+            chartBuilder.SetSeries(_stats.UrgesStats.suicide, OxyColors.Yellow, "suicide");
+            chartBuilder.SetSeries(_stats.UrgesStats.drugs, OxyColors.Purple, "drugs");
+            chartBuilder.SetSeries(_stats.UrgesStats.alcohol, OxyColors.AliceBlue, "alcohol");
+
+            return chartBuilder.GetChart();
+        }
     }
 }

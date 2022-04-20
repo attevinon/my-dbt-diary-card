@@ -9,12 +9,14 @@
         
         <Style TargetType="Picker" x:Key="GeneralPicker">
             <Setter Property="ItemsSource" Value="{Binding GeneralScale}"/>
-            <Setter Property="SelectedIndex" Value="{Binding Converter={StaticResource ScaleToIndexCvt}}"/>
+            <Setter Property="SelectedIndex" Value="{Binding Converter={StaticResource ScaleToIndexCvt}, Mode=TwoWay}"/>
+            <Setter Property="Grid.Column" Value="2"/>
         </Style>
         
         <Style TargetType="Picker" x:Key="UrgesPicker">
             <Setter Property="ItemsSource" Value="{Binding UrgesScale}"/>
-            <Setter Property="SelectedIndex" Value="{Binding Converter={StaticResource ScaleToIndexCvt}}"/>
+            <Setter Property="SelectedIndex" Value="{Binding Converter={StaticResource ScaleToIndexCvt}, Mode=TwoWay }"/>
+            <Setter Property="Grid.Column" Value="2"/>
         </Style>
 
     </ContentPage.Resources>
@@ -30,21 +32,21 @@
 
                         <Label Text="Feelings" Style="{StaticResource ItemsTitleStyle}"/>
 
-                        <Grid RowDefinitions="3" ColumnDefinitions="2">
+                        <Grid ColumnDefinitions="2">
                             <Label Text="Emotional Misery:" Grid.Column="1" Grid.Row="1"/>
                             <Picker Style="{StaticResource GeneralPicker}"
-                                    Title="Emotional Misery" Grid.Column="2" Grid.Row="1"
-                                    SelectedIndex="{Binding DayFeelings.EmotionMisery}"/>
+                                    Title="Emotional Misery" Grid.Row="1"
+                                    SelectedIndex="{Binding DayFeelings.EmotionMisery, Converter={StaticResource ScaleToIndexCvt}}"/>
 
                             <Label Text="Physical Misery:" Grid.Column="1" Grid.Row="2"/>
                             <Picker Style="{StaticResource GeneralPicker}" 
-                                    Title="Physical Misery" Grid.Column="2" Grid.Row="2"
-                                    SelectedIndex="{Binding DayFeelings.PhysicalMisery}"/>
+                                    Title="Physical Misery" Grid.Row="2"
+                                    SelectedIndex="{Binding DayFeelings.PhysicalMisery, Converter={StaticResource ScaleToIndexCvt}}"/>
 
                             <Label Text="Excitation:" Grid.Column="1" Grid.Row="3"/>
                             <Picker Style="{StaticResource GeneralPicker}"
-                                    Title="Excitation" Grid.Column="2" Grid.Row="3"
-                                    SelectedIndex="{Binding DayFeelings.Excitation}"/>
+                                    Title="Excitation" Grid.Row="3"
+                                    SelectedIndex="{Binding DayFeelings.Excitation, Converter={StaticResource ScaleToIndexCvt}}"/>
                         </Grid>
 
                         <Label Text="Additional comments:"/>
@@ -58,7 +60,7 @@
 
                         <Label Text="Emotions" Style="{StaticResource ItemsTitleStyle}"/>
 
-                        <Grid RowDefinitions="6" ColumnDefinitions="2">
+                        <Grid ColumnDefinitions="2">
                             <Label Text="Anger: " Grid.Column="1" Grid.Row="1"/>
                             <Picker Style="{StaticResource GeneralPicker}"
                                     Title="Anger" Grid.Column="2" Grid.Row="1"
@@ -91,6 +93,37 @@
 
                         </Grid>
 
+                    </StackLayout>
+                </Frame>
+
+                <Frame>
+                    <StackLayout>
+                        
+                        <Label Text="Urges" Style="{StaticResource ItemsTitleStyle}"/>
+                        
+                        <Grid ColumnDefinitions="2">
+
+                            <Label Text="Selfham: " Grid.Column="1" Grid.Row="1"/>
+                            <Picker Style="{StaticResource UrgesPicker}"
+                                    Title="Selfharm" Grid.Row="1"
+                                    SelectedIndex="{Binding DayUrges.SelfHarm}"/>
+                            
+                            <Label Text="Suicide: " Grid.Column="1" Grid.Row="2"/>
+                            <Picker Style="{StaticResource UrgesPicker}"
+                                    Title="Suicide" Grid.Row="2"
+                                    SelectedIndex="{Binding DayUrges.Suicide}"/>
+
+                            <Label Text="Drugs: " Grid.Column="1" Grid.Row="3"/>
+                            <Picker Style="{StaticResource UrgesPicker}"
+                                    Title="Drugs" Grid.Row="3"
+                                    SelectedIndex="{Binding DayUrges.Drugs}"/>
+
+                            <Label Text="Alcohol: " Grid.Column="1" Grid.Row="4"/>
+                            <Picker Style="{StaticResource UrgesPicker}"
+                                    Title="Alcohol" Grid.Row="4"
+                                    SelectedIndex="{Binding DayUrges.Alcohol}"/>
+
+                        </Grid>
                     </StackLayout>
                 </Frame>
 

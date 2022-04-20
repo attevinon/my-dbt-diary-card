@@ -22,10 +22,10 @@ namespace MyDbtDiaryCard.Model
         [OneToOne]
         public Emotions DayEmotions { get; set; }
 
-        /*[OneToOne]
+        [OneToOne]
         public Urges DayUrges { get; set; }
 
-        [OneToMany]
+       /* [OneToMany]
         public List<Meds> DayMeds { get; set; }*/
 
         /*public List<(DbtSkills skill, int rate, string description)> DayUsedSkills { get; set; }

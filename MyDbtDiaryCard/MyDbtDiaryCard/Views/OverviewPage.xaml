@@ -10,6 +10,9 @@
     <ContentPage.Content>
         <StackLayout>
 
+            <Picker ItemsSource="{Binding DaysCountList}"
+                    SelectedItem="{Binding DaysCount}"/>
+
             <ScrollView>
                 <StackLayout>
 
@@ -17,15 +20,22 @@
 
                     <Frame>
                         <AbsoluteLayout HeightRequest="300">
-                            <oxy:PlotView x:Name="feelingsChart" Model="{Binding EmotionsChart}"/>
+                            <oxy:PlotView Model="{Binding EmotionsChart}"/>
                         </AbsoluteLayout>
                     </Frame>
 
                     <Frame>
                         <AbsoluteLayout HeightRequest="300">
-                            <oxy:PlotView x:Name="emotionsChart" Model="{Binding FeelingsChart}"/>
+                            <oxy:PlotView Model="{Binding FeelingsChart}"/>
                         </AbsoluteLayout>
                     </Frame>
+
+                    <Frame>
+                        <AbsoluteLayout HeightRequest="350">
+                            <oxy:PlotView Model="{Binding UrgesChart}"/>
+                        </AbsoluteLayout>
+                    </Frame>
+                    
                 </StackLayout>
             </ScrollView>
 

@@ -89,6 +89,21 @@ namespace MyDbtDiaryCard.ViewModels
             }
         }
 
+        private Urges urges;
+
+        public Urges DayUrges
+        {
+            get
+            {
+                if (urges == null)
+                    urges = new Urges(_date);
+
+                return urges;
+            }
+            set { SetProperty(ref urges, value); }
+        }
+
+
 
         private async void FindDay()
         {
@@ -100,15 +115,20 @@ namespace MyDbtDiaryCard.ViewModels
                 IsEntryExistsInDb = false;
                 day = new DayEntry(_date);
             }
+            else
+            {
+                IsEntryExistsInDb = true;
+            }
 
-            IsEntryExistsInDb = true;
             DayFeelings = day?.DayFeelings;
             DayEmotions = day?.DayEmotions;
+            DayUrges = day?.DayUrges;
         }
         private async Task SaveEntryAsync()
         {
             day.SetDayEmotions(DayEmotions);
             day.SetDayFeelings(DayFeelings);
+            day.DayUrges = DayUrges;
 
             await _dayEntryData.AddDayEntryAsync(day);
 

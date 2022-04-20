@@ -15,7 +15,7 @@ namespace MyDbtDiaryCard.Services.DataService
 
         public async Task Init()
         {
-            var date = new DateTime(2022, 04, 14);
+            var date = new DateTime(2022, 04, 19);
 
             DayEntries = new List<DayEntry>();
             DayEntries.Add(new DayEntry(date)
@@ -33,6 +33,12 @@ namespace MyDbtDiaryCard.Services.DataService
                     Fear = 1,
                     Pride = 2,
                     Joy = 4
+                },
+                DayUrges = new Model.EntryItems.Urges(date)
+                {
+                    SelfHarm = 1,
+                    Suicide = 2,
+                    Drugs = 0,
                 }
             });
 
@@ -51,6 +57,12 @@ namespace MyDbtDiaryCard.Services.DataService
                     Fear = 2,
                     Pride = 0,
                     Joy = 3
+                },
+                DayUrges = new Model.EntryItems.Urges(date.AddDays(-1))
+                {
+                    SelfHarm = 1,
+                    Suicide = 2,
+                    Alcohol = 6,
                 }
             });
 

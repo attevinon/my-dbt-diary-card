@@ -9,11 +9,17 @@ namespace MyDbtDiaryCard.ViewModels
 {
     internal class OverviewViewModel : BaseViewModel
     {
+        public List<int> DaysCountList { get; set; }
+
         private int daysCount = 14;
         public int DaysCount
         {
             get { return daysCount; }
-            set { daysCount = value; }
+            set 
+            {
+                SetProperty(ref daysCount, value);
+                RefreshCharts();
+            }
         }
 
         private PlotModel feelingsChart;
@@ -30,17 +36,32 @@ namespace MyDbtDiaryCard.ViewModels
             set { SetProperty(ref emotionsChart, value); }
         }
 
+        private PlotModel urgesChart;
+        public PlotModel UrgesChart
+        {
+            get { return urgesChart; }
+            set { SetProperty(ref urgesChart, value); }
+        }
+
+
 
         public OverviewViewModel(INavigationService navigation) : base(navigation)
         {
+            RefreshCharts();
+            DaysCountList = new List<int> { 7, 14 };
+        }
+
+        private async void RefreshCharts()
+        {
             var entries = new Model.EntriesStats();
-            entries.Initialize(DaysCount);
+            await entries.Initialize(DaysCount);
 
             var chartsDirector = new ChartsDirector(entries);
 
             var builder = new LineChartBuilder();
             EmotionsChart = chartsDirector.BuildEmotionsChart(builder);
             FeelingsChart = chartsDirector.BuildFeelingsChart(builder);
+            UrgesChart = chartsDirector.BuildUrgesChart(builder);
         }
     }
 }

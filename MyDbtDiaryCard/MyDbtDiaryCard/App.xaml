@@ -19,11 +19,15 @@
             <Setter Property="FontSize" Value="Large"/>
             <Setter Property="HorizontalTextAlignment" Value="Center"/>
         </Style>
-        
+
         <Style TargetType="Label" x:Key="PageTitleStyle">
             <Setter Property="FontSize" Value="Title"/>
         </Style>
-        
+
+        <Style TargetType="Label" x:Key="lblFieldName">
+            <Setter Property="Grid.Column" Value="1"/>
+        </Style>
+
     </Application.Resources>
     
 </Application>

@@ -22,6 +22,7 @@ namespace MyDbtDiaryCard.Services.DataService.Repositories
             {
                 var r1 = await connection.CreateTableAsync<Feelings>();
                 await connection.CreateTableAsync<Emotions>();
+                await connection.CreateTableAsync<Urges>();
 
                 var r = await connection.CreateTableAsync<DayEntry>();
 
@@ -81,14 +82,16 @@ namespace MyDbtDiaryCard.Services.DataService.Repositories
                 {
                     result = await CreateAsync(newDayEntry)
                         && await CreateAsync(newDayEntry.DayFeelings)
-                        && await CreateAsync(newDayEntry.DayEmotions);
+                        && await CreateAsync(newDayEntry.DayEmotions)
+                        && await CreateAsync(newDayEntry.DayUrges);
 
                 }
                 else
                 {
                     result = await UpdateAsync(newDayEntry)
                         && await UpdateAsync(newDayEntry.DayFeelings)
-                        && await UpdateAsync(newDayEntry.DayFeelings);
+                        && await UpdateAsync(newDayEntry.DayFeelings)
+                        && await UpdateAsync(newDayEntry.DayUrges);
                 }
 
                 if (!result)
@@ -116,6 +119,9 @@ namespace MyDbtDiaryCard.Services.DataService.Repositories
             if (dayEntryToRemove.DayEmotions != null)
                 result = result && await DeleteAsync(dayEntryToRemove.DayEmotions);
 
+            if (dayEntryToRemove.DayUrges != null)
+                result = result && await DeleteAsync(dayEntryToRemove.DayUrges);
+
             return result;
         }
 
@@ -126,6 +132,7 @@ namespace MyDbtDiaryCard.Services.DataService.Repositories
 
             day.DayFeelings = await FindByConditionAsync<Feelings>(f => f.Date == day.Date);
             day.DayEmotions = await FindByConditionAsync<Emotions>(e => e.Date == day.Date);
+            day.DayUrges = await FindByConditionAsync<Urges>(u => u.Date == day.Date);
         }
     }
 }
