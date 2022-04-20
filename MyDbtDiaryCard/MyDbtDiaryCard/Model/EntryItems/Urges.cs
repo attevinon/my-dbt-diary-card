@@ -11,10 +11,10 @@ namespace MyDbtDiaryCard.Model.EntryItems
     {
         [PrimaryKey, ForeignKey(typeof(DayEntry))]
         public DateTime Date { get; set; }
-        public int SelfHarm { get; set; }
-        public int Suicide { get; set; }
-        public int Alcohol { get; set; }
-        public int Drugs { get; set; }
+        public int SelfHarm { get; set; } = -1;
+        public int Suicide { get; set; } = -1;
+        public int Alcohol { get; set; } = -1;
+        public int Drugs { get; set; } = -1;
 
         public Urges(DateTime date)
         {
