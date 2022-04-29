@@ -7,6 +7,8 @@ namespace MyDbtDiaryCard.Model.Abstractions
 {
     internal interface IDayEntryRepository
     {
+        event EventHandler EntryDataUpdated;
+        bool HasBeenInitialized { get; }
         Task Init();
         Task<DayEntry> GetDayEntryForDateAsync(DateTime date);
         Task<List<DayEntry>> GetDayEntriesPerPeriodAsync(DateTime startDate, DateTime endDate);
