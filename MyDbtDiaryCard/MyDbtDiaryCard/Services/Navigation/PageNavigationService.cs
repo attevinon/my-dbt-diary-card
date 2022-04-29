@@ -67,7 +67,14 @@ namespace MyDbtDiaryCard.Services.Navigation
             var page = GetPage(pageKey, parameter);
             await CurrentNavigationPage.Navigation.PushAsync(page);
         }
-        public async Task GoBack()
+
+        public async Task NavigateAsync(string pageKey,params object[] parameters)
+        {
+            var page = GetPage(pageKey, parameters);
+            await CurrentNavigationPage.Navigation.PushAsync(page);
+        }
+
+        public async Task GoBackAsync()
         {
             var navigationStack = CurrentNavigationPage.Navigation;
 
@@ -86,6 +93,50 @@ namespace MyDbtDiaryCard.Services.Navigation
 
             await CurrentNavigationPage.PopAsync();
 
+        }
+        private Page GetPage(string pageKey, params object[] parameters)
+        {
+            lock (_locker)
+            {
+                if (!_pagesByKey.ContainsKey(pageKey))
+                    throw new Exception();
+
+                var pageType = _pagesByKey[pageKey];
+                ConstructorInfo constructor; //???????????????????????????????????
+
+                if (parameters == null)
+                {
+                    constructor = pageType.GetTypeInfo()
+                        .DeclaredConstructors
+                        .FirstOrDefault(c => !c.GetParameters().Any());
+                    parameters = new object[] { };
+                }
+                else
+                {
+                    constructor = pageType.GetTypeInfo()
+                        .DeclaredConstructors
+                        .FirstOrDefault(c =>
+                        {
+                            var p = c.GetParameters();
+
+                            if (parameters.Length != p.Length)
+                                return false;
+
+                            for (int i = 0; i < parameters.Length; i++)
+                            {
+                                if (parameters[i].GetType() != p[i].ParameterType)
+                                    return false;
+                            }
+                            return true;
+                        });
+                }
+
+                if (constructor == null)
+                    throw new Exception("No suitable constructor :(");
+
+                var page = constructor.Invoke(parameters) as Page;
+                return page;
+            }
         }
 
         private Page GetPage(string pageKey, object parameter = null)
@@ -129,7 +180,6 @@ namespace MyDbtDiaryCard.Services.Navigation
                 return page;
             }
         }
-
 
     }
 }
