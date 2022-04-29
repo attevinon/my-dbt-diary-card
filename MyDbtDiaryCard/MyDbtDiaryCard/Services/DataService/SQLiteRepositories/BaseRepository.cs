@@ -6,11 +6,12 @@ using System.Threading.Tasks;
 using MyDbtDiaryCard.Model.Abstractions;
 using SQLite;
 
-namespace MyDbtDiaryCard.Services.DataService.Repositories
+namespace MyDbtDiaryCard.Services.DataService.SQLiteRepositories
 {
     internal class BaseRepository : IBaseRepository
     {
         protected bool hasBeenInitialized;
+        public bool HasBeenInitialized { get; protected set; }
         protected readonly SQLiteAsyncConnection connection;
         public BaseRepository(SQLiteAsyncConnection connection)
         {
@@ -22,6 +23,18 @@ namespace MyDbtDiaryCard.Services.DataService.Repositories
             return 1 == await connection.InsertAsync(entity);
         }
 
+        public async Task<bool> CreateManyAsync<TEntity>(IList<TEntity> entities) where TEntity : new()
+        {
+            bool result = true;
+
+            foreach (var entity in entities)
+            {
+                result = result && await CreateAsync(entity);
+            }
+
+            return result;
+        }
+
         public async Task<bool> UpdateAsync<TEntity>(TEntity entity) where TEntity : new()
         {
             return 1 == await connection.UpdateAsync(entity);
@@ -30,6 +43,21 @@ namespace MyDbtDiaryCard.Services.DataService.Repositories
         public async Task<bool> DeleteAsync<TEntity>(TEntity entity) where TEntity : new()
         {
             return 1 == await connection.DeleteAsync(entity);
+        }
+
+        public async Task<bool> DeleteManyAsync<TEntity>(
+            Expression<Func<TEntity, bool>> expression) where TEntity : new()
+        {
+            try
+            {
+                await connection.Table<TEntity>().Where(expression).DeleteAsync();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return false;
+            }
         }
 
         public async Task<List<TEntity>> FindAllAsync<TEntity>() where TEntity : new()
@@ -46,11 +74,25 @@ namespace MyDbtDiaryCard.Services.DataService.Repositories
             return entity;
         }
 
+        public async Task<List<TEntity>> FindManyByConditionAsync<TEntity>(
+            Expression<Func<TEntity, bool>> expression) where TEntity : new()
+        {
+            try
+            {
+                var entities = await connection.Table<TEntity>().Where(expression).ToListAsync();
+                return entities;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+
+        }
+
         public async Task<List<TEntity>> FindManyByConditionAsync<TEntity, U>(
             Expression<Func<TEntity, bool>> expression, Expression<Func<TEntity, U>> orderExpr,
             bool isByDescending = false) where TEntity : new()
         {
-
             if (isByDescending)
             {
                 var entities = await connection.Table<TEntity>()
@@ -59,11 +101,17 @@ namespace MyDbtDiaryCard.Services.DataService.Repositories
             }
             else
             {
-                var entities = await connection.Table<TEntity>()
-                    .Where(expression).OrderBy(orderExpr).ToListAsync();
-                return entities;
+                try
+                {
+                    var entities = await connection?.Table<TEntity>()?.Where(expression)?.OrderBy(orderExpr).ToListAsync();
+                    return entities;
+                }
+                catch(Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+                return null;
             }
-            
         }
 
     }
