@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace MyDbtDiaryCard.Model
 {
-    [Table("DbtEntries")]
+    [Table("Entries")]
     internal class DayEntry
     {
 
@@ -25,11 +25,13 @@ namespace MyDbtDiaryCard.Model
         [OneToOne]
         public Urges DayUrges { get; set; }
 
-       /* [OneToMany]
-        public List<Meds> DayMeds { get; set; }*/
+        [OneToMany]
+        public List<DbtSkillUsed> DaysDbtSkills { get; set; }
 
-        /*public List<(DbtSkills skill, int rate, string description)> DayUsedSkills { get; set; }
-        public Lazy<Treatment> DayTreatment { get; set; }*/
+        /* [OneToMany]
+         public List<Meds> DayMeds { get; set; }*/
+
+        //public Lazy<Treatment> DayTreatment { get; set; }
 
         public DayEntry(DateTime date)
         {

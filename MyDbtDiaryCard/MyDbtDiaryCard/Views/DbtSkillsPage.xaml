@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MyDbtDiaryCard.Views.DbtSkillsPage"
+             xmlns:local="clr-namespace:MyDbtDiaryCard.ViewModels"
+             x:DataType="local:DbtSkillsViewModel">
+
+    <ContentPage.Resources>
+        <Style TargetType="StackLayout">
+            <Setter Property="VisualStateManager.VisualStateGroups">
+                <VisualStateGroupList>
+                    <VisualStateGroup x:Name="CommonStates">
+                        <VisualState x:Name="Normal" />
+                        <VisualState x:Name="Selected">
+                            <VisualState.Setters>
+                                <Setter Property="BackgroundColor"
+                                        Value="LightSkyBlue" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter>
+        </Style>
+    </ContentPage.Resources>
+
+    <CollectionView ItemsSource="{Binding DbtSkillsList}"
+                    SelectionMode="Multiple"
+                    SelectedItems="{Binding SelectedDbtSkillsList}"
+                    IsGrouped="True">
+        <CollectionView.Header>
+            <ActivityIndicator IsRunning="{Binding IsLoading}" Color="GreenYellow"/>
+        </CollectionView.Header>
+        <CollectionView.GroupHeaderTemplate>
+            <DataTemplate x:DataType="{x:Null}">
+                <StackLayout>
+                    <Label Text="----------------------------"/>
+                    <Label Text="{Binding ModuleName}" FontAttributes="Bold"/>
+                </StackLayout>
+            </DataTemplate>
+        </CollectionView.GroupHeaderTemplate>
+        <CollectionView.ItemTemplate>
+            <DataTemplate x:DataType="{x:Null}">
+                <StackLayout Orientation="Horizontal">
+                    <Label Text="{Binding Name}"/>
+                </StackLayout>
+            </DataTemplate>
+        </CollectionView.ItemTemplate>
+        <CollectionView.Footer>
+            <Button Text="Confirm" Command="{Binding ConfirmChangesCommand}"/>
+        </CollectionView.Footer>
+    </CollectionView>
+
+</ContentPage>

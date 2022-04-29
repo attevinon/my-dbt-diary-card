@@ -15,9 +15,10 @@ namespace MyDbtDiaryCard.Views
     {
         public DayEntryPage()
         {
-            InitializeComponent();
-            var dayEntryVM = new DayEntryViewModel(App.NavigationService);
-            BindingContext = dayEntryVM;
+
+                InitializeComponent();
+                var dayEntryVM = new DayEntryViewModel(App.NavigationService);
+                this.BindingContext = dayEntryVM;
         }
     }
 }
