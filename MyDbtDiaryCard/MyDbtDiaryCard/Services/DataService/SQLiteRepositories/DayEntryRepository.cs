@@ -7,10 +7,11 @@ using MyDbtDiaryCard.Model.Abstractions;
 using MyDbtDiaryCard.Model.EntryItems;
 using SQLite;
 
-namespace MyDbtDiaryCard.Services.DataService.Repositories
+namespace MyDbtDiaryCard.Services.DataService.SQLiteRepositories
 {
     internal class DayEntryRepository : BaseRepository, IDayEntryRepository
     {
+        public event EventHandler EntryDataUpdated;
         public DayEntryRepository(SQLiteAsyncConnection connection) : base(connection) 
         {
             hasBeenInitialized = false; 
@@ -20,18 +21,23 @@ namespace MyDbtDiaryCard.Services.DataService.Repositories
         {
             try
             {
-                var r1 = await connection.CreateTableAsync<Feelings>();
+                await connection.CreateTableAsync<Feelings>();
                 await connection.CreateTableAsync<Emotions>();
                 await connection.CreateTableAsync<Urges>();
+                await connection.CreateTableAsync<DbtSkillUsed>();
 
                 var r = await connection.CreateTableAsync<DayEntry>();
 
-                hasBeenInitialized = true;
+                Console.WriteLine(r);
+
+                HasBeenInitialized = true;
+
+                EntryDataUpdatedInvoke();
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
-                hasBeenInitialized = false;
+                HasBeenInitialized = false;
             }
         }
 
@@ -85,6 +91,11 @@ namespace MyDbtDiaryCard.Services.DataService.Repositories
                         && await CreateAsync(newDayEntry.DayEmotions)
                         && await CreateAsync(newDayEntry.DayUrges);
 
+                    if(newDayEntry.DaysDbtSkills != null)
+                    {
+                        result = result && await CreateManyAsync(newDayEntry.DaysDbtSkills);
+                    }
+
                 }
                 else
                 {
@@ -92,6 +103,13 @@ namespace MyDbtDiaryCard.Services.DataService.Repositories
                         && await UpdateAsync(newDayEntry.DayFeelings)
                         && await UpdateAsync(newDayEntry.DayFeelings)
                         && await UpdateAsync(newDayEntry.DayUrges);
+
+                    await DeleteManyAsync<DbtSkillUsed>(s => s.Date == newDayEntry.Date);
+
+                    if (newDayEntry.DaysDbtSkills != null)
+                    {
+                        result = result && await CreateManyAsync(newDayEntry.DaysDbtSkills);
+                    }
                 }
 
                 if (!result)
@@ -99,6 +117,8 @@ namespace MyDbtDiaryCard.Services.DataService.Repositories
                     Console.WriteLine("Exception while saving data!");
                     return false;
                 }
+
+                EntryDataUpdatedInvoke();
 
                 return true;
             }
@@ -122,6 +142,8 @@ namespace MyDbtDiaryCard.Services.DataService.Repositories
             if (dayEntryToRemove.DayUrges != null)
                 result = result && await DeleteAsync(dayEntryToRemove.DayUrges);
 
+            EntryDataUpdatedInvoke();
+
             return result;
         }
 
@@ -133,6 +155,20 @@ namespace MyDbtDiaryCard.Services.DataService.Repositories
             day.DayFeelings = await FindByConditionAsync<Feelings>(f => f.Date == day.Date);
             day.DayEmotions = await FindByConditionAsync<Emotions>(e => e.Date == day.Date);
             day.DayUrges = await FindByConditionAsync<Urges>(u => u.Date == day.Date);
+            try
+            {
+                day.DaysDbtSkills = await FindManyByConditionAsync<DbtSkillUsed>(s => s.Date == day.Date);
+            }
+            catch( Exception ex)
+            {
+                Console.WriteLine("sfdasdfasdfasdfasdfasfasdf");
+            }
+
+        }
+
+        private void EntryDataUpdatedInvoke()
+        {
+            EntryDataUpdated?.Invoke(this, null);
         }
     }
 }
