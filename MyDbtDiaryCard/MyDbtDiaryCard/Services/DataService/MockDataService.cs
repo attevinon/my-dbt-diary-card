@@ -8,37 +8,45 @@ using System.Threading.Tasks;
 
 namespace MyDbtDiaryCard.Services.DataService
 {
-    internal class MockDataService : IDayEntryRepository
+    internal class MockDataService : IDayEntryRepository, IDbtSkillsRepository
     {
         public bool HasBeenInitialized { get; private set; }
         private List<DayEntry> DayEntries { get; set; }
+        private List<DbtSkills> DbtSkillsList { get; set; }
+
+        public event EventHandler EntryDataUpdated;
+        public event EventHandler DbtSkillsLoaded;
 
         public async Task Init()
         {
-            var date = new DateTime(2022, 04, 19);
+            var date = new DateTime(2022, 4, 23);
 
             DayEntries = new List<DayEntry>();
+
             DayEntries.Add(new DayEntry(date)
             {
                 DayFeelings = new Model.EntryItems.Feelings(date)
                 {
-                    EmotionMisery = 1,
-                    PhysicalMisery = 2,
-                    Excitation = 4
+
+                    PhysicalMisery = 0,
+                    Excitation = 1
                 },
                 DayEmotions = new Model.EntryItems.Emotions(date)
                 {
-                    Anger = 3,
+                    Anger = -1,
                     Sadness = 0,
                     Fear = 1,
-                    Pride = 2,
-                    Joy = 4
+                    Shame = 2,
+                    Pride = 3,
+                    Joy = 4,
+
                 },
                 DayUrges = new Model.EntryItems.Urges(date)
                 {
-                    SelfHarm = 1,
-                    Suicide = 2,
-                    Drugs = 0,
+                    SelfHarm = -1,
+                    Suicide = 0,
+                    Drugs = 5,
+                    Alcohol = 6
                 }
             });
 
@@ -195,6 +203,20 @@ namespace MyDbtDiaryCard.Services.DataService
                 }
             });
 
+            DbtSkillsList = new List<DbtSkills>
+            {
+                new DbtSkills()
+                {
+                    Name = "Describe",
+                    Module = DbtModules.Mindfulness,
+                },
+                new DbtSkills()
+                {
+                    Name = "Observe",
+                    Module = DbtModules.Mindfulness,
+                }
+
+            };
 
             HasBeenInitialized = true;
         }
@@ -213,8 +235,7 @@ namespace MyDbtDiaryCard.Services.DataService
         }
         public async Task<DayEntry> GetDayEntryForDateAsync(DateTime date)
         {
-            var day = DayEntries.Where(d => d.Date == date).FirstOrDefault();
-
+            var day = DayEntries?.Where(d => d.Date == date).FirstOrDefault();
             return day;
         }
 
@@ -250,6 +271,14 @@ namespace MyDbtDiaryCard.Services.DataService
             return true;
         }
 
+        public async Task<DbtSkills> GetDbtSkillForName(string name)
+        {
+            return DbtSkillsList.Where(s => s.Name == name).FirstOrDefault();
+        }
 
+        public async Task<IEnumerable<DbtSkills>> GetDbtSkillsForModule(DbtModules module)
+        {
+            return DbtSkillsList.Where(s => s.Module == module);
+        }
     }
 }

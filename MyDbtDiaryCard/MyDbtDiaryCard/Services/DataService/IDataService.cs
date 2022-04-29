@@ -8,7 +8,9 @@ namespace MyDbtDiaryCard.Services.DataService
 {
     internal interface IDataService
     {
+        bool IsLoaded { get; }
         IDayEntryRepository DayEntryData { get; }
+        IDbtSkillsRepository DbtSkillsData { get; }
         Task InitializeAsync(string dbPath);
         //Task DropAllDataAsync();
     }
