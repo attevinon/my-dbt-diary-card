@@ -1,9 +1,11 @@
 ﻿using MyDbtDiaryCard.Services.ChartsService;
+using MyDbtDiaryCard.Services.DataService;
 using MyDbtDiaryCard.Services.Navigation;
 using OxyPlot;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace MyDbtDiaryCard.ViewModels
 {
@@ -18,7 +20,6 @@ namespace MyDbtDiaryCard.ViewModels
             set 
             {
                 SetProperty(ref daysCount, value);
-                RefreshCharts();
             }
         }
 
@@ -47,11 +48,16 @@ namespace MyDbtDiaryCard.ViewModels
 
         public OverviewViewModel(INavigationService navigation) : base(navigation)
         {
-            RefreshCharts();
+            DataService.GetDataManager().DayEntryData.EntryDataUpdated += DataUpdated;
             DaysCountList = new List<int> { 7, 14 };
         }
 
-        private async void RefreshCharts()
+        private async void DataUpdated(object sender, EventArgs e)
+        {
+            await RefreshCharts();
+        }
+
+        private async Task RefreshCharts()
         {
             var entries = new Model.EntriesStats();
             await entries.Initialize(DaysCount);

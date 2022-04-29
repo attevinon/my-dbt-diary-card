@@ -1,4 +1,5 @@
 ﻿using MyDbtDiaryCard.Model;
+using MyDbtDiaryCard.Model.EntryItems;
 using MyDbtDiaryCard.Services.Commands;
 using MyDbtDiaryCard.Services.DataService;
 using MyDbtDiaryCard.Services.Navigation;
@@ -32,6 +33,15 @@ namespace MyDbtDiaryCard.ViewModels
             }
         }
 
+        private IEnumerable<DbtSkillUsed> skillsUsed;
+        public IEnumerable<DbtSkillUsed> SkillsUsed
+        {
+            get { return skillsUsed; }
+            set { SetProperty(ref skillsUsed, value); }
+        }
+
+
+
         public ICommand AddEntryCommand { get; set; }
         public ICommand DeleteEntryCommand { get; set; }
         public ICommand DropDbCommand { get; set; }
@@ -41,7 +51,7 @@ namespace MyDbtDiaryCard.ViewModels
             AddEntryCommand = new ActionCommand(async () => await ShowAddDayEntryPage());
             DropDbCommand = new ActionCommand(async () => await DropDb());
 
-            FindDay();
+            DataService.GetDataManager().DayEntryData.EntryDataUpdated += DataUpdated;
         }
 
         private DateTime pickedDate = DateTime.Today;
@@ -69,13 +79,28 @@ namespace MyDbtDiaryCard.ViewModels
 
         }
 
+        private void DataUpdated(object sender, EventArgs e)
+        {
+            FindDay();
+        }
+
         private async void FindDay()
         {
-            Day = await DataService.GetDataManager().DayEntryData.GetDayEntryForDateAsync(PickedDate);
+            try
+            {
+                Day = await DataService.GetDataManager().DayEntryData?.GetDayEntryForDateAsync(PickedDate);
+                SkillsUsed = Day?.DaysDbtSkills ?? null;
 
-            IsDayEntryExists = Day != null;
+                IsDayEntryExists = Day != null;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message + ex.StackTrace);
+            }
         }
 
         //refresh page somehow after adding new entry 
+
+
     }
 }
