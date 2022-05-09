@@ -19,6 +19,8 @@ namespace MyDbtDiaryCard.Droid
             OxyPlot.Xamarin.Forms.Platform.Android.PlotViewRenderer.Init();
 
             LoadApplication(new App());
+
+            Window.SetStatusBarColor(Android.Graphics.Color.ParseColor("#87995c"));
         }
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
         {
