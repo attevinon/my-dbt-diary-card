@@ -3,18 +3,20 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MyDbtDiaryCard.Views.DbtSkillsPage"
              xmlns:local="clr-namespace:MyDbtDiaryCard.ViewModels"
-             x:DataType="local:DbtSkillsViewModel">
+             x:DataType="local:DbtSkillsViewModel"
+             NavigationPage.HasNavigationBar="False"
+             BackgroundColor="{StaticResource TheLightestColor}">
 
     <ContentPage.Resources>
         <Style TargetType="StackLayout">
             <Setter Property="VisualStateManager.VisualStateGroups">
                 <VisualStateGroupList>
                     <VisualStateGroup x:Name="CommonStates">
-                        <VisualState x:Name="Normal" />
+                        <VisualState x:Name="Normal"/>
                         <VisualState x:Name="Selected">
                             <VisualState.Setters>
                                 <Setter Property="BackgroundColor"
-                                        Value="LightSkyBlue" />
+                                        Value="{StaticResource BackgroundPageColor}" />
                             </VisualState.Setters>
                         </VisualState>
                     </VisualStateGroup>
@@ -25,10 +27,15 @@
 
     <CollectionView ItemsSource="{Binding DbtSkillsList}"
                     SelectionMode="Multiple"
-                    SelectedItems="{Binding SelectedDbtSkillsList}"
-                    IsGrouped="True">
+                    SelectedItems="{Binding SelectedDbtSkillsList, Mode=TwoWay}"
+                    IsGrouped="True"
+                    Margin="20,0">
         <CollectionView.Header>
-            <ActivityIndicator IsRunning="{Binding IsLoading}" Color="GreenYellow"/>
+            <StackLayout>
+                <Label Text="Choose skills:" Style="{StaticResource ItemsTitleStyle}"/>
+                <ActivityIndicator IsRunning="{Binding IsLoading}" IsVisible="{Binding IsLoading}"
+                                   Color="{StaticResource AccentColor}"/>
+            </StackLayout>
         </CollectionView.Header>
         <CollectionView.GroupHeaderTemplate>
             <DataTemplate x:DataType="{x:Null}">

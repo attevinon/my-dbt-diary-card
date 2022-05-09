@@ -15,10 +15,15 @@ namespace MyDbtDiaryCard.Views
     {
         public DayEntryPage()
         {
+            InitializeComponent();
+            var dayEntryVM = new DayEntryViewModel(App.NavigationService);
+            dayEntryVM.WrongDataPicked += ShowAlert;
+            this.BindingContext = dayEntryVM;
+        }
 
-                InitializeComponent();
-                var dayEntryVM = new DayEntryViewModel(App.NavigationService);
-                this.BindingContext = dayEntryVM;
+        private async void ShowAlert(object sender, EventArgs e)
+        {
+            await DisplayAlert("Alert", "You can't be from future!", "ok :(");
         }
     }
 }

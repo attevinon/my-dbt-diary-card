@@ -2,180 +2,246 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:MyDbtDiaryCard.ViewModels"
-             xmlns:model="clr-namespace:MyDbtDiaryCard.Model.EntryItems"
+             xmlns:resx="clr-namespace:MyDbtDiaryCard.Resx"
+             xmlns:icons="clr-namespace:MyDbtDiaryCard.Helpers.Fonts"
              x:DataType="local:DayEntryViewModel"
              x:Class="MyDbtDiaryCard.Views.DayEntryPage"
-             Title="Day"
-             >
+             Title="{x:Static resx:ViewResources.EntryPageTitle}">
+    <!-- IconImageSource="{StaticResource icon}" -->
+
     <ContentPage.Resources>
 
-        <Style TargetType="Grid" x:Key="grdInfo">
-            <Setter Property="ColumnDefinitions" Value="2"/>
-        </Style>
+        <FontImageSource x:Key="icon" FontFamily="FAS"
+                     Glyph="{x:Static icons:FontAwesomeIcons.Medal}"/>
 
-        <Style TargetType="Label" x:Key="lblValue">
+        <Style TargetType="Label" x:Key="Value">
             <Setter Property="Grid.Column" Value="2"/>
+            <Setter Property="Margin" Value="30,0"/>
         </Style>
 
     </ContentPage.Resources>
 
-    <Grid ColumnDefinitions="1" RowDefinitions="Auto">
+    <Grid RowDefinitions="Auto" RowSpacing="0">
 
-        <StackLayout x:Name="stckToolBar" Grid.Row="0" Grid.Column="1" VerticalOptions="Start" Orientation="Horizontal">
-            <Button Text="&lt;-"/>
-            <DatePicker Date="{Binding PickedDate}" Format="D"/>
-            <Button Text="->"/>
-        </StackLayout>
+        <Grid Style="{StaticResource grdToolBar}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="1.5*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
 
-        <ScrollView Grid.Row="1" Grid.Column="1">
+            <Button Text="&lt;-" Grid.Column="0"
+                    Style="{StaticResource BtnToolBar}"
+                    Command="{Binding GetPreviousDayCommand}"/>
+            
+            <DatePicker Date="{Binding PickedDate}"
+                        Format="D"
+                        Grid.Column="1"/>
+            
+            <Button Text="->" Grid.Column="2" 
+                    Style="{StaticResource BtnToolBar}"
+                    Command="{Binding GetNextDayCommand}"/>
+        </Grid>
+
+        <ScrollView Grid.Row="1">
             <StackLayout>
 
-                <Frame>
-                    <StackLayout BindingContext="{Binding Day.DayFeelings}"  x:DataType="{x:Null}">
+                <StackLayout x:Name="stckItems" IsVisible="{Binding IsDayEntryExists}">
 
-                        <Label Text="Feelings" Style="{StaticResource ItemsTitleStyle}"/>
+                    <Frame>
+                        <StackLayout BindingContext="{Binding Day.DayFeelings}"  x:DataType="{x:Null}">
 
-                        <Grid ColumnDefinitions="2">
+                            <Label Text="{x:Static resx:EntryResources.Feelings}" Style="{StaticResource ItemsTitleStyle}"/>
 
-                            <Label Text="Emotional Misery:" Style="{StaticResource lblFieldName}" Grid.Row="1"/>
-                            <Label Style="{StaticResource lblValue}" 
-                                   Text="{Binding EmotionMisery, Converter={StaticResource ScaleToStringCvt}}"
-                                   Grid.Row="1"/>
+                            <StackLayout Style="{StaticResource ItemField}">
+                                <Grid Style="{StaticResource grdItemField}">
+                                    <Label Text="{x:Static resx:EntryResources.F_EmotionMisery}"
+                                       Style="{StaticResource lblFieldName}"/>
+                                    <Label Style="{StaticResource Value}" 
+                                       Text="{Binding EmotionMisery, Converter={StaticResource ScaleToStringCvt}}"/>
+                                </Grid>
+                            </StackLayout>
 
-                            <Label Text="Physical Misery:" Style="{StaticResource lblFieldName}" Grid.Row="2"/>
-                            <Label Style="{StaticResource lblValue}"
-                                   Text="{Binding PhysicalMisery, Converter={StaticResource ScaleToStringCvt}}"
-                                   Grid.Row="2"/>
 
-                            <Label Text="Excitation:" Style="{StaticResource lblFieldName}" Grid.Row="3"/>
-                            <Label Style="{StaticResource lblValue}" 
-                                   Text="{Binding Excitation, Converter={StaticResource ScaleToStringCvt}}" 
-                                   Grid.Row="3"/>
+                            <StackLayout Style="{StaticResource ItemField}">
+                                <Grid Style="{StaticResource grdItemField}">
+                                    <Label Text="{x:Static resx:EntryResources.F_PhysicalMisery}"
+                                       Style="{StaticResource lblFieldName}"/>
+                                    <Label Style="{StaticResource Value}"
+                                   Text="{Binding PhysicalMisery, Converter={StaticResource ScaleToStringCvt}}"/>
+                                </Grid>
+                            </StackLayout>
 
-                        </Grid>
+                            <StackLayout Style="{StaticResource ItemField}">
+                                <Grid Style="{StaticResource grdItemField}">
+                                    <Label Text="{x:Static resx:EntryResources.F_Excitation}"
+                                       Style="{StaticResource lblFieldName}"/>
+                                    <Label Style="{StaticResource Value}" 
+                                       Text="{Binding Excitation, Converter={StaticResource ScaleToStringCvt}}" />
+                                </Grid>
+                            </StackLayout>
 
-                        <Label Text="Additional:"/>
-                        <Editor Text="{Binding Additional}" 
+                            <Label Text="{x:Static resx:EntryResources.Additional}"/>
+                            <Editor Text="{Binding Additional}" 
                                 IsEnabled="False" AutoSize="TextChanges"/>
-
-                    </StackLayout>
-                </Frame>
-
-                <Frame x:Name="Emotions">
-                    <StackLayout BindingContext="{Binding Day.DayEmotions}" x:DataType="{x:Null}">
-
-                        <Label Text="Emotions" Style="{StaticResource ItemsTitleStyle}"/>
-
-                        <Grid ColumnDefinitions="2">
-
-                            <Label Text="Anger:" Style="{StaticResource lblFieldName}" Grid.Row="1"  />
-                            <Label Style="{StaticResource lblValue}" 
-                                   Text="{Binding Anger, Converter={StaticResource ScaleToStringCvt}}"
-                                   Grid.Column="2" Grid.Row="1"/>
-
-                            <Label Text="Sadness:" Style="{StaticResource lblFieldName}" Grid.Row="2"/>
-                            <Label Style="{StaticResource lblValue}" 
-                                   Text="{Binding Sadness, Converter={StaticResource ScaleToStringCvt}}"
-                                   Grid.Column="2" Grid.Row="2"/>
-
-                            <Label Text="Fear:" Style="{StaticResource lblFieldName}" Grid.Row="3"/>
-                            <Label Style="{StaticResource lblValue}" 
-                                   Text="{Binding Fear, Converter={StaticResource ScaleToStringCvt}}"
-                                   Grid.Column="2" Grid.Row="3"/>
-
-                            <Label Text="Shame:" Style="{StaticResource lblFieldName}" Grid.Row="4"/>
-                            <Label Style="{StaticResource lblValue}" 
-                                   Text="{Binding Shame, Converter={StaticResource ScaleToStringCvt}}"
-                                   Grid.Column="2" Grid.Row="4"/>
-
-                            <Label Text="Pride:" Style="{StaticResource lblFieldName}" Grid.Row="5"/>
-                            <Label Style="{StaticResource lblValue}" 
-                                   Text="{Binding Pride, Converter={StaticResource ScaleToStringCvt}}"
-                                   Grid.Column="2" Grid.Row="5"/>
-
-                            <Label Text="Joy:" Style="{StaticResource lblFieldName}" Grid.Row="6"/>
-                            <Label Style="{StaticResource lblValue}" 
-                                   Text="{Binding Joy, Converter={StaticResource ScaleToStringCvt}}"
-                                   Grid.Column="2" Grid.Row="6"/>
-
-                        </Grid>
-                    </StackLayout>
-                </Frame>
-
-                <Frame>
-                    <StackLayout BindingContext="{Binding Day.DayUrges}" x:DataType="{x:Null}">
-
-                        <Label Text="Urges" Style="{StaticResource ItemsTitleStyle}"/>
-
-                        <Grid Style="{StaticResource grdInfo}">
-
-                            <Label Style="{StaticResource lblFieldName}" Text="SelfHarm: " Grid.Row="1"/>
-                            <Label Style="{StaticResource lblValue}" Grid.Row="1"
-                                   Text="{Binding SelfHarm, Converter={StaticResource ScaleToStringCvt}}"/>
-
-                            <Label Style="{StaticResource lblFieldName}" Text="Suicide: " Grid.Row="2"/>
-                            <Label Style="{StaticResource lblValue}" Grid.Row="2"
-                                   Text="{Binding Suicide, Converter={StaticResource ScaleToStringCvt}}"/>
-
-                            <Label Style="{StaticResource lblFieldName}" Text="Alcohol: " Grid.Row="3"/>
-                            <Label Style="{StaticResource lblValue}" Grid.Row="3"
-                                   Text="{Binding Alcohol, Converter={StaticResource ScaleToStringCvt}}"/>
-
-                            <Label Style="{StaticResource lblFieldName}" Text="Drugs: " Grid.Row="4"/>
-                            <Label Style="{StaticResource lblValue}" Grid.Row="4"
-                                   Text="{Binding Drugs, Converter={StaticResource ScaleToStringCvt}}"/>
-                        </Grid>
-
-                    </StackLayout>
-                </Frame>
-
-                <Frame>
-                    <StackLayout>
-                        <Label Style="{StaticResource ItemsTitleStyle}" Text="Used Skills"/>
-                  
-                        <StackLayout BindableLayout.ItemsSource="{Binding SkillsUsed}">
-                            <BindableLayout.EmptyView>
-                                <Label Text="No skills was used"/>
-                            </BindableLayout.EmptyView>
-                            <BindableLayout.ItemTemplate>
-                                <DataTemplate x:DataType="{x:Null}">
-                                    <StackLayout Orientation="Horizontal" >
-                                        <Label Text="{Binding Skill}"/>
-                                        <Label Text="{Binding Usefulness}" HorizontalOptions="EndAndExpand"/>
-                                    </StackLayout>
-                                </DataTemplate>
-                            </BindableLayout.ItemTemplate>
                         </StackLayout>
-                    </StackLayout>
-                </Frame>
+                    </Frame>
+                   
+
+                    <Frame x:Name="Emotions">
+                        <StackLayout BindingContext="{Binding Day.DayEmotions}" x:DataType="{x:Null}">
+
+                            <Label Text="{x:Static resx:EntryResources.Emotions}" Style="{StaticResource ItemsTitleStyle}"/>
+
+                            <StackLayout Style="{StaticResource ItemField}">
+                                <Grid Style="{StaticResource grdItemField}">
+                                    <Label Text="{x:Static resx:EntryResources.E_Anger}"
+                                       Style="{StaticResource lblFieldName}"/>
+                                    <Label Style="{StaticResource Value}" 
+                                       Text="{Binding Anger, Converter={StaticResource ScaleToStringCvt}}"/>
+                                </Grid>
+                            </StackLayout>
+
+                            <StackLayout Style="{StaticResource ItemField}">
+                                <Grid Style="{StaticResource grdItemField}">
+                                    <Label Text="{x:Static resx:EntryResources.E_Sadness}"
+                                       Style="{StaticResource lblFieldName}"/>
+                                    <Label Style="{StaticResource Value}" 
+                                       Text="{Binding Sadness, Converter={StaticResource ScaleToStringCvt}}"/>
+                                </Grid>
+                            </StackLayout>
+
+                            <StackLayout Style="{StaticResource ItemField}">
+                                <Grid Style="{StaticResource grdItemField}">
+                                    <Label Text="{x:Static resx:EntryResources.E_Fear}"
+                                       Style="{StaticResource lblFieldName}"/>
+                                    <Label Style="{StaticResource Value}" 
+                                       Text="{Binding Fear, Converter={StaticResource ScaleToStringCvt}}"/>
+                                </Grid>
+                            </StackLayout>
+
+                            <StackLayout Style="{StaticResource ItemField}">
+                                <Grid Style="{StaticResource grdItemField}">
+                                    <Label Text="{x:Static resx:EntryResources.E_Shame}"
+                                       Style="{StaticResource lblFieldName}"/>
+                                    <Label Style="{StaticResource Value}" 
+                                       Text="{Binding Shame, Converter={StaticResource ScaleToStringCvt}}"/>
+                                </Grid>
+                            </StackLayout>
+
+                            <StackLayout Style="{StaticResource ItemField}">
+                                <Grid Style="{StaticResource grdItemField}">
+                                    <Label Text="{x:Static resx:EntryResources.E_Pride}" 
+                                       Style="{StaticResource lblFieldName}"/>
+                                    <Label Style="{StaticResource Value}" 
+                                       Text="{Binding Pride, Converter={StaticResource ScaleToStringCvt}}"/>
+                                </Grid>
+                            </StackLayout>
+
+                            <StackLayout Style="{StaticResource ItemField}">
+                                <Grid Style="{StaticResource grdItemField}">
+                                    <Label Text="{x:Static resx:EntryResources.E_Joy}" 
+                                       Style="{StaticResource lblFieldName}"/>
+                                    <Label Style="{StaticResource Value}" 
+                                       Text="{Binding Joy, Converter={StaticResource ScaleToStringCvt}}"/>
+                                </Grid>
+                            </StackLayout>
+                            
+                        </StackLayout>
+                    </Frame>
+
+                    <Frame>
+                        <StackLayout BindingContext="{Binding Day.DayUrges}" x:DataType="{x:Null}">
+
+                            <Label Text="{x:Static resx:EntryResources.Urges}" Style="{StaticResource ItemsTitleStyle}"/>
+
+                            <StackLayout Style="{StaticResource ItemField}">
+                                <Grid Style="{StaticResource grdItemField}">
+                                    <Label Style="{StaticResource lblFieldName}"
+                                       Text="{x:Static resx:EntryResources.U_SelfHarm}"/>
+                                    <Label Style="{StaticResource Value}"
+                                       Text="{Binding SelfHarm, Converter={StaticResource ScaleToStringCvt}}"/>
+                                </Grid>
+                            </StackLayout>
+
+                            <StackLayout Style="{StaticResource ItemField}">
+                                <Grid Style="{StaticResource grdItemField}">
+                                    <Label Style="{StaticResource lblFieldName}"
+                                       Text="{x:Static resx:EntryResources.U_Suicide}"/>
+                                    <Label Style="{StaticResource Value}"
+                                       Text="{Binding Suicide, Converter={StaticResource ScaleToStringCvt}}"/>
+                                </Grid>
+                            </StackLayout>
+
+                            <StackLayout Style="{StaticResource ItemField}">
+                                <Grid Style="{StaticResource grdItemField}">
+                                    <Label Style="{StaticResource lblFieldName}"
+                                       Text="{x:Static resx:EntryResources.U_Drugs}"/>
+                                    <Label Style="{StaticResource Value}"
+                                       Text="{Binding Drugs, Converter={StaticResource ScaleToStringCvt}}"/>
+                                </Grid>
+                            </StackLayout>
+
+                            <StackLayout Style="{StaticResource ItemField}">
+                                <Grid Style="{StaticResource grdItemField}">
+                                    <Label Style="{StaticResource lblFieldName}"
+                                       Text="{x:Static resx:EntryResources.U_Alcohol}"/>
+                                    <Label Style="{StaticResource Value}"
+                                       Text="{Binding Alcohol, Converter={StaticResource ScaleToStringCvt}}"/>
+                                </Grid>
+                            </StackLayout>
+
+                        </StackLayout>
+                    </Frame>
+
+                    <Frame>
+                        <StackLayout>
+                            <Label Style="{StaticResource ItemsTitleStyle}" Text="{x:Static resx:EntryResources.Skills}"/>
+
+                            <StackLayout BindableLayout.ItemsSource="{Binding SkillsUsed}">
+                                <BindableLayout.EmptyView>
+                                    <Label Text="{x:Static resx:ViewResources.EmptySkillsList}"/>
+                                </BindableLayout.EmptyView>
+                                <BindableLayout.ItemTemplate>
+                                    <DataTemplate x:DataType="{x:Null}">
+                                        <StackLayout Style="{StaticResource ItemField}" >
+                                            <Label Text="{Binding SkillName}"/>
+                                            
+                                            <Label Text="{Binding Usefulness,
+                                                                  Converter={StaticResource UsefulnessToStringCvt}}"
+                                                   HorizontalOptions="EndAndExpand"/>
+                                        </StackLayout>
+                                    </DataTemplate>
+                                </BindableLayout.ItemTemplate>
+                            </StackLayout>
+                        </StackLayout>
+                    </Frame>
+                </StackLayout>
 
 
-                <StackLayout>
+                <StackLayout VerticalOptions="CenterAndExpand">
 
-                    <StackLayout>
+                    <StackLayout >
                         <Button x:Name="btnEditEntry"
-                    IsVisible="{Binding IsDayEntryExists}"
-                    Text="Edit Entry"
-                    HorizontalOptions="Center"
-                    Command ="{Binding AddEntryCommand}"/>
+                        IsVisible="{Binding IsDayEntryExists}"
+                        Text="{x:Static resx:ViewResources.EditEntry}"
+                        HorizontalOptions="Center"
+                        Command ="{Binding AddEntryCommand}"/>
 
                         <Button x:Name="btnAddEntry"
-                    IsVisible="{Binding IsDayEntryExists,
+                        IsVisible="{Binding IsDayEntryExists,
                         Converter={StaticResource ReverseBoolCvt},
                         Mode=OneWay}"
-                    Text="Add Entry"
-                    HorizontalOptions="Center"
-                    Command ="{Binding AddEntryCommand}"/>
+                        Text="{x:Static resx:ViewResources.AddEntry}"
+                        HorizontalOptions="Center"
+                        Command ="{Binding AddEntryCommand}"/>
                     </StackLayout>
-
-                    <Button Text="Drop Database"
-                    HorizontalOptions="Center"
-                    Command ="{Binding DropDbCommand}"/>
-
                 </StackLayout>
 
             </StackLayout>
         </ScrollView>
+
+        <ActivityIndicator IsVisible="{Binding IsLoading}" Grid.RowSpan="2"/>
     </Grid>
 
 </ContentPage>

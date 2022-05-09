@@ -1,10 +1,18 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:local="clr-namespace:MyDbtDiaryCard.Views"
-             x:Class="MyDbtDiaryCard.Views.MainPage">
-    <TabbedPage.Children>
+            xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+            xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
+            xmlns:local="clr-namespace:MyDbtDiaryCard.Views"
+            x:Class="MyDbtDiaryCard.Views.MainPage"
+            NavigationPage.HasNavigationBar="False"
+            BackgroundColor="{StaticResource BackgroundPageColor}"
+            BarBackgroundColor="{StaticResource DarkerAccentColor}"
+            SelectedTabColor="{StaticResource TheLightestColor}"
+            UnselectedTabColor="{StaticResource AccentColor}">
+
+    <TabbedPage.Children >
         <local:DayEntryPage/>
         <local:OverviewPage/>
     </TabbedPage.Children>
+
 </TabbedPage>
