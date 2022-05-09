@@ -28,3 +28,5 @@ Unfortunately this app is only for andriod users (bc I don't have any Aplle prod
 - [ ] Average skills using of the day
 - [ ] Data export (pdf)
 
+#### [MIT License](https://github.com/attevinon/my-dbt-diary-card/blob/master/LICENSE)
+Copyright (c) 2022 Violetta Lutsevich
