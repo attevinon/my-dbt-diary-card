@@ -1,4 +1,5 @@
 ﻿using MyDbtDiaryCard.Model;
+using MyDbtDiaryCard.Resx;
 using OxyPlot;
 using System;
 using System.Collections.Generic;
@@ -16,14 +17,15 @@ namespace MyDbtDiaryCard.Services.ChartsService
 
         public PlotModel BuildFeelingsChart(ILineChartBuilder chartBuilder)
         {
-            chartBuilder.Reset();
-            chartBuilder.SetPlotModel(_stats.Dates);
-            chartBuilder.SetLeftAxis(false);
-            chartBuilder.SetSeries(_stats.FeelingsStats.emMisery, OxyColors.Gold, "Emotional misery");
-            chartBuilder.SetSeries(_stats.FeelingsStats.phMisery, OxyColors.Blue, "Physical misery");
-            chartBuilder.SetSeries(_stats.FeelingsStats.excitation, OxyColors.OrangeRed, "Excitation");
+                chartBuilder.Reset();
+                chartBuilder.SetPlotModel(_stats.Dates);
+                chartBuilder.SetLegend(EntryResources.Feelings);
+                chartBuilder.SetLeftAxis(false);
+                chartBuilder.SetSeries(_stats.FeelingsStats.emMisery, OxyColor.Parse("#94e0c8"), EntryResources.F_EmotionMisery);
+                chartBuilder.SetSeries(_stats.FeelingsStats.phMisery, OxyColor.Parse("#c098e3"), EntryResources.F_PhysicalMisery);
+                chartBuilder.SetSeries(_stats.FeelingsStats.excitation, OxyColor.Parse("#ecd079"), EntryResources.F_Excitation);
 
-            return chartBuilder.GetChart();
+                return chartBuilder.GetChart();
         }
 
         public PlotModel BuildEmotionsChart(ILineChartBuilder chartBuilder)
@@ -31,13 +33,14 @@ namespace MyDbtDiaryCard.Services.ChartsService
 
             chartBuilder.Reset();
             chartBuilder.SetPlotModel(_stats.Dates);
+            chartBuilder.SetLegend(EntryResources.Emotions);
             chartBuilder.SetLeftAxis(false);
-            chartBuilder.SetSeries(_stats.EmotionsStats.anger, OxyColors.Red, "Anger");
-            chartBuilder.SetSeries(_stats.EmotionsStats.sadness, OxyColors.Blue, "Sadness");
-            chartBuilder.SetSeries(_stats.EmotionsStats.fear, OxyColors.Violet, "Fear");
-            chartBuilder.SetSeries(_stats.EmotionsStats.shame, OxyColors.Pink, "Shame");
-            chartBuilder.SetSeries(_stats.EmotionsStats.pride, OxyColors.Green, "Pride");
-            chartBuilder.SetSeries(_stats.EmotionsStats.joy, OxyColors.Gold, "Joy");
+            chartBuilder.SetSeries(_stats.EmotionsStats.anger, OxyColor.Parse("#dd5e4b"), EntryResources.E_Anger);
+            chartBuilder.SetSeries(_stats.EmotionsStats.sadness, OxyColor.Parse("#27aeef"), EntryResources.E_Sadness);
+            chartBuilder.SetSeries(_stats.EmotionsStats.fear, OxyColor.Parse("#b33dc6"), EntryResources.E_Fear);
+            chartBuilder.SetSeries(_stats.EmotionsStats.shame, OxyColor.Parse("#87bc45"), EntryResources.E_Shame);
+            chartBuilder.SetSeries(_stats.EmotionsStats.pride, OxyColor.Parse("#f477a4"), EntryResources.E_Pride);
+            chartBuilder.SetSeries(_stats.EmotionsStats.joy, OxyColor.Parse("#edbf33"), EntryResources.E_Joy);
 
             return chartBuilder.GetChart();
         }
@@ -46,11 +49,12 @@ namespace MyDbtDiaryCard.Services.ChartsService
         {
             chartBuilder.Reset();
             chartBuilder.SetPlotModel(_stats.Dates);
+            chartBuilder.SetLegend(EntryResources.Urges);
             chartBuilder.SetLeftAxis(true);
-            chartBuilder.SetSeries(_stats.UrgesStats.selfharm, OxyColors.Red, "SelfHarm");
-            chartBuilder.SetSeries(_stats.UrgesStats.suicide, OxyColors.Yellow, "suicide");
-            chartBuilder.SetSeries(_stats.UrgesStats.drugs, OxyColors.Purple, "drugs");
-            chartBuilder.SetSeries(_stats.UrgesStats.alcohol, OxyColors.AliceBlue, "alcohol");
+            chartBuilder.SetSeries(_stats.UrgesStats.selfharm, OxyColor.Parse("#df9f62"), EntryResources.U_SelfHarm);
+            chartBuilder.SetSeries(_stats.UrgesStats.suicide, OxyColor.Parse("#e78ac3"), EntryResources.U_Suicide);
+            chartBuilder.SetSeries(_stats.UrgesStats.drugs, OxyColor.Parse("#9c7cb0"), EntryResources.U_Drugs);
+            chartBuilder.SetSeries(_stats.UrgesStats.alcohol, OxyColor.Parse("#6fadb9"), EntryResources.U_Alcohol);
 
             return chartBuilder.GetChart();
         }

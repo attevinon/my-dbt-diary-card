@@ -19,21 +19,48 @@ namespace MyDbtDiaryCard.Services.ChartsService
 
         public void SetPlotModel(DateTime[] dates)
         {
-            chart.LegendPosition = LegendPosition.BottomCenter;
-            chart.LegendPlacement = LegendPlacement.Outside;
-            chart.LegendItemAlignment = HorizontalAlignment.Center;
+            if (dates == null)
+                return;
+
+            this.dates = dates;
 
             try
             {
-                chart.Axes.Add(new DateTimeAxis()
+                var axis = new DateTimeAxis()
                 {
                     Position = AxisPosition.Bottom,
                     IntervalType = DateTimeIntervalType.Days,
+                    StringFormat = "dd/MM",
                     IsZoomEnabled = false,
                     IsPanEnabled = false,
-                    StringFormat = "dd/MM"
-                    //unit?
-                });
+                };
+
+
+                axis.Reset();
+
+                if(dates != null && dates.Length != 0)
+                {
+                    axis.MinimumRange = dates.Length;
+                    axis.MaximumRange = dates.Length + 1.0;
+                    axis.Minimum = DateTimeAxis.ToDouble(dates[0].AddDays(-1));
+                    axis.Maximum = DateTimeAxis.ToDouble(dates[dates.Length - 1].AddDays(1));
+
+                    if (dates.Length <= 7)
+                    {
+                        axis.MajorStep = 1;
+                        axis.MinorTickSize = 0;
+                    }
+                    else if (dates.Length <= 14)
+                    {
+                        axis.MajorStep = 2;
+                    }
+                    else
+                    {
+                        axis.MajorStep = 4;
+                    }
+                }
+
+                chart.Axes.Add(axis);
             }
 
             catch (Exception ex)
@@ -41,20 +68,42 @@ namespace MyDbtDiaryCard.Services.ChartsService
                 Console.WriteLine(ex.Message);
             }
 
-            this.dates = dates;
         }
 
         public void SetSeries(int[] dataArray, OxyColor color, string titile = null)
         {
+            bool isSmooth = false;
             DataPoint[] points = new DataPoint[dates.Length];
 
             for (int i = 0; i < points.Length; i++)
             {
-                points[i] = new DataPoint(DateTimeAxis.ToDouble(dates[i]),
-                    dataArray[i] == -1 ? double.NaN : dataArray[i]);
+                points[i] = dataArray[i] == -1 
+                    ? new DataPoint(double.NaN, double.NaN) 
+                    : new DataPoint(DateTimeAxis.ToDouble(dates[i]), dataArray[i]);
             }
 
-            chart.Series.Add( new LineSeries() { ItemsSource = points, Title = titile, Color = color } );
+            try
+            {
+                var line = new LineSeries()
+                {
+                    Title = titile,
+                    Color = color,
+                    LineJoin = LineJoin.Round,
+                    MarkerType = MarkerType.Circle,
+                    MarkerFill = color,
+                    MarkerSize = 3,
+                };
+
+                line.ItemsSource = points;
+                line.Smooth = isSmooth;
+
+                chart.Series.Add(line);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.StackTrace);
+            }
+
         }
 
         public PlotModel GetChart()
@@ -64,39 +113,39 @@ namespace MyDbtDiaryCard.Services.ChartsService
 
         public void SetLeftAxis(bool isBiggerScale)
         {
+            LinearAxis axis = new LinearAxis()
+            {
+                Position = AxisPosition.Left,
+                Minimum = -0.1,
+                IsZoomEnabled = false,
+                IsPanEnabled = false,
+                MajorStep = 1,
+                MinorStep = 10
+            };
 
             if (isBiggerScale)
             {
-                chart.Axes.Add(
-                    new LinearAxis()
-                    {
-                        Position = AxisPosition.Left,
-                        Minimum = 0,
-                        Maximum = 7,
-                        IsZoomEnabled = false,
-                        IsPanEnabled = false,
-                        LabelFormatter = new Func<double, string>(
-                             (double d) => d == 6 ? "X" : d.ToString())
+                axis.Maximum = 6.5;
+                axis.LabelFormatter = new Func<double, string>(
+                             (double d) => d == 6 ? "X" : d.ToString());
 
-                    });
             }
             else
             {
-                chart.Axes.Add(
-                    new LinearAxis()
-                    {
-                        Position = AxisPosition.Left,
-                        Minimum = -0.1,
-                        Maximum = 6,
-                        IsPanEnabled = false,
-                        IsZoomEnabled = false
-                    });
+                axis.Maximum = 5.5;
             }
+
+            chart.Axes.Add(axis);
         }
 
-        public void SetLegend()
+        public void SetLegend(string title)
         {
-            throw new NotImplementedException();
+            chart.LegendPosition = LegendPosition.BottomCenter;
+            chart.LegendPlacement = LegendPlacement.Outside;
+            chart.LegendItemAlignment = HorizontalAlignment.Center;
+            chart.LegendOrientation = LegendOrientation.Horizontal;
+            chart.LegendFontSize = 13;
+            chart.Title = title;
         }
     }
 

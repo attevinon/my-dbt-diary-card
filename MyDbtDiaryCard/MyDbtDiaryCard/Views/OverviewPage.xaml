@@ -3,42 +3,64 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:oxy="clr-namespace:OxyPlot.Xamarin.Forms;assembly=OxyPlot.Xamarin.Forms"
              xmlns:local="clr-namespace:MyDbtDiaryCard.ViewModels"
+             xmlns:resx="clr-namespace:MyDbtDiaryCard.Resx"
+             xmlns:icons="clr-namespace:MyDbtDiaryCard.Helpers.Fonts"
              x:DataType="local:OverviewViewModel"
              x:Class="MyDbtDiaryCard.Views.OverviewPage"
-             Title="Overview">
-    
+             Title="{x:Static resx:ViewResources.OverviewPageTitle}">
+
+    <ContentPage.Resources>
+
+    </ContentPage.Resources>
+
     <ContentPage.Content>
-        <StackLayout>
+        <Grid RowDefinitions="Auto" RowSpacing="0" >
+            <Grid Grid.Row="0" RowSpacing="0" RowDefinitions="Auto" 
+                  BackgroundColor="{StaticResource TheLightestColor}">
+                <Picker Grid.Column="0"
+                        ItemsSource="{Binding DaysCountList}"
+                        SelectedItem="{Binding DaysCount}"
+                        HorizontalOptions="Center"
+                        Title="Days"/>
 
-            <Picker ItemsSource="{Binding DaysCountList}"
-                    SelectedItem="{Binding DaysCount}"/>
+                <Button Grid.Column="1" Style="{StaticResource BtnToolBar}">
+                    <Button.ImageSource>
+                        <FontImageSource FontFamily="FAS" 
+                                         Glyph="{x:Static icons:FontAwesomeIcons.TableCells}"
+                                         Size="Large"
+                                         Color="{StaticResource AccentColor}"/>
+                    </Button.ImageSource>
+                </Button>
+            </Grid>
 
-            <ScrollView>
+            <ScrollView Grid.Row="1">
                 <StackLayout>
+                    <Grid RowDefinitions="Auto" IsVisible="{Binding IsEnoughEntries}">
+                        <Frame Grid.Row="0">
+                            <AbsoluteLayout HeightRequest="350">
+                                <oxy:PlotView Model="{Binding FeelingsChart}"/>
+                            </AbsoluteLayout>
+                        </Frame>
 
-                    <Label Text=" ГРАФИК ТУТ ДОЛЖЕН БЫТЬ ГРАФИК"/>
+                        <Frame Grid.Row="1">
+                            <AbsoluteLayout HeightRequest="350">
+                                <oxy:PlotView Model="{Binding EmotionsChart}"/>
+                            </AbsoluteLayout>
+                        </Frame>
 
-                    <Frame>
-                        <AbsoluteLayout HeightRequest="300">
-                            <oxy:PlotView Model="{Binding EmotionsChart}"/>
-                        </AbsoluteLayout>
-                    </Frame>
+                        <Frame Grid.Row="2">
+                            <AbsoluteLayout HeightRequest="350">
+                                <oxy:PlotView Model="{Binding UrgesChart}"/>
+                            </AbsoluteLayout>
+                        </Frame>
+                    </Grid>
 
-                    <Frame>
-                        <AbsoluteLayout HeightRequest="300">
-                            <oxy:PlotView Model="{Binding FeelingsChart}"/>
-                        </AbsoluteLayout>
-                    </Frame>
-
-                    <Frame>
-                        <AbsoluteLayout HeightRequest="350">
-                            <oxy:PlotView Model="{Binding UrgesChart}"/>
-                        </AbsoluteLayout>
-                    </Frame>
-                    
+                    <Label Text="{x:Static resx:ViewResources.NotEnoughEntries}" 
+                           IsVisible="{Binding IsEnoughEntries, Converter={StaticResource ReverseBoolCvt}}"
+                           HorizontalOptions="CenterAndExpand"
+                           VerticalOptions="CenterAndExpand"/>
                 </StackLayout>
             </ScrollView>
-
-        </StackLayout>
+        </Grid>
     </ContentPage.Content>
 </ContentPage>

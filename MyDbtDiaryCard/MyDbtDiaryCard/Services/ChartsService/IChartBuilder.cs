@@ -9,7 +9,7 @@ namespace MyDbtDiaryCard.Services.ChartsService
     {
         void Reset();
         void SetPlotModel(DateTime[] dates);
-        void SetLegend();
+        void SetLegend(string title);
         PlotModel GetChart();
     }
 }

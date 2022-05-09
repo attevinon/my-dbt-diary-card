@@ -13,6 +13,8 @@ namespace MyDbtDiaryCard.Model
         private readonly IDayEntryRepository _dayEntryDataService;
 
         private List<DayEntry> daysOfPeriod;
+        private DateTime start;
+        private DateTime end;
         public int DaysCount { get; private set; }
         public DateTime[] Dates { get; private set; }
         public (int[] anger, int[] sadness, int[] fear, int[] shame, int[] pride, int[] joy) EmotionsStats { get; set; }
@@ -28,26 +30,33 @@ namespace MyDbtDiaryCard.Model
             if (daysOfPeriod != null)
                 return;
 
-            daysOfPeriod = await _dayEntryDataService.GetDayEntriesPerPeriodAsync(startOfPeriod, endOfPeriod);
-            await SetProperties();
-        }
+            start = startOfPeriod;
+            end = endOfPeriod;
 
-        public async Task Initialize(int daysCount)
-        {
-            if (daysOfPeriod != null)
-                return;
+            Dates = await GetDataStats();
+            await GetDaysPeriod();
 
-            daysOfPeriod = await _dayEntryDataService.GetTheLatestDayEntriesAsync(daysCount);
             await SetProperties();
         }
 
         private async Task SetProperties()
         {
-            DaysCount = daysOfPeriod.Count;
-            Dates = await GetDataStats();
             EmotionsStats = await GetEmotionsStats();
             FeelingsStats = await GetFeelingsStats();
             UrgesStats = await GetUrgesStats();
+        }
+
+        private async Task GetDaysPeriod()
+        {
+            var daysOfPeriod = await _dayEntryDataService.GetDayEntriesPerPeriodAsync(start, end);
+            DaysCount = daysOfPeriod.Count;
+
+            this.daysOfPeriod = new List<DayEntry>(Dates.Length);
+
+            foreach (var day in Dates)
+            {
+                this.daysOfPeriod.Add(daysOfPeriod.Find(d => d.Date == day) ?? null);
+            }
         }
 
         private async Task<(int[], int[], int[], int[], int[], int[])> GetEmotionsStats()
@@ -61,7 +70,7 @@ namespace MyDbtDiaryCard.Model
 
             await Task.Run(() =>
             {
-                for (int i = 0; i < DaysCount; i++)
+                for (int i = 0; i < Dates.Length; i++)
                 {
                     var emotions = daysOfPeriod[i]?.DayEmotions ?? new Emotions();
 
@@ -85,7 +94,7 @@ namespace MyDbtDiaryCard.Model
 
             await Task.Run(() =>
             {
-                for (int i = 0; i < DaysCount; i++)
+                for (int i = 0; i < Dates.Length; i++)
                 {
                     var feelings = daysOfPeriod[i]?.DayFeelings ?? new Feelings();
 
@@ -107,7 +116,7 @@ namespace MyDbtDiaryCard.Model
 
             await Task.Run(() =>
             {
-                for (int i = 0; i < DaysCount; i++)
+                for (int i = 0; i < Dates.Length; i++)
                 {
                     var urges = daysOfPeriod[i]?.DayUrges ?? new Urges();
 
@@ -125,13 +134,13 @@ namespace MyDbtDiaryCard.Model
 
         private async Task<DateTime[]> GetDataStats()
         {
-            var dates = new DateTime[daysOfPeriod.Count];
+            var dates = new DateTime[(end - start).Days];
 
             await Task.Run(() => 
             {
-                for (int i = 0; i < daysOfPeriod.Count; i++)
+                for (int i = 0; i < dates.Length; i++)
                 {
-                    dates[i] = daysOfPeriod[i].Date;
+                    dates[i] = start.AddDays(i);
                 }
             });
 
