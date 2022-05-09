@@ -13,7 +13,8 @@ namespace MyDbtDiaryCard.Model.EntryItems
         public DateTime Date { get; set; }
 
         [ForeignKey(typeof(DbtSkills))]
-        public string Skill { get; set; }
+        public int SkillId { get; set; }
+        public string SkillName { get; set; }
         public int Usefulness { get; set; } //change to int[] in future
         public string Additional { get; set; }
     }

@@ -17,7 +17,7 @@ namespace MyDbtDiaryCard.ViewModels
 {
     internal class DbtSkillsViewModel : BaseViewModel
     {
-        private delegate void UsedDbtSkillsChanged(object sender, UsedDbtSkillesChangedEvent args);
+        private delegate void UsedDbtSkillsChanged(object sender, UsedDbtSkillsChangedEvent args);
 
         private event UsedDbtSkillsChanged selectedDbtSkillsChanged;
         private readonly IDbtSkillsRepository _dbtSkillsData;
@@ -25,9 +25,10 @@ namespace MyDbtDiaryCard.ViewModels
         public ActionCommand ConfirmChangesCommand { get; set; }
 
         public DbtSkillsViewModel(INavigationService navigation,
-            List<string> selectedDbtSkillsNames, Action<object, UsedDbtSkillesChangedEvent> action) : base(navigation)
+            List<int> selectedDbtSkillsId, Action<object, UsedDbtSkillsChangedEvent> action) : base(navigation)
         {
             _dbtSkillsData = DataService.GetDataManager().DbtSkillsData;
+            SelectedDbtSkillsId = selectedDbtSkillsId;
 
             Initialize();
 
@@ -35,8 +36,6 @@ namespace MyDbtDiaryCard.ViewModels
             ConfirmChangesCommand = new ActionCommand(async () => await ConfirmChanges());
 
             SelectedDbtSkillsList = new ObservableCollection<object>();
-
-            SelectedDbtSkillsNames = selectedDbtSkillsNames;
         }
         private async Task Initialize()
         {
@@ -58,7 +57,7 @@ namespace MyDbtDiaryCard.ViewModels
                     DbtSkillsResources.Module_EmotionRegulation, new List<DbtSkills>(
                         await _dbtSkillsData.GetDbtSkillsForModule(DbtModules.EmotionRegulation))));
 
-                FindSkills();
+                await FindSkills();
             }
             catch(Exception ex)
             {
@@ -69,16 +68,24 @@ namespace MyDbtDiaryCard.ViewModels
                 IsLoading = false;
             }
         }
-        private async void FindSkills()
+        private async Task FindSkills()
         {
-            if (SelectedDbtSkillsNames == null || SelectedDbtSkillsNames.Count == 0)
-                return;
-
             try
             {
-                foreach (var name in SelectedDbtSkillsNames)
+                if (SelectedDbtSkillsId == null || SelectedDbtSkillsId.Count == 0)
+                    return;
+
+                foreach (var id in SelectedDbtSkillsId)
                 {
-                    SelectedDbtSkillsList.Add(await _dbtSkillsData.GetDbtSkillForName(name));
+                    var skill = await _dbtSkillsData.GetDbtSkillForId(id);
+                    foreach(List<DbtSkills> list in DbtSkillsList)
+                    {
+                        if (list[0].Module != skill.Module)
+                            continue;
+
+                        SelectedDbtSkillsList.Add(list.Where(s => s.Id == id).FirstOrDefault());
+                        break;
+                    }
                 }
             }
             catch (Exception ex)
@@ -88,15 +95,8 @@ namespace MyDbtDiaryCard.ViewModels
 
         }
 
-        private bool isLoading;
-        public bool IsLoading
-        {
-            get { return isLoading; }
-            set { SetProperty(ref isLoading, value); }
-        }
 
-
-        public List<string> SelectedDbtSkillsNames { get; set; }
+        public List<int> SelectedDbtSkillsId { get; set; }
 
         private ObservableCollection<object> selectedDbtSkills;
         public ObservableCollection<object> SelectedDbtSkillsList
@@ -118,20 +118,27 @@ namespace MyDbtDiaryCard.ViewModels
 
         private async Task ConfirmChanges()
         {
-            await ChangeSelectedSkills();
-            selectedDbtSkillsChanged(this, new UsedDbtSkillesChangedEvent(SelectedDbtSkillsNames));
-            await NavigationService.GoBackAsync();
+            try
+            {
+                await ChangeSelectedSkills();
+                selectedDbtSkillsChanged(this, new UsedDbtSkillsChangedEvent(SelectedDbtSkillsId));
+                await NavigationService.GoBackAsync();
+            }
+            catch (Exception ex)
+            {
+
+            }
         }
 
         private async Task ChangeSelectedSkills()
         {
-            if(SelectedDbtSkillsList?.Count == 0 || SelectedDbtSkillsNames == null)
+            if(SelectedDbtSkillsList?.Count == 0 || SelectedDbtSkillsList == null)
             {
-                SelectedDbtSkillsNames?.Clear();
+                SelectedDbtSkillsId?.Clear();
                 return;
             }
 
-            //какая-то херь с преобразованием
+            //delete? something with typecasting
             if (!(SelectedDbtSkillsList is IList<DbtSkills> selectedDbtSkills))
             {
                 selectedDbtSkills = new List<DbtSkills>();
@@ -143,26 +150,27 @@ namespace MyDbtDiaryCard.ViewModels
 
             foreach (var skill in selectedDbtSkills)
             {
-                if (!SelectedDbtSkillsNames.Contains(skill.Name))
+                if (!SelectedDbtSkillsId.Contains(skill.Id))
                 {
-                    SelectedDbtSkillsNames.Add(skill.Name);
+                    SelectedDbtSkillsId.Add(skill.Id);
                 }
             }
 
-            if (SelectedDbtSkillsNames.Count == selectedDbtSkills.Count)
+            if (SelectedDbtSkillsId.Count == selectedDbtSkills.Count)
                 return;
 
-            foreach (var skillName in SelectedDbtSkillsNames)
+            var oldLesectedList = SelectedDbtSkillsId.ToList();
+            foreach (var id in oldLesectedList)
             {
 
-                if(selectedDbtSkills.Where(s => s.Name == skillName).FirstOrDefault() == null)
+                if(selectedDbtSkills.Where(s => s.Id == id).FirstOrDefault() == null)
                 {
-                    SelectedDbtSkillsNames.Remove(skillName);
+                    SelectedDbtSkillsId.Remove(id);
                 }
             }
 
-            if (SelectedDbtSkillsNames.Count != SelectedDbtSkillsList.Count)
-                throw new Exception("dbtSkills SUCKSSSSSSS but in dbtSkills page");
+            if (SelectedDbtSkillsId.Count != SelectedDbtSkillsList.Count)
+                throw new Exception("DbtSkills don't work correct but in skills page");
         }
     }
 

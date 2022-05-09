@@ -22,15 +22,12 @@ namespace MyDbtDiaryCard.Services.DataService.SQLiteRepositories
             if (hasBeenInitialized == true)
                 return;
 
-            await connection.CreateTableAsync<DbtSkills>();
+            var result = await connection.CreateTableAsync<DbtSkills>();
 
             try
             {
-                /*var initMinfulness = connection.InsertAllAsync(InitMindfulnessSkills());
-                var initDistressTolerance = connection.InsertAllAsync(InitDistressToleranceSkills());
-                var initEmotionRegulation = connection.InsertAllAsync(InitEmotionRegulationSkills());
-
-                await Task.WhenAll(initMinfulness, initDistressTolerance, initEmotionRegulation);*/
+                if (result == CreateTableResult.Migrated)
+                    return;
 
                 await connection.InsertAllAsync(InitMindfulnessSkills());
                 await connection.InsertAllAsync(InitDistressToleranceSkills());
@@ -49,6 +46,12 @@ namespace MyDbtDiaryCard.Services.DataService.SQLiteRepositories
         public async Task<DbtSkills> GetDbtSkillForName(string name)
         {
             var skill = await FindByConditionAsync<DbtSkills>(s => s.Name == name);
+            return skill;
+        }
+
+        public async Task<DbtSkills> GetDbtSkillForId(int id)
+        {
+            var skill = await FindByConditionAsync<DbtSkills>(s => s.Id == id);
             return skill;
         }
 

@@ -280,5 +280,10 @@ namespace MyDbtDiaryCard.Services.DataService
         {
             return DbtSkillsList.Where(s => s.Module == module);
         }
+
+        public Task<DbtSkills> GetDbtSkillForId(int id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -8,7 +8,6 @@ using MyDbtDiaryCard.Events;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Linq;
@@ -22,10 +21,7 @@ namespace MyDbtDiaryCard.ViewModels
 
         private DayEntry day;
 
-        public string StringDate => _date.ToString("d");
-        public List<string> GeneralScale { get; set; }
-        public List<string> UrgesScale { get; set; }
-        public List<string> UsefulnessScale { get; set; }
+        public string StringDate => $"{_date:ddd}, {_date:D}";
 
         public ICommand SaveCommand { get; set; }
         public ICommand DeleteCommand { get; set; }
@@ -49,13 +45,10 @@ namespace MyDbtDiaryCard.ViewModels
             CancelCommand = new ActionCommand(async () => await NavigationService.GoBackAsync());
             ChooseSkillsCommand = new ActionCommand(async () => await ShowSkillsList()); 
 
-            GeneralScale = new List<string> { "-", "0", "1", "2", "3", "4", "5"};
-            UrgesScale = new List<string> { "-", "0", "1", "2", "3", "4", "5", "X" };
-            UsefulnessScale = new List<string> { "-", "0", "1", "2", "3", "4", "5", "6", "7" };
-
             FindDay();
         }
 
+        //if true, here is ability to delete entry
         private bool isEntryExistsInDb;
         public bool IsEntryExistsInDb
         {
@@ -96,7 +89,6 @@ namespace MyDbtDiaryCard.ViewModels
         }
 
         private Urges urges;
-
         public Urges DayUrges
         {
             get
@@ -125,6 +117,7 @@ namespace MyDbtDiaryCard.ViewModels
 
         private async void FindDay()
         {
+            IsLoading = true;
             day = await _dayEntryData.GetDayEntryForDateAsync(_date);
 
             
@@ -135,21 +128,26 @@ namespace MyDbtDiaryCard.ViewModels
             }
             else
             {
+                DayFeelings = day?.DayFeelings;
+                DayEmotions = day?.DayEmotions;
+                DayUrges = day?.DayUrges;
+                DaysDbtSkillsUsed = new ObservableCollection<DbtSkillUsed>(day?.DaysDbtSkills);
                 IsEntryExistsInDb = true;
             }
 
-            DayFeelings = day?.DayFeelings;
-            DayEmotions = day?.DayEmotions;
-            DayUrges = day?.DayUrges;
+            IsLoading = false;
         }
         private async Task SaveEntryAsync()
         {
-            day.SetDayEmotions(DayEmotions);
-            day.SetDayFeelings(DayFeelings);
+            IsLoading = true;
+            day.DayFeelings = DayFeelings;
+            day.DayEmotions = DayEmotions;
             day.DayUrges = DayUrges;
             day.DaysDbtSkills = new List<DbtSkillUsed>(DaysDbtSkillsUsed);
 
             await _dayEntryData.AddDayEntryAsync(day);
+
+            IsLoading = false;
 
             await NavigationService.GoBackAsync();
         }
@@ -166,59 +164,67 @@ namespace MyDbtDiaryCard.ViewModels
 
         private async Task ShowSkillsList()
         {
-            List<string> dbtSkillsNames;
+            List<int> dbtSkillsId;
 
             if(DaysDbtSkillsUsed == null)
             {
-                dbtSkillsNames = new List<string>(0);
+                dbtSkillsId = new List<int>(0);
             }
             else
             {
-                dbtSkillsNames = new List<string>();
+                dbtSkillsId = new List<int>();
 
                 foreach (var skill in DaysDbtSkillsUsed)
                 {
-                    if(!dbtSkillsNames.Contains(skill.Skill))
-                        dbtSkillsNames.Add(skill.Skill);
+                    if(!dbtSkillsId.Contains(skill.SkillId))
+                        dbtSkillsId.Add(skill.SkillId);
                 }
             }
 
-            await NavigationService.NavigateAsync("DbtSkillsPage", dbtSkillsNames,
-                new Action<object, UsedDbtSkillesChangedEvent>(DaysDbtSkillsChanged));
+            await NavigationService.NavigateAsync("DbtSkillsPage", dbtSkillsId,
+                new Action<object, UsedDbtSkillsChangedEvent>(DaysDbtSkillsChanged));
 
         }
 
-        private void DaysDbtSkillsChanged(object sender, UsedDbtSkillesChangedEvent args)
+        private async void DaysDbtSkillsChanged(object sender, UsedDbtSkillsChangedEvent args)
         {
-            foreach (var skill in DaysDbtSkillsUsed)
+            IsLoading = true;
+            var oldSkillsList = DaysDbtSkillsUsed.ToList();
+            foreach (var skill in oldSkillsList)
             {
-                if (args.UsedSkillsNames.Contains(skill.Skill))
+                if (args.UsedSkillsId.Contains(skill.SkillId))
                     continue;
 
-                if (!args.UsedSkillsNames.Contains(skill.Skill))
+                if (!args.UsedSkillsId.Contains(skill.SkillId))
                 {
                     DaysDbtSkillsUsed.Remove(skill);
                     continue;
                 }
             }
 
-            if (DaysDbtSkillsUsed.Count == args.UsedSkillsNames.Count)
-                return;
-
-            foreach (var skillName in args.UsedSkillsNames)
+            if (DaysDbtSkillsUsed.Count == args.UsedSkillsId.Count)
             {
-                if(DaysDbtSkillsUsed.Where(s => s.Skill == skillName).FirstOrDefault() == null)
+                IsLoading = false;
+                return;
+            }
+
+            foreach (var id in args.UsedSkillsId)
+            {
+                if(DaysDbtSkillsUsed.Where(s => s.SkillId == id).FirstOrDefault() == null)
                 {
+                    //WRONG!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                    var skill = await DataService.GetDataManager().DbtSkillsData.GetDbtSkillForId(id);
+
                     DaysDbtSkillsUsed.Add(
-                        new DbtSkillUsed { Skill = skillName, Date = _date });
+                        new DbtSkillUsed { SkillId = id, SkillName = skill.Name,  Date = _date });
                     continue;
                 }
             }
 
-            if (DaysDbtSkillsUsed.Count != args.UsedSkillsNames.Count)
+            if (DaysDbtSkillsUsed.Count != args.UsedSkillsId.Count)
                 throw new Exception("dbt skills suck");
-        }
 
-        //cancel command
+            IsLoading = false;
+        }
     }
 }

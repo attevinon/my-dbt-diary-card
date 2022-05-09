@@ -10,7 +10,7 @@ namespace MyDbtDiaryCard.Model.Abstractions
         event EventHandler DbtSkillsLoaded;
         bool HasBeenInitialized { get; }
         Task Init();
-        Task<DbtSkills> GetDbtSkillForName(string name);
+        Task<DbtSkills> GetDbtSkillForId(int id);
         Task<IEnumerable<DbtSkills>> GetDbtSkillsForModule(DbtModules module);
     }
 }

@@ -22,10 +22,10 @@ namespace MyDbtDiaryCard.Views
         }
 
         //DELETE REFFFFFFFF!!!! NO MODEL HERE!!!!!!!!!!!!!!!!!!!!!
-        public DbtSkillsPage(List<string> names, Action<object, UsedDbtSkillesChangedEvent> action) : this()
+        public DbtSkillsPage(List<int> idList, Action<object, UsedDbtSkillsChangedEvent> action) : this()
         {
 
-            this.BindingContext = new DbtSkillsViewModel(App.NavigationService, names, action);
+            this.BindingContext = new DbtSkillsViewModel(App.NavigationService, idList, action);
         }
     }
 }
