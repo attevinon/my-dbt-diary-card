@@ -11,6 +11,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Resx\Fonts\Font Awesome 6 Free-Regular-400.otf" />
+    <None Remove="Resx\Fonts\Font Awesome 6 Free-Solid-900.otf" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Resx\Fonts\Font Awesome 6 Free-Regular-400.otf" />
+    <EmbeddedResource Include="Resx\Fonts\Font Awesome 6 Free-Solid-900.otf" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="OxyPlot.Xamarin.Forms" Version="1.0.0" />
     <PackageReference Include="Prism.Core" Version="8.1.97" />
     <PackageReference Include="sqlite-net-pcl" Version="1.8.116" />
@@ -20,10 +30,25 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Update="Resx\DbtSkillsResources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>DbtSkillsResources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resx\EntryResources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>EntryResources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resx\ViewResources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>ViewResources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Update="Views\AddDayEntryPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\DayEntryPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\DbtSkillsPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\MainPage.xaml">
@@ -35,6 +60,21 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Resx\DbtSkillsResources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>DbtSkillsResources.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resx\EntryResources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>EntryResources.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resx\ViewResources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ViewResources.resx</DependentUpon>
+    </Compile>
     <Compile Update="Views\DayEntryPage.xaml.cs">
       <DependentUpon>DayEntryPage.xaml</DependentUpon>
     </Compile>
