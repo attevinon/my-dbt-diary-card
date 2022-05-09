@@ -101,7 +101,7 @@ namespace MyDbtDiaryCard.Services.DataService.SQLiteRepositories
                 {
                     result = await UpdateAsync(newDayEntry)
                         && await UpdateAsync(newDayEntry.DayFeelings)
-                        && await UpdateAsync(newDayEntry.DayFeelings)
+                        && await UpdateAsync(newDayEntry.DayEmotions)
                         && await UpdateAsync(newDayEntry.DayUrges);
 
                     await DeleteManyAsync<DbtSkillUsed>(s => s.Date == newDayEntry.Date);
@@ -161,7 +161,7 @@ namespace MyDbtDiaryCard.Services.DataService.SQLiteRepositories
             }
             catch( Exception ex)
             {
-                Console.WriteLine("sfdasdfasdfasdfasdfasfasdf");
+                Console.WriteLine(ex.StackTrace);
             }
 
         }
