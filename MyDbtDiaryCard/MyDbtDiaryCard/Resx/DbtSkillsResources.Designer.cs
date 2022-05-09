@@ -169,7 +169,7 @@ namespace MyDbtDiaryCard.Resx {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Promlrm sloving.
+        ///   Ищет локализованную строку, похожую на Problem sloving.
         /// </summary>
         public static string E_ProblemSloving {
             get {

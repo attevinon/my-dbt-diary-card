@@ -117,64 +117,40 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Additional" xml:space="preserve">
-    <value>Additional</value>
+  <data name="AddEntry" xml:space="preserve">
+    <value>Добавить запись</value>
   </data>
-  <data name="Emotions" xml:space="preserve">
-    <value>Emotions</value>
+  <data name="Alert_DayFromFuture" xml:space="preserve">
+    <value>Этот день ещё не настал</value>
   </data>
-  <data name="E_Anger" xml:space="preserve">
-    <value>Anger</value>
+  <data name="Cancel" xml:space="preserve">
+    <value>Отмена</value>
   </data>
-  <data name="E_Fear" xml:space="preserve">
-    <value>Fear</value>
+  <data name="Confirm" xml:space="preserve">
+    <value>Готово</value>
   </data>
-  <data name="E_Joy" xml:space="preserve">
-    <value>Joy</value>
+  <data name="Delete" xml:space="preserve">
+    <value>Удалить</value>
   </data>
-  <data name="E_Pride" xml:space="preserve">
-    <value>Pride</value>
+  <data name="EditEntry" xml:space="preserve">
+    <value>Редактировать запись</value>
   </data>
-  <data name="E_Sadness" xml:space="preserve">
-    <value>Sadness</value>
+  <data name="EmptySkillsList" xml:space="preserve">
+    <value>Нет отмеченных навыков</value>
   </data>
-  <data name="E_Shame" xml:space="preserve">
-    <value>Shame</value>
+  <data name="EntryPageTitle" xml:space="preserve">
+    <value>Записи</value>
   </data>
-  <data name="Feelings" xml:space="preserve">
-    <value>Feelings</value>
+  <data name="NotEnoughEntries" xml:space="preserve">
+    <value>Недостаточно записей :(</value>
   </data>
-  <data name="F_EmotionMisery" xml:space="preserve">
-    <value>Emotion misery</value>
+  <data name="OverviewPageTitle" xml:space="preserve">
+    <value>Обзор</value>
   </data>
-  <data name="F_Excitation" xml:space="preserve">
-    <value>Excitation</value>
+  <data name="Save" xml:space="preserve">
+    <value>Сохранить</value>
   </data>
-  <data name="F_PhysicalMisery" xml:space="preserve">
-    <value>Physical misery</value>
-  </data>
-  <data name="Meds" xml:space="preserve">
-    <value>Meds</value>
-  </data>
-  <data name="Skills" xml:space="preserve">
-    <value>Skills</value>
-  </data>
-  <data name="Urges" xml:space="preserve">
-    <value>Urges</value>
-  </data>
-  <data name="Usefulness" xml:space="preserve">
-    <value>Usefulness</value>
-  </data>
-  <data name="U_Alcohol" xml:space="preserve">
-    <value>Alcohol</value>
-  </data>
-  <data name="U_Drugs" xml:space="preserve">
-    <value>Drugs</value>
-  </data>
-  <data name="U_SelfHarm" xml:space="preserve">
-    <value>SelfHarm</value>
-  </data>
-  <data name="U_Suicide" xml:space="preserve">
-    <value>Suicide</value>
+  <data name="SelectSkills" xml:space="preserve">
+    <value>Выбрать навыки</value>
   </data>
 </root>

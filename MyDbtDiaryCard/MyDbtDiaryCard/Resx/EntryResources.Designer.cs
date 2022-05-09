@@ -169,11 +169,20 @@ namespace MyDbtDiaryCard.Resx {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на .
+        ///   Ищет локализованную строку, похожую на Meds.
         /// </summary>
         internal static string Meds {
             get {
                 return ResourceManager.GetString("Meds", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Skills.
+        /// </summary>
+        internal static string Skills {
+            get {
+                return ResourceManager.GetString("Skills", resourceCulture);
             }
         }
         
@@ -223,7 +232,7 @@ namespace MyDbtDiaryCard.Resx {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на .
+        ///   Ищет локализованную строку, похожую на Usefulness.
         /// </summary>
         internal static string Usefulness {
             get {

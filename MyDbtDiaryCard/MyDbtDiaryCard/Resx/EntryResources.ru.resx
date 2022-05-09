@@ -118,63 +118,63 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Additional" xml:space="preserve">
-    <value>Additional</value>
+    <value>Дополнительно</value>
   </data>
   <data name="Emotions" xml:space="preserve">
-    <value>Emotions</value>
+    <value>Эмоции</value>
   </data>
   <data name="E_Anger" xml:space="preserve">
-    <value>Anger</value>
+    <value>Гнев</value>
   </data>
   <data name="E_Fear" xml:space="preserve">
-    <value>Fear</value>
+    <value>Страх/Тревога</value>
   </data>
   <data name="E_Joy" xml:space="preserve">
-    <value>Joy</value>
+    <value>Счастье</value>
   </data>
   <data name="E_Pride" xml:space="preserve">
-    <value>Pride</value>
+    <value>Гордость</value>
   </data>
   <data name="E_Sadness" xml:space="preserve">
-    <value>Sadness</value>
+    <value>Печаль</value>
   </data>
   <data name="E_Shame" xml:space="preserve">
-    <value>Shame</value>
+    <value>Стыд</value>
   </data>
   <data name="Feelings" xml:space="preserve">
-    <value>Feelings</value>
+    <value>Состояние</value>
   </data>
   <data name="F_EmotionMisery" xml:space="preserve">
-    <value>Emotion misery</value>
+    <value>Эмоциональное страдание</value>
   </data>
   <data name="F_Excitation" xml:space="preserve">
-    <value>Excitation</value>
+    <value>Возбуждение</value>
   </data>
   <data name="F_PhysicalMisery" xml:space="preserve">
-    <value>Physical misery</value>
+    <value>Физическое страдание</value>
   </data>
   <data name="Meds" xml:space="preserve">
-    <value>Meds</value>
+    <value>Медикаменты</value>
   </data>
   <data name="Skills" xml:space="preserve">
-    <value>Skills</value>
+    <value>Навыки</value>
   </data>
   <data name="Urges" xml:space="preserve">
-    <value>Urges</value>
+    <value>Побуждения</value>
   </data>
   <data name="Usefulness" xml:space="preserve">
-    <value>Usefulness</value>
+    <value>Полезность</value>
   </data>
   <data name="U_Alcohol" xml:space="preserve">
-    <value>Alcohol</value>
+    <value>Алкоголь</value>
   </data>
   <data name="U_Drugs" xml:space="preserve">
-    <value>Drugs</value>
+    <value>Наркотики</value>
   </data>
   <data name="U_SelfHarm" xml:space="preserve">
-    <value>SelfHarm</value>
+    <value>Самоповреждение</value>
   </data>
   <data name="U_Suicide" xml:space="preserve">
-    <value>Suicide</value>
+    <value>Суицид</value>
   </data>
 </root>
