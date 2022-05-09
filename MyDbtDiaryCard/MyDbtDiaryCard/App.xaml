@@ -6,26 +6,82 @@
 
     <Application.Resources>
 
+        <!-- Converters -->
         <cvt:ScaleToIndexConverter x:Key="ScaleToIndexCvt"/>
         <cvt:ReverseBooleanConverter x:Key="ReverseBoolCvt"/>
         <cvt:ScaleToStringConverter x:Key="ScaleToStringCvt"/>
+        <cvt:UsefulnessToStringConverter x:Key="UsefulnessToStringCvt"/>
 
+        <!-- Colors -->
+        <Color x:Key="TheLightestColor">#fffdfb</Color>
+        <Color x:Key="VeryLightColor">#f9f5f1</Color>
+        <Color x:Key="BackgroundPageColor">#f4efe8</Color>
+        <Color x:Key="AccentColor">#b2c78a</Color>
+        <Color x:Key="DarkerAccentColor">#87995c</Color>
+        <Color x:Key="NormalTextColor">#93856c</Color>
+        <Color x:Key="TitleTextColor">#806f4d</Color>
+        <Color x:Key="ButtonTextColor">#606c38</Color>
+
+        <!-- Buttons -->
+        <Style TargetType="Button">
+            <Setter Property="BackgroundColor" Value="{StaticResource AccentColor}"/>
+            <Setter Property="TextColor" Value="{StaticResource ButtonTextColor}"/>
+        </Style>
+
+        <Style TargetType="Button" x:Key="BtnToolBar">
+            <Setter Property="BackgroundColor" Value="{StaticResource TheLightestColor}"/>
+            <Setter Property="FontSize" Value="Medium"/>
+            <Setter Property="TextTransform" Value="None"/>
+        </Style>
+
+        <!-- Labels -->
         <Style TargetType="Label">
             <Setter Property="FontSize" Value="Medium"/>
             <Setter Property="VerticalOptions" Value="Center"/>
+            <Setter Property="TextColor" Value="{StaticResource NormalTextColor}"/>
         </Style>
         
         <Style TargetType="Label" x:Key="ItemsTitleStyle">
             <Setter Property="FontSize" Value="Large"/>
             <Setter Property="HorizontalTextAlignment" Value="Center"/>
+            <Setter Property="TextColor" Value="{StaticResource TitleTextColor}"/>
+            <Setter Property="Margin" Value="0,10"/>
         </Style>
 
         <Style TargetType="Label" x:Key="PageTitleStyle">
+            <Setter Property="TextColor" Value="{StaticResource TheLightestColor}"/>
             <Setter Property="FontSize" Value="Title"/>
+            <Setter Property="HorizontalOptions" Value="Center"/>
+            <Setter Property="Margin" Value="0, 10"/>
         </Style>
 
         <Style TargetType="Label" x:Key="lblFieldName">
             <Setter Property="Grid.Column" Value="1"/>
+            <Setter Property="TextColor" Value="{StaticResource NormalTextColor}"/>
+        </Style>
+
+        <!-- Other Items -->
+        <Style TargetType="Frame">
+            <Setter Property="BackgroundColor" Value="{StaticResource TheLightestColor}"/>
+        </Style>
+
+        <Style TargetType="StackLayout" x:Key="ItemField">
+            <Setter Property="Orientation" Value="Horizontal"/>
+            <Setter Property="BackgroundColor" Value="{StaticResource VeryLightColor}"/>
+            <Setter Property="HorizontalOptions" Value="FillAndExpand"/>
+        </Style>
+
+        <Style TargetType="Grid" x:Key="grdToolBar">
+            <Setter Property="Grid.Row" Value="0"/>
+            <Setter Property="RowSpacing" Value="0"/>
+            <Setter Property="RowDefinitions" Value="Auto"/>
+            <Setter Property="BackgroundColor" Value="{StaticResource TheLightestColor}"/>
+        </Style>
+
+        <Style TargetType="Grid" x:Key="grdItemField">
+            <Setter Property="ColumnDefinitions" Value="2"/>
+            <Setter Property="RowDefinitions" Value="Auto"/>
+            <Setter Property="HorizontalOptions" Value="FillAndExpand"/>
         </Style>
 
     </Application.Resources>
