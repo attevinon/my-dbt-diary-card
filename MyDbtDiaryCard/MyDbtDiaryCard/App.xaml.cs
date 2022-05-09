@@ -14,8 +14,7 @@ namespace MyDbtDiaryCard
         {
             CultureInfo.CurrentUICulture = new CultureInfo("ru");
 
-            //File.Delete(Path.Combine(Environment.GetFolderPath(
-            //Environment.SpecialFolder.LocalApplicationData), "MyDbtDiaryDb.db3"));
+            //File.Delete(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "MyDbtDiaryDb.db3"));
 
             InitializeComponent();
 
