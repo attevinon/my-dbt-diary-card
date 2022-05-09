@@ -19,14 +19,18 @@ Unfortunately this app is only for andriod users (bc I don't have any Aplle prod
 **Application avalable in 2 languages:** Russian and English. You can't change it by yourself though.
 
 ## To-Do
-- [ ] Belarusian translation
 - [ ] Table Overview
+- [ ] Average skills using of the day
+- [ ] Data export (pdf)
+- [ ] Meds
+- [ ] Therapy check
+- [ ] Joys of the day
+- [ ] Belarusian translation
 - [ ] Description of entry items
 - [ ] Description of DBT skills
 - [ ] DBT Skills Chart
 - [ ] App label localization
-- [ ] Average skills using of the day
-- [ ] Data export (pdf)
+
 
 #### [MIT License](https://github.com/attevinon/my-dbt-diary-card/blob/master/LICENSE)
 Copyright (c) 2022 Violetta Lutsevich
