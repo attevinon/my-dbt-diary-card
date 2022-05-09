@@ -1,6 +1,6 @@
 # DBT Diary Card (Xamarin.Forms app)
 ### 📱🌱 Forget about printable diary cards!
-My first experience in mobile developing. I hope people who go throgh DBT therapy will find this app usefull :)
+My first experience in mobile developing. I hope people who go through DBT therapy will find this app usefull :)
 
 
 ## Tools
