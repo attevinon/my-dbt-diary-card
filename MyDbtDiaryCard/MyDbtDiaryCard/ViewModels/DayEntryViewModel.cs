@@ -5,7 +5,6 @@ using MyDbtDiaryCard.Services.DataService;
 using MyDbtDiaryCard.Services.Navigation;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
@@ -13,6 +12,8 @@ namespace MyDbtDiaryCard.ViewModels
 {
     internal class DayEntryViewModel : BaseViewModel
     {
+        public event EventHandler WrongDataPicked;
+
         DayEntry day;
         public DayEntry Day
         {
@@ -40,18 +41,19 @@ namespace MyDbtDiaryCard.ViewModels
             set { SetProperty(ref skillsUsed, value); }
         }
 
-
-
         public ICommand AddEntryCommand { get; set; }
-        public ICommand DeleteEntryCommand { get; set; }
-        public ICommand DropDbCommand { get; set; }
+        public ICommand GetNextDayCommand { get; set; }
+        public ICommand GetPreviousDayCommand { get; set; }
 
         public DayEntryViewModel(INavigationService navigation) : base(navigation)
         {
             AddEntryCommand = new ActionCommand(async () => await ShowAddDayEntryPage());
-            DropDbCommand = new ActionCommand(async () => await DropDb());
+            GetNextDayCommand = new ActionCommand(() => PickedDate = PickedDate.AddDays(1));
+            GetPreviousDayCommand = new ActionCommand(() => PickedDate = PickedDate.AddDays(-1));
 
             DataService.GetDataManager().DayEntryData.EntryDataUpdated += DataUpdated;
+
+            IsLoading = true;
         }
 
         private DateTime pickedDate = DateTime.Today;
@@ -61,8 +63,12 @@ namespace MyDbtDiaryCard.ViewModels
             set 
             {
                 if (value > DateTime.Today)
+                {
+                    WrongDataPicked?.Invoke(this, null);
+                    //and nothing changes!!!!!
                     return;
-                //notigication "you can't be from future" and nothing changes
+                }
+
 
                 SetProperty(ref pickedDate, value);
                 FindDay();
@@ -74,11 +80,6 @@ namespace MyDbtDiaryCard.ViewModels
             await NavigationService.NavigateAsync("AddDayEntryPage", pickedDate);
         }
 
-        private async Task DropDb()
-        {
-
-        }
-
         private void DataUpdated(object sender, EventArgs e)
         {
             FindDay();
@@ -88,6 +89,8 @@ namespace MyDbtDiaryCard.ViewModels
         {
             try
             {
+                IsLoading = true;
+
                 Day = await DataService.GetDataManager().DayEntryData?.GetDayEntryForDateAsync(PickedDate);
                 SkillsUsed = Day?.DaysDbtSkills ?? null;
 
@@ -97,9 +100,11 @@ namespace MyDbtDiaryCard.ViewModels
             {
                 Console.WriteLine(ex.Message + ex.StackTrace);
             }
+            finally
+            {
+                IsLoading = false;
+            }
         }
-
-        //refresh page somehow after adding new entry 
 
 
     }
