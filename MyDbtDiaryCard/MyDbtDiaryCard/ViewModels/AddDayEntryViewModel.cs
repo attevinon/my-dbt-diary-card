@@ -222,7 +222,7 @@ namespace MyDbtDiaryCard.ViewModels
             }
 
             if (DaysDbtSkillsUsed.Count != args.UsedSkillsId.Count)
-                throw new Exception("dbt skills suck");
+                throw new Exception("dbt skills error (AddEntryPage)");
 
             IsLoading = false;
         }

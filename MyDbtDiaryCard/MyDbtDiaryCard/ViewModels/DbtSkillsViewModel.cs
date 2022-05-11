@@ -19,7 +19,7 @@ namespace MyDbtDiaryCard.ViewModels
     {
         private delegate void UsedDbtSkillsChanged(object sender, UsedDbtSkillsChangedEvent args);
 
-        private event UsedDbtSkillsChanged selectedDbtSkillsChanged;
+        private event UsedDbtSkillsChanged SelectedDbtSkillsChanged;
         private readonly IDbtSkillsRepository _dbtSkillsData;
 
         public ActionCommand ConfirmChangesCommand { get; set; }
@@ -32,7 +32,7 @@ namespace MyDbtDiaryCard.ViewModels
 
             Initialize();
 
-            selectedDbtSkillsChanged += new UsedDbtSkillsChanged(action);
+            SelectedDbtSkillsChanged += new UsedDbtSkillsChanged(action);
             ConfirmChangesCommand = new ActionCommand(async () => await ConfirmChanges());
 
             SelectedDbtSkillsList = new ObservableCollection<object>();
@@ -92,9 +92,7 @@ namespace MyDbtDiaryCard.ViewModels
             {
                 Console.WriteLine(ex.Message);
             }
-
         }
-
 
         public List<int> SelectedDbtSkillsId { get; set; }
 
@@ -108,7 +106,6 @@ namespace MyDbtDiaryCard.ViewModels
             }
         }
 
-
         private ObservableCollection<DbtSkillsModules> dbtSkills;
         public ObservableCollection<DbtSkillsModules> DbtSkillsList
         {
@@ -121,12 +118,12 @@ namespace MyDbtDiaryCard.ViewModels
             try
             {
                 await ChangeSelectedSkills();
-                selectedDbtSkillsChanged(this, new UsedDbtSkillsChangedEvent(SelectedDbtSkillsId));
+                SelectedDbtSkillsChanged(this, new UsedDbtSkillsChangedEvent(SelectedDbtSkillsId));
                 await NavigationService.GoBackAsync();
             }
             catch (Exception ex)
             {
-
+                Console.WriteLine(ex.Message);
             }
         }
 
@@ -138,7 +135,7 @@ namespace MyDbtDiaryCard.ViewModels
                 return;
             }
 
-            //delete? something with typecasting
+            //typecasting
             if (!(SelectedDbtSkillsList is IList<DbtSkills> selectedDbtSkills))
             {
                 selectedDbtSkills = new List<DbtSkills>();

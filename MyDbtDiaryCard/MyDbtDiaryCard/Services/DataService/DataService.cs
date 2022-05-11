@@ -25,15 +25,9 @@ namespace MyDbtDiaryCard.Services.DataService
         {
             var connection = new SQLiteAsyncConnection(dbPath);
 
-            //MockDataService mockDataService = new MockDataService();
-
             _lazyDayEntry = new Lazy<IDayEntryRepository>(() => new DayEntryRepository(connection));
             _lazyDbtSkills = new Lazy<IDbtSkillsRepository>(() => new DbtSkillsRepository(connection));
 
-            /*_lazyDayEntry = new Lazy<IDayEntryRepository>(() => mockDataService);
-            _lazyDbtSkills = new Lazy<IDbtSkillsRepository>(() => mockDataService);*/
-
-            //стоит накинуть locker чтобы они там по очереди мутились????
             try
             {
                 await _lazyDbtSkills.Value.Init();
