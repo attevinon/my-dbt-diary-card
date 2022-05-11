@@ -142,6 +142,9 @@ namespace MyDbtDiaryCard.Services.DataService.SQLiteRepositories
             if (dayEntryToRemove.DayUrges != null)
                 result = result && await DeleteAsync(dayEntryToRemove.DayUrges);
 
+            if (dayEntryToRemove.DaysDbtSkills != null)
+                result = result && await DeleteManyAsync<DbtSkillUsed>(s => s.Date == dayEntryToRemove.Date);
+
             EntryDataUpdatedInvoke();
 
             return result;
