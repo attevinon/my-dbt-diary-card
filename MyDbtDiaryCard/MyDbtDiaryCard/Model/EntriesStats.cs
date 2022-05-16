@@ -12,14 +12,14 @@ namespace MyDbtDiaryCard.Model
     {
         private readonly IDayEntryRepository _dayEntryDataService;
 
-        private List<DayEntry> daysOfPeriod;
         private DateTime start;
         private DateTime end;
+        public List<DayEntry> DaysOfPeriod { get; private set; }
         public int DaysCount { get; private set; }
         public DateTime[] Dates { get; private set; }
-        public (int[] anger, int[] sadness, int[] fear, int[] shame, int[] pride, int[] joy) EmotionsStats { get; set; }
-        public (int[] emMisery, int[] phMisery, int[] excitation) FeelingsStats { get; set; }
-        public (int[] selfharm, int[] suicide, int[] drugs, int[] alcohol) UrgesStats { get; set; }
+        public (int[] anger, int[] sadness, int[] fear, int[] shame, int[] pride, int[] joy) EmotionsStats { get; private set; }
+        public (int[] emMisery, int[] phMisery, int[] excitation) FeelingsStats { get; private set; }
+        public (int[] selfharm, int[] suicide, int[] drugs, int[] alcohol) UrgesStats { get; private set; }
 
         public EntriesStats()
         {
@@ -27,7 +27,7 @@ namespace MyDbtDiaryCard.Model
         }
         public async Task Initialize(DateTime startOfPeriod, DateTime endOfPeriod)
         {
-            if (daysOfPeriod != null)
+            if (DaysOfPeriod != null)
                 return;
 
             start = startOfPeriod;
@@ -51,28 +51,28 @@ namespace MyDbtDiaryCard.Model
             var daysOfPeriod = await _dayEntryDataService.GetDayEntriesPerPeriodAsync(start, end);
             DaysCount = daysOfPeriod.Count;
 
-            this.daysOfPeriod = new List<DayEntry>(Dates.Length);
+            this.DaysOfPeriod = new List<DayEntry>(Dates.Length);
 
             foreach (var day in Dates)
             {
-                this.daysOfPeriod.Add(daysOfPeriod.Find(d => d.Date == day) ?? null);
+                this.DaysOfPeriod.Add(daysOfPeriod.Find(d => d.Date == day) ?? null);
             }
         }
 
         private async Task<(int[], int[], int[], int[], int[], int[])> GetEmotionsStats()
         {
-            var anger = new int[daysOfPeriod.Count];
-            var sadness = new int[daysOfPeriod.Count];
-            var fear = new int[daysOfPeriod.Count];
-            var shame = new int[daysOfPeriod.Count];
-            var pride = new int[daysOfPeriod.Count];
-            var joy = new int[daysOfPeriod.Count];
+            var anger = new int[DaysOfPeriod.Count];
+            var sadness = new int[DaysOfPeriod.Count];
+            var fear = new int[DaysOfPeriod.Count];
+            var shame = new int[DaysOfPeriod.Count];
+            var pride = new int[DaysOfPeriod.Count];
+            var joy = new int[DaysOfPeriod.Count];
 
             await Task.Run(() =>
             {
                 for (int i = 0; i < Dates.Length; i++)
                 {
-                    var emotions = daysOfPeriod[i]?.DayEmotions ?? new Emotions();
+                    var emotions = DaysOfPeriod[i]?.DayEmotions ?? new Emotions();
 
                     anger[i] = emotions.Anger;
                     sadness[i] = emotions.Sadness;
@@ -88,15 +88,15 @@ namespace MyDbtDiaryCard.Model
 
         private async Task<(int[], int[], int[])> GetFeelingsStats()
         {
-            var emMisery = new int[daysOfPeriod.Count];
-            var phMisery = new int[daysOfPeriod.Count];
-            var excitation = new int[daysOfPeriod.Count];
+            var emMisery = new int[DaysOfPeriod.Count];
+            var phMisery = new int[DaysOfPeriod.Count];
+            var excitation = new int[DaysOfPeriod.Count];
 
             await Task.Run(() =>
             {
                 for (int i = 0; i < Dates.Length; i++)
                 {
-                    var feelings = daysOfPeriod[i]?.DayFeelings ?? new Feelings();
+                    var feelings = DaysOfPeriod[i]?.DayFeelings ?? new Feelings();
 
                     emMisery[i] = feelings.EmotionMisery;
                     phMisery[i] = feelings.PhysicalMisery;
@@ -109,16 +109,16 @@ namespace MyDbtDiaryCard.Model
 
         private async Task<(int[], int[], int[], int[])> GetUrgesStats()
         {
-            var selfharm = new int[daysOfPeriod.Count];
-            var suicide = new int[daysOfPeriod.Count];
-            var drugs = new int[daysOfPeriod.Count];
-            var alcohol = new int[daysOfPeriod.Count];
+            var selfharm = new int[DaysOfPeriod.Count];
+            var suicide = new int[DaysOfPeriod.Count];
+            var drugs = new int[DaysOfPeriod.Count];
+            var alcohol = new int[DaysOfPeriod.Count];
 
             await Task.Run(() =>
             {
                 for (int i = 0; i < Dates.Length; i++)
                 {
-                    var urges = daysOfPeriod[i]?.DayUrges ?? new Urges();
+                    var urges = DaysOfPeriod[i]?.DayUrges ?? new Urges();
 
                     selfharm[i] = urges.SelfHarm;
                     suicide[i] = urges.Suicide;
