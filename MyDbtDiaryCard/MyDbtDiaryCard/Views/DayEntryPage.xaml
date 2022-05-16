@@ -23,31 +23,38 @@
 
     <Grid RowDefinitions="Auto" RowSpacing="0">
 
-        <Grid Style="{StaticResource grdToolBar}">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="1.5*"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
+        <!-- ToolBar -->
+        <Grid ColumnDefinitions="*, 1.5*, *"
+              Style="{StaticResource grdToolBar}">
 
-            <Button Text="&lt;-" Grid.Column="0"
+            <Button Grid.Column="0"
+                    Command="{Binding GetPreviousDayCommand}"
                     Style="{StaticResource BtnToolBar}"
-                    Command="{Binding GetPreviousDayCommand}"/>
-            
-            <DatePicker Date="{Binding PickedDate}"
-                        Format="D"
-                        Grid.Column="1"/>
-            
-            <Button Text="->" Grid.Column="2" 
+                    Text="&lt;-"/>
+
+            <DatePicker x:Name="datePicker"
+                        Grid.Column="1"
+                        Date="{Binding PickedDate}"
+                        Format="D"/>
+
+            <Button Grid.Column="2"
+                    Command="{Binding GetNextDayCommand}"
                     Style="{StaticResource BtnToolBar}"
-                    Command="{Binding GetNextDayCommand}"/>
+                    Text="->"/>
         </Grid>
 
-        <ScrollView Grid.Row="1">
+        <ActivityIndicator Grid.Row="1"
+                           IsRunning="{Binding IsLoading}"
+                           IsVisible="{Binding IsLoading}"/>
+
+        <ScrollView Grid.Row="1"
+                    IsVisible="{Binding IsLoading, Converter={StaticResource ReverseBoolCvt}}">
             <StackLayout>
 
+                <!-- Entry Data -->
                 <StackLayout x:Name="stckItems" IsVisible="{Binding IsDayEntryExists}">
 
+                    <!-- Feelings -->
                     <Frame>
                         <StackLayout BindingContext="{Binding Day.DayFeelings}"  x:DataType="{x:Null}">
 
@@ -86,9 +93,10 @@
                                 IsEnabled="False" AutoSize="TextChanges"/>
                         </StackLayout>
                     </Frame>
-                   
 
-                    <Frame x:Name="Emotions">
+                    
+                    <!-- Emotions -->
+                    <Frame>
                         <StackLayout BindingContext="{Binding Day.DayEmotions}" x:DataType="{x:Null}">
 
                             <Label Text="{x:Static resx:EntryResources.Emotions}" Style="{StaticResource ItemsTitleStyle}"/>
@@ -150,6 +158,7 @@
                         </StackLayout>
                     </Frame>
 
+                    <!-- Urges -->
                     <Frame>
                         <StackLayout BindingContext="{Binding Day.DayUrges}" x:DataType="{x:Null}">
 
@@ -194,6 +203,7 @@
                         </StackLayout>
                     </Frame>
 
+                    <!-- Skills -->
                     <Frame>
                         <StackLayout>
                             <Label Style="{StaticResource ItemsTitleStyle}" Text="{x:Static resx:EntryResources.Skills}"/>
@@ -218,30 +228,26 @@
                     </Frame>
                 </StackLayout>
 
-
+                <!-- Button -->
                 <StackLayout VerticalOptions="CenterAndExpand">
+                    <Button x:Name="btnEditEntry"
+                            Command ="{Binding AddEntryCommand}"
+                            IsVisible="{Binding IsDayEntryExists}"
+                            HorizontalOptions="Center"
+                            Text="{x:Static resx:ViewResources.EditEntry}"/>
 
-                    <StackLayout >
-                        <Button x:Name="btnEditEntry"
-                        IsVisible="{Binding IsDayEntryExists}"
-                        Text="{x:Static resx:ViewResources.EditEntry}"
-                        HorizontalOptions="Center"
-                        Command ="{Binding AddEntryCommand}"/>
-
-                        <Button x:Name="btnAddEntry"
-                        IsVisible="{Binding IsDayEntryExists,
-                        Converter={StaticResource ReverseBoolCvt},
-                        Mode=OneWay}"
-                        Text="{x:Static resx:ViewResources.AddEntry}"
-                        HorizontalOptions="Center"
-                        Command ="{Binding AddEntryCommand}"/>
-                    </StackLayout>
+                    <Button x:Name="btnAddEntry"
+                            Command ="{Binding AddEntryCommand}"
+                            IsVisible="{Binding IsDayEntryExists,
+                                Converter={StaticResource ReverseBoolCvt},
+                                Mode=OneWay}"
+                            HorizontalOptions="Center"
+                            Text="{x:Static resx:ViewResources.AddEntry}"/>
                 </StackLayout>
 
             </StackLayout>
         </ScrollView>
 
-        <ActivityIndicator IsVisible="{Binding IsLoading}" Grid.RowSpan="2"/>
     </Grid>
 
 </ContentPage>

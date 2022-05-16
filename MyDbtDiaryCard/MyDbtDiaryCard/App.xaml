@@ -104,7 +104,7 @@
         </Style>
 
         <Style TargetType="ActivityIndicator">
-            <Setter Property="BackgroundColor" Value="{StaticResource AccentColor}"/>
+            <Setter Property="Color" Value="{StaticResource AccentColor}"/>
             <Setter Property="HorizontalOptions" Value="Center"/>
             <Setter Property="Margin" Value="50"/>
             <Setter Property="VerticalOptions" Value="Start"/>
