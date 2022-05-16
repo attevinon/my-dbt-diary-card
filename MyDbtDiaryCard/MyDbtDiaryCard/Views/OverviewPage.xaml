@@ -7,6 +7,7 @@
              xmlns:icons="clr-namespace:MyDbtDiaryCard.Helpers.Fonts"
              x:DataType="local:OverviewViewModel"
              x:Class="MyDbtDiaryCard.Views.OverviewPage"
+             x:Name="pageOverview"
              Title="{x:Static resx:ViewResources.OverviewPageTitle}">
 
     <ContentPage.Resources>
@@ -15,15 +16,27 @@
 
     <ContentPage.Content>
         <Grid RowDefinitions="Auto" RowSpacing="0" >
-            <Grid Grid.Row="0" RowSpacing="0" RowDefinitions="Auto" 
+            <Grid Grid.Row="0"
+                  RowSpacing="0"
+                  ColumnDefinitions="1.5*, 0.6*, *, *"
                   BackgroundColor="{StaticResource TheLightestColor}">
-                <Picker Grid.Column="0"
-                        ItemsSource="{Binding DaysCountList}"
-                        SelectedItem="{Binding DaysCount}"
+                
+                <Label Grid.Column="0"
+                       Text="{x:Static resx:ViewResources.DateRange}"
+                       HorizontalOptions="End"/>
+                
+                <Picker Grid.Column="1"
+                        ItemsSource="{Binding Path=DaysRangeList, Source={x:Reference pageOverview}}"
+                        SelectedItem="{Binding DaysRange}"
                         HorizontalOptions="Center"
-                        Title="Days"/>
+                        Title="{x:Static resx:ViewResources.DateRange}"
+                        HorizontalTextAlignment="Center"/>
+                
+                <Label Grid.Column="2"
+                       Text="{x:Static resx:ViewResources.Days}"/>
 
-                <Button Grid.Column="1" Style="{StaticResource BtnToolBar}">
+                <Button Grid.Column="3" Style="{StaticResource BtnToolBar}"
+                        Command="{Binding ShowTableOverviewCommand}">
                     <Button.ImageSource>
                         <FontImageSource FontFamily="FAS" 
                                          Glyph="{x:Static icons:FontAwesomeIcons.TableCells}"

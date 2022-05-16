@@ -1,4 +1,5 @@
 ﻿using MyDbtDiaryCard.Services.ChartsService;
+using MyDbtDiaryCard.Services.Commands;
 using MyDbtDiaryCard.Services.DataService;
 using MyDbtDiaryCard.Services.Navigation;
 using OxyPlot;
@@ -6,20 +7,20 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace MyDbtDiaryCard.ViewModels
 {
     internal class OverviewViewModel : BaseViewModel
     {
-        public List<int> DaysCountList { get; set; }
 
-        private int daysCount;
-        public int DaysCount
+        private int daysRange = 7;
+        public int DaysRange
         {
-            get { return daysCount; }
+            get { return daysRange; }
             set 
             {
-                SetProperty(ref daysCount, value);
+                SetProperty(ref daysRange, value);
                 RefreshCharts();
             }
         }
@@ -52,12 +53,13 @@ namespace MyDbtDiaryCard.ViewModels
             set { SetProperty(ref isEnoughEntries, value); }
         }
 
+        public ICommand ShowTableOverviewCommand { get; set; }
 
         public OverviewViewModel(INavigationService navigation) : base(navigation)
         {
-            daysCount = 7;
             DataService.GetDataManager().DayEntryData.EntryDataUpdated += DataUpdated;
-            DaysCountList = new List<int> { 7, 14, 30 };
+
+            ShowTableOverviewCommand = new ActionCommand(async () => await ShowTableView());
         }
 
         private void DataUpdated(object sender, EventArgs e)
@@ -72,7 +74,7 @@ namespace MyDbtDiaryCard.ViewModels
 
             var entries = new Model.EntriesStats();
             //change, not universal
-            await entries.Initialize(DateTime.Today.AddDays(-DaysCount), DateTime.Today);
+            await entries.Initialize(DateTime.Today.AddDays(-DaysRange), DateTime.Today);
 
             if (entries == null || entries.DaysCount <= 1 )
             {
@@ -95,6 +97,11 @@ namespace MyDbtDiaryCard.ViewModels
                 Console.WriteLine(ex);
             }
 
+        }
+
+        private async Task ShowTableView()
+        {
+            await NavigationService.NavigateAsync("TableOverviewPage");
         }
     }
 }
