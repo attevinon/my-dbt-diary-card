@@ -120,6 +120,9 @@
   <data name="AddEntry" xml:space="preserve">
     <value>Add entry</value>
   </data>
+  <data name="Alert" xml:space="preserve">
+    <value>Alert</value>
+  </data>
   <data name="Alert_DayFromFuture" xml:space="preserve">
     <value>That day has not come yet</value>
   </data>
@@ -128,6 +131,12 @@
   </data>
   <data name="Confirm" xml:space="preserve">
     <value>Confirm</value>
+  </data>
+  <data name="DateRange" xml:space="preserve">
+    <value>Date range</value>
+  </data>
+  <data name="Days" xml:space="preserve">
+    <value>Days</value>
   </data>
   <data name="Delete" xml:space="preserve">
     <value>Delete</value>
@@ -144,6 +153,9 @@
   <data name="NotEnoughEntries" xml:space="preserve">
     <value>Not enough entries :(</value>
   </data>
+  <data name="Ok" xml:space="preserve">
+    <value>Ok</value>
+  </data>
   <data name="OverviewPageTitle" xml:space="preserve">
     <value>Overview</value>
   </data>
@@ -152,5 +164,8 @@
   </data>
   <data name="SelectSkills" xml:space="preserve">
     <value>Select skills</value>
+  </data>
+  <data name="TableOverviewPageTitle" xml:space="preserve">
+    <value>Champion's Card!</value>
   </data>
 </root>

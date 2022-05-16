@@ -120,14 +120,23 @@
   <data name="AddEntry" xml:space="preserve">
     <value>Добавить запись</value>
   </data>
+  <data name="Alert" xml:space="preserve">
+    <value>Уведомление</value>
+  </data>
   <data name="Alert_DayFromFuture" xml:space="preserve">
-    <value>Этот день ещё не настал</value>
+    <value>Этот день ещё не настал!</value>
   </data>
   <data name="Cancel" xml:space="preserve">
     <value>Отмена</value>
   </data>
   <data name="Confirm" xml:space="preserve">
     <value>Готово</value>
+  </data>
+  <data name="DateRange" xml:space="preserve">
+    <value>Диапазон</value>
+  </data>
+  <data name="Days" xml:space="preserve">
+    <value>Дней</value>
   </data>
   <data name="Delete" xml:space="preserve">
     <value>Удалить</value>
@@ -144,6 +153,9 @@
   <data name="NotEnoughEntries" xml:space="preserve">
     <value>Недостаточно записей :(</value>
   </data>
+  <data name="Ok" xml:space="preserve">
+    <value>Ладно</value>
+  </data>
   <data name="OverviewPageTitle" xml:space="preserve">
     <value>Обзор</value>
   </data>
@@ -152,5 +164,8 @@
   </data>
   <data name="SelectSkills" xml:space="preserve">
     <value>Выбрать навыки</value>
+  </data>
+  <data name="TableOverviewPageTitle" xml:space="preserve">
+    <value>Карточка Чемпиона(ки)!</value>
   </data>
 </root>
