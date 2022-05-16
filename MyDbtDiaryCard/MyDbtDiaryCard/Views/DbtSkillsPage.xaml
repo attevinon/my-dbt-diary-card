@@ -1,8 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="MyDbtDiaryCard.Views.DbtSkillsPage"
+             xmlns:resx="clr-namespace:MyDbtDiaryCard.Resx"
              xmlns:local="clr-namespace:MyDbtDiaryCard.ViewModels"
+             x:Class="MyDbtDiaryCard.Views.DbtSkillsPage"
              x:DataType="local:DbtSkillsViewModel"
              NavigationPage.HasNavigationBar="False"
              BackgroundColor="{StaticResource TheLightestColor}">
@@ -16,13 +17,20 @@
                         <VisualState x:Name="Selected">
                             <VisualState.Setters>
                                 <Setter Property="BackgroundColor"
-                                        Value="{StaticResource BackgroundPageColor}" />
+                                        Value="{StaticResource BackgroundPageColor}"/>
                             </VisualState.Setters>
                         </VisualState>
                     </VisualStateGroup>
                 </VisualStateGroupList>
             </Setter>
         </Style>
+
+        <Style TargetType="BoxView">
+            <Setter Property="BackgroundColor" Value="{StaticResource AccentColor}"/>
+            <Setter Property="HeightRequest" Value="5"/>
+            <Setter Property="VerticalOptions" Value="Center"/>
+        </Style>
+        
     </ContentPage.Resources>
 
     <CollectionView ItemsSource="{Binding DbtSkillsList}"
@@ -32,28 +40,40 @@
                     Margin="20,0">
         <CollectionView.Header>
             <StackLayout>
-                <Label Text="Choose skills:" Style="{StaticResource ItemsTitleStyle}"/>
-                <ActivityIndicator IsRunning="{Binding IsLoading}" IsVisible="{Binding IsLoading}"
+                <Label Text="{x:Static resx:ViewResources.SelectSkills}"
+                       Style="{StaticResource ItemsTitleStyle}"/>
+                
+                <ActivityIndicator IsRunning="{Binding IsLoading}"
+                                   IsVisible="{Binding IsLoading}"
                                    Color="{StaticResource AccentColor}"/>
             </StackLayout>
         </CollectionView.Header>
         <CollectionView.GroupHeaderTemplate>
             <DataTemplate x:DataType="{x:Null}">
-                <StackLayout>
-                    <Label Text="----------------------------"/>
-                    <Label Text="{Binding ModuleName}" FontAttributes="Bold"/>
-                </StackLayout>
+                <Grid ColumnDefinitions="*, Auto, *"
+                      HorizontalOptions="Center"
+                      Margin="5, 0">
+                    <BoxView Grid.Column="0"/>
+                    <Label Grid.Column="1"
+                           FontAttributes="Bold"
+                           HorizontalTextAlignment="Center"
+                           Margin="0 ,5"
+                           Text="{Binding ModuleName}"/>
+                    <BoxView Grid.Column="2"/>
+                </Grid>
             </DataTemplate>
         </CollectionView.GroupHeaderTemplate>
         <CollectionView.ItemTemplate>
             <DataTemplate x:DataType="{x:Null}">
-                <StackLayout Orientation="Horizontal">
+                <StackLayout Orientation="Horizontal"
+                             Margin="5">
                     <Label Text="{Binding Name}"/>
                 </StackLayout>
             </DataTemplate>
         </CollectionView.ItemTemplate>
         <CollectionView.Footer>
-            <Button Text="Confirm" Command="{Binding ConfirmChangesCommand}"/>
+            <Button Text="{x:Static resx:ViewResources.Confirm}"
+                    Command="{Binding ConfirmChangesCommand}"/>
         </CollectionView.Footer>
     </CollectionView>
 

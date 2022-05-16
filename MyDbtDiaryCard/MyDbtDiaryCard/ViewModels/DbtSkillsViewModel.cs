@@ -57,6 +57,10 @@ namespace MyDbtDiaryCard.ViewModels
                     DbtSkillsResources.Module_EmotionRegulation, new List<DbtSkills>(
                         await _dbtSkillsData.GetDbtSkillsForModule(DbtModules.EmotionRegulation))));
 
+                DbtSkillsList.Add(new DbtSkillsModules(
+                    DbtSkillsResources.Module_InterpersonalEffectiveness, new List<DbtSkills>(
+                        await _dbtSkillsData.GetDbtSkillsForModule(DbtModules.InterpersonalEffectiveness))));
+
                 await FindSkills();
             }
             catch(Exception ex)
