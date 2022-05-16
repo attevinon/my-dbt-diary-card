@@ -13,11 +13,15 @@ namespace MyDbtDiaryCard.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class OverviewPage : ContentPage
     {
+        public List<int> DaysRangeList { get; }
         public OverviewPage()
         {
+            DaysRangeList = new List<int> { 7, 14, 30 };
+
             InitializeComponent();
             var vm = new OverviewViewModel(App.NavigationService);
             BindingContext = vm;
+
         }
     }
 }
