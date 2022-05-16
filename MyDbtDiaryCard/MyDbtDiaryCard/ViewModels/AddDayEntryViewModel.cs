@@ -17,12 +17,10 @@ namespace MyDbtDiaryCard.ViewModels
     internal class AddDayEntryViewModel : BaseViewModel
     {
         private static readonly IDayEntryRepository _dayEntryData;
-        private readonly DateTime _date;
 
         private DayEntry day;
 
-        public string StringDate => $"{_date:ddd}, {_date:D}";
-
+        public DateTime Date { get; }
         public ICommand SaveCommand { get; set; }
         public ICommand DeleteCommand { get; set; }
         public ICommand CancelCommand { get; set; }
@@ -38,7 +36,7 @@ namespace MyDbtDiaryCard.ViewModels
             if (date > DateTime.Today)
                 throw new Exception();
 
-            _date = date;
+            Date = date;
 
             SaveCommand = new ActionCommand(async () => await SaveEntryAsync());
             DeleteCommand = new ActionCommand(async () => await DeleteEntryAsync());
@@ -62,7 +60,7 @@ namespace MyDbtDiaryCard.ViewModels
             get 
             {
                 if (feelings == null)
-                    feelings = new Feelings(_date);
+                    feelings = new Feelings(Date);
 
                 return feelings;
             }
@@ -78,7 +76,7 @@ namespace MyDbtDiaryCard.ViewModels
             get 
             {
                 if(emotions == null)
-                    emotions = new Emotions(_date);
+                    emotions = new Emotions(Date);
 
                 return emotions; 
             }
@@ -94,7 +92,7 @@ namespace MyDbtDiaryCard.ViewModels
             get
             {
                 if (urges == null)
-                    urges = new Urges(_date);
+                    urges = new Urges(Date);
 
                 return urges;
             }
@@ -118,13 +116,13 @@ namespace MyDbtDiaryCard.ViewModels
         private async void FindDay()
         {
             IsLoading = true;
-            day = await _dayEntryData.GetDayEntryForDateAsync(_date);
+            day = await _dayEntryData.GetDayEntryForDateAsync(Date);
 
             
             if (day == null)
             {
                 IsEntryExistsInDb = false;
-                day = new DayEntry(_date);
+                day = new DayEntry(Date);
             }
             else
             {
@@ -216,7 +214,7 @@ namespace MyDbtDiaryCard.ViewModels
                     var skill = await DataService.GetDataManager().DbtSkillsData.GetDbtSkillForId(id);
 
                     DaysDbtSkillsUsed.Add(
-                        new DbtSkillUsed { SkillId = id, SkillName = skill.Name,  Date = _date });
+                        new DbtSkillUsed { SkillId = id, SkillName = skill.Name,  Date = Date });
                     continue;
                 }
             }

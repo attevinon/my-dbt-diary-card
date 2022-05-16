@@ -61,7 +61,7 @@
     <Grid RowDefinitions="Auto" RowSpacing="0">
 
         <Grid Style="{StaticResource grdToolBar}" BackgroundColor="{StaticResource DarkerAccentColor}">
-            <Label Text="{Binding StringDate}" Style="{StaticResource PageTitleStyle}"/>
+            <Label Text="{Binding Date, Converter={StaticResource DateTimeCvt}}" Style="{StaticResource PageTitleStyle}"/>
         </Grid>
 
         <ScrollView Grid.Row="1">
@@ -264,7 +264,7 @@
                             </BindableLayout.ItemTemplate>
                         </StackLayout>
 
-                        <Button Text="Choose skills" Command="{Binding ChooseSkillsCommand}"/>
+                        <Button Text="{x:Static resx:ViewResources.SelectSkills}" Command="{Binding ChooseSkillsCommand}"/>
 
                     </StackLayout>
                 </Frame>
