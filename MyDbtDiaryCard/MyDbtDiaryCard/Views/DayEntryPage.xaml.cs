@@ -17,13 +17,18 @@ namespace MyDbtDiaryCard.Views
         {
             InitializeComponent();
             var dayEntryVM = new DayEntryViewModel(App.NavigationService);
+
+           //remove?
             dayEntryVM.WrongDataPicked += ShowAlert;
+
             this.BindingContext = dayEntryVM;
+
+            datePicker.MaximumDate = DateTime.Today;
         }
 
         private async void ShowAlert(object sender, EventArgs e)
         {
-            await DisplayAlert("Alert", "You can't be from future!", "ok :(");
+            await DisplayAlert(Resx.ViewResources.Alert, Resx.ViewResources.Alert_DayFromFuture, Resx.ViewResources.Ok);
         }
     }
 }
