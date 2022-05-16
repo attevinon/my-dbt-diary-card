@@ -2,17 +2,20 @@
 <Application xmlns="http://xamarin.com/schemas/2014/forms"
 			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:cvt="clr-namespace:MyDbtDiaryCard.Converters"
+             xmlns:icons="clr-namespace:MyDbtDiaryCard.Helpers.Fonts"
              x:Class="MyDbtDiaryCard.App">
 
     <Application.Resources>
 
-        <!-- Converters -->
+        <!--#region Converters -->
         <cvt:ScaleToIndexConverter x:Key="ScaleToIndexCvt"/>
         <cvt:ReverseBooleanConverter x:Key="ReverseBoolCvt"/>
         <cvt:ScaleToStringConverter x:Key="ScaleToStringCvt"/>
         <cvt:UsefulnessToStringConverter x:Key="UsefulnessToStringCvt"/>
+        <cvt:DateTimeConverter x:Key="DateTimeCvt"/>
+        <!--#endregion-->
 
-        <!-- Colors -->
+        <!--#region Colors -->
         <Color x:Key="TheLightestColor">#fffdfb</Color>
         <Color x:Key="VeryLightColor">#f9f5f1</Color>
         <Color x:Key="BackgroundPageColor">#f4efe8</Color>
@@ -22,7 +25,11 @@
         <Color x:Key="TitleTextColor">#806f4d</Color>
         <Color x:Key="ButtonTextColor">#606c38</Color>
 
-        <!-- Buttons -->
+        <Color x:Key="TableBorderColor">#806f4d</Color>
+        <Color x:Key="TableInnerBorderColor">#93856c</Color>
+        <!--#endregion-->
+
+        <!--#region Buttons -->
         <Style TargetType="Button">
             <Setter Property="BackgroundColor" Value="{StaticResource AccentColor}"/>
             <Setter Property="TextColor" Value="{StaticResource ButtonTextColor}"/>
@@ -34,7 +41,30 @@
             <Setter Property="TextTransform" Value="None"/>
         </Style>
 
-        <!-- Labels -->
+        <Style TargetType="Button" x:Key="BtnNavigatiomBar">
+            <Setter Property="BackgroundColor" Value="{StaticResource DarkerAccentColor}"/>
+            <Setter Property="ImageSource">
+                <Setter.Value>
+                    <FontImageSource FontFamily="FAS"
+                         Glyph="{x:Static icons:FontAwesomeIcons.ArrowLeft}"
+                         Size="Large" Color="{StaticResource TheLightestColor}"/>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style TargetType="Button" x:Key="BtnHelp">
+            <Setter Property="ImageSource">
+                <Setter.Value>
+                    <FontImageSource FontFamily="FAS"
+                         Glyph="{x:Static icons:FontAwesomeIcons.CircleQuestion}"
+                         Size="Large" Color="{StaticResource DarkerAccentColor}"/>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        
+        <!--#endregion-->
+
+        <!--#region Labels -->
         <Style TargetType="Label">
             <Setter Property="FontSize" Value="Medium"/>
             <Setter Property="VerticalOptions" Value="Center"/>
@@ -60,7 +90,9 @@
             <Setter Property="TextColor" Value="{StaticResource NormalTextColor}"/>
         </Style>
 
-        <!-- Other Items -->
+        <!--#endregion-->
+
+        <!--#region Other Items -->
         <Style TargetType="Frame">
             <Setter Property="BackgroundColor" Value="{StaticResource TheLightestColor}"/>
         </Style>
@@ -71,18 +103,28 @@
             <Setter Property="HorizontalOptions" Value="FillAndExpand"/>
         </Style>
 
+        <Style TargetType="ActivityIndicator">
+            <Setter Property="BackgroundColor" Value="{StaticResource AccentColor}"/>
+            <Setter Property="HorizontalOptions" Value="Center"/>
+            <Setter Property="Margin" Value="50"/>
+            <Setter Property="VerticalOptions" Value="Start"/>
+        </Style>
+        <!--#endregion-->
+
+        <!--#region Grids -->
         <Style TargetType="Grid" x:Key="grdToolBar">
+            <Setter Property="BackgroundColor" Value="{StaticResource TheLightestColor}"/>
             <Setter Property="Grid.Row" Value="0"/>
             <Setter Property="RowSpacing" Value="0"/>
             <Setter Property="RowDefinitions" Value="Auto"/>
-            <Setter Property="BackgroundColor" Value="{StaticResource TheLightestColor}"/>
         </Style>
 
         <Style TargetType="Grid" x:Key="grdItemField">
             <Setter Property="ColumnDefinitions" Value="2"/>
-            <Setter Property="RowDefinitions" Value="Auto"/>
             <Setter Property="HorizontalOptions" Value="FillAndExpand"/>
+            <Setter Property="RowDefinitions" Value="Auto"/>
         </Style>
+        <!--#endregion-->
 
     </Application.Resources>
     
