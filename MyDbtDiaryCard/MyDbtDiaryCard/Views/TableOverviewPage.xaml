@@ -98,7 +98,7 @@
                 
                 <Label Grid.Column="1"
                        HorizontalTextAlignment="Start"
-                       Text="{x:Static resx:ViewResources.TableViewPageTitle}"
+                       Text="{x:Static resx:ViewResources.TableOverviewPageTitle}"
                        Style="{StaticResource PageTitleStyle}"/>
             </Grid>
             
