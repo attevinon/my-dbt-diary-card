@@ -1,0 +1,559 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MyDbtDiaryCard.Views.TableOverviewPage"
+             xmlns:local="clr-namespace:MyDbtDiaryCard.ViewModels"
+             xmlns:resx="clr-namespace:MyDbtDiaryCard.Resx"
+             x:DataType="local:TableViewModel"
+             x:Name="page"
+             
+             NavigationPage.HasNavigationBar="False">
+
+    <ContentPage.Resources>
+
+        <Style TargetType="Label" x:Key="ColumnHeader">
+            <Setter Property="WidthRequest" Value="100"/>
+            <Setter Property="VerticalOptions" Value="Center"/>
+        </Style>
+
+        <Style TargetType="Label" x:Key="CellData">
+            <Setter Property="HorizontalOptions" Value="Center"/>
+        </Style>
+        
+        <!--#region Frames -->
+
+        <Style TargetType="Frame" x:Key="CellFrame">
+            <Setter Property="VerticalOptions" Value="FillAndExpand"/>
+            <Setter Property="Padding" Value="2, 0"/>
+            <Setter Property="CornerRadius" Value="0"/>
+            <Setter Property="HasShadow" Value="False"/>
+        </Style>
+
+        <Style TargetType="Frame" x:Key="FeelingsHeaderFrame"
+               BasedOn="{StaticResource CellFrame}">
+            <Setter Property="BackgroundColor" Value="#FFCDD2"/>
+        </Style>
+
+        <Style TargetType="Frame" x:Key="FeelingsCellFrame"
+               BasedOn="{StaticResource CellFrame}">
+            <Setter Property="BackgroundColor" Value="#FFEBEE"/>
+        </Style>
+
+        <Style TargetType="Frame" x:Key="EmotionsHeaderFrame"
+               BasedOn="{StaticResource CellFrame}">
+            <Setter Property="BackgroundColor" Value="#FFECB3"/>
+        </Style>
+
+        <Style TargetType="Frame" x:Key="EmotionsCellFrame"
+               BasedOn="{StaticResource CellFrame}">
+            <Setter Property="BackgroundColor" Value="#FFF8E1"/>
+        </Style>
+
+        <Style TargetType="Frame" x:Key="UrgesHeaderFrame"
+               BasedOn="{StaticResource CellFrame}">
+            <Setter Property="BackgroundColor" Value="#D1C4E9"/>
+        </Style>
+
+        <Style TargetType="Frame" x:Key="UrgesCellFrame"
+               BasedOn="{StaticResource CellFrame}">
+            <Setter Property="BackgroundColor" Value="#EDE7F6"/>
+        </Style>
+
+        <Style TargetType="Frame" x:Key="SkillsCellFrame"
+               BasedOn="{StaticResource CellFrame}">
+            <Setter Property="BackgroundColor" Value="#E1F5FE"/>
+        </Style>
+        
+        <!--#endregion-->
+
+        <Style TargetType="Grid" x:Key="BorderGrid">
+            <Setter Property="BackgroundColor" Value="{StaticResource TableBorderColor}"/>
+        </Style>
+
+        <Style TargetType="Grid" x:Key="SubGrid">
+            <Setter Property="ColumnSpacing" Value="3"/>
+        </Style>
+
+        <x:Array x:Key="DaysRangeArray" Type="{x:Type x:String}">
+            <x:String>7</x:String>
+            <x:String>14</x:String>
+        </x:Array>
+
+    </ContentPage.Resources>
+    
+    <ContentPage.Content>
+        <Grid RowDefinitions="50, 50, *" RowSpacing="0">
+
+            <!-- NavigationBar -->
+            <Grid Grid.Row="0"
+                  BackgroundColor="{StaticResource DarkerAccentColor}"
+                  ColumnDefinitions="*, 9*"
+                  Padding="20, 0">
+                
+                <Button Grid.Column="0"
+                        Command="{Binding GoBackCommand}"
+                        HorizontalOptions="Center"
+                        VerticalOptions="End"
+                        Style="{StaticResource BtnNavigatiomBar}"/>
+                
+                <Label Grid.Column="1"
+                       HorizontalTextAlignment="Start"
+                       Text="{x:Static resx:ViewResources.TableViewPageTitle}"
+                       Style="{StaticResource PageTitleStyle}"/>
+            </Grid>
+            
+            <!-- ToolBar -->
+            <Grid Grid.Row="1"
+                  HeightRequest="50"
+                  Style="{StaticResource grdToolBar}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.5*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="0.1*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="0.5*"/>
+                    <ColumnDefinition Width="0.8*"/>
+                </Grid.ColumnDefinitions>
+
+                <Button Grid.Column="0"
+                        Text="&lt;-"
+                        Style="{StaticResource BtnToolBar}"/>
+
+                <DatePicker x:Name="startDatePicker"
+                            Grid.Column="1" 
+                            Date="{Binding StartDate}" />
+
+                <Label Grid.Column="2"
+                       HorizontalOptions="Center"
+                       Text="-"/>
+                
+                <DatePicker x:Name="endDatePicker"
+                            Grid.Column="3"
+                            Date="{Binding EndDate}"
+                            IsEnabled="False"/>
+
+                <Button Grid.Column="4"
+                        Text="->"
+                        Style="{StaticResource BtnToolBar}"/>
+
+                <Picker Grid.Column="5"
+                        ItemsSource="{Binding Path=DaysRangeList, Source={x:Reference page}}"
+                        SelectedItem="{Binding DaysRange}"
+                        Title="{x:Static resx:ViewResources.DateRange}"
+                        HorizontalTextAlignment="Center"
+                        HorizontalOptions="Center"/>
+
+            </Grid>
+
+
+            <ActivityIndicator Grid.Row="2"
+                               IsRunning="{Binding IsLoading}"/>
+
+            <!-- Table -->
+            <Grid Grid.Row="2"
+                  Margin="4, 0" Padding="3"
+                  ColumnSpacing="3"
+                  Style="{StaticResource BorderGrid}"
+                  IsVisible="{Binding IsLoading, Converter={StaticResource ReverseBoolCvt}}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="2.2 *"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Dates Column -->
+                <Grid Grid.Column="0"
+                      Style="{StaticResource BorderGrid}"
+                      RowSpacing="3">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="7*"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- Dates Header -->
+                    <Frame Grid.Row="0"
+                           Style="{StaticResource CellFrame}">
+                        <Label Text="{Static resx:EntryResources.Date}"
+                               HorizontalOptions="Center"/>
+                    </Frame>
+
+                    <!-- Dates -->
+                    <StackLayout x:Name="stckDates"
+                            Grid.Row="1"
+                            BindableLayout.ItemsSource="{Binding Entries}"
+                            Spacing="3" Orientation="Vertical">
+                        <BindableLayout.ItemTemplate >
+                            <DataTemplate x:DataType="{x:Null}">
+                                <Frame Style="{StaticResource CellFrame}"
+                                       HeightRequest="{Binding CellHeight, Source={x:Reference page}}">
+                                    <Label Text="{Binding Date,
+                                        Converter={StaticResource DateTimeCvt},
+                                        ConverterParameter=True,
+                                        FallbackValue='error data'}"
+                                           HorizontalOptions="Center"
+                                           Margin="3, 0"/>
+                                </Frame>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </StackLayout>
+                </Grid>
+
+                <!-- Main part of Table -->
+                <ScrollView Grid.Column="1"
+                            Orientation="Horizontal"
+                            HorizontalOptions="Fill"
+                            HorizontalScrollBarVisibility="Always">
+                    
+                    <Grid RowSpacing="4">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="7*"/>
+                        </Grid.RowDefinitions>
+
+                        <!-- Table Header -->
+                        <Grid x:Name="grdTableHeader" Grid.Row="0" Grid.Column="0"
+                              ColumnSpacing="3"
+                              Style="{StaticResource BorderGrid}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1500"/>
+                                <ColumnDefinition Width="300" x:Name="grdclmnSkillsHeader"/>
+                            </Grid.ColumnDefinitions>
+
+                            <!-- Feelings, Emotions, Urges Header -->
+                            <Grid Grid.Column="0"
+                                  ColumnSpacing="5"
+                                  RowSpacing="3"
+                                  Style="{StaticResource BorderGrid}">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="1.3*"/>
+                                    <RowDefinition Height="2*"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="0.5*"/>
+                                    <ColumnDefinition Width="0.7*"/>
+                                    <ColumnDefinition Width="0.5*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <!-- Feelings Header Subcolumn -->
+                                <Frame Style="{StaticResource FeelingsHeaderFrame}"
+                                       Grid.Column="0" Grid.Row="0">
+                                    <Label Text="{x:Static resx:EntryResources.Feelings}"
+                                           HorizontalOptions="Center"/>
+                                </Frame>
+
+
+                                <Grid x:Name="grdFeelingsHeader" Grid.Column="0" Grid.Row="1"
+                                      Style="{StaticResource SubGrid}">
+
+                                    <Frame Style="{StaticResource FeelingsHeaderFrame}"
+                                           Grid.Column="0">
+                                        <Label Text="{x:Static resx:EntryResources.F_EmotionMisery}"
+                                               Style="{StaticResource ColumnHeader}"/>
+                                    </Frame>
+
+                                    <Frame Style="{StaticResource FeelingsHeaderFrame}"
+                                           Grid.Column="1">
+                                        <Label Text="{x:Static resx:EntryResources.F_PhysicalMisery}"
+                                               Style="{StaticResource ColumnHeader}"/>
+                                    </Frame>
+
+                                    <Frame Style="{StaticResource FeelingsHeaderFrame}"
+                                           Grid.Column="2">
+                                        <Label Text="{x:Static resx:EntryResources.F_Excitation}"
+                                               Style="{StaticResource ColumnHeader}"/>
+                                    </Frame>
+                                </Grid>
+
+                                <!-- Emotions Header Subcolumn -->
+                                <Frame Style="{StaticResource EmotionsHeaderFrame}"
+                                       Grid.Column="1"  Grid.Row="0">
+                                        <Label Text="{x:Static resx:EntryResources.Emotions}"
+                                           HorizontalOptions="Center"/>
+                                </Frame>
+
+
+                                <Grid Grid.Column="1" Grid.Row="1"
+                                      ColumnDefinitions="Auto"
+                                      Style="{StaticResource SubGrid}">
+
+                                    <Frame Style="{StaticResource EmotionsHeaderFrame}"
+                                       Grid.Column="0">
+                                        <Label Text="{x:Static resx:EntryResources.E_Anger}"
+                                               Style="{StaticResource ColumnHeader}"/>
+                                    </Frame>
+
+                                    <Frame Style="{StaticResource EmotionsHeaderFrame}"
+                                       Grid.Column="1">
+                                        <Label Text="{x:Static resx:EntryResources.E_Sadness}"
+                                               Style="{StaticResource ColumnHeader}"/>
+                                    </Frame>
+
+                                    <Frame Style="{StaticResource EmotionsHeaderFrame}"
+                                       Grid.Column="2">
+                                        <Label Text="{x:Static resx:EntryResources.E_Fear}"
+                                               Style="{StaticResource ColumnHeader}"/>
+                                    </Frame>
+
+                                    <Frame Style="{StaticResource EmotionsHeaderFrame}"
+                                       Grid.Column="3">
+                                        <Label Text="{x:Static resx:EntryResources.E_Shame}"
+                                               Style="{StaticResource ColumnHeader}"/>
+                                    </Frame>
+
+                                    <Frame Style="{StaticResource EmotionsHeaderFrame}"
+                                       Grid.Column="4">
+                                        <Label Text="{x:Static resx:EntryResources.E_Pride}"
+                                               Style="{StaticResource ColumnHeader}"/>
+                                    </Frame>
+
+                                    <Frame Style="{StaticResource EmotionsHeaderFrame}"
+                                       Grid.Column="5">
+                                        <Label Text="{x:Static resx:EntryResources.E_Joy}"
+                                               Style="{StaticResource ColumnHeader}"/>
+                                    </Frame>
+                                    
+                                </Grid>
+
+                                <!-- Urges Header Subcolumn -->
+                                <Frame Style="{StaticResource UrgesHeaderFrame}"
+                                       Grid.Column="2" Grid.Row="0">
+                                    <Label Text="{x:Static resx:EntryResources.Urges}"
+                                           HorizontalOptions="Center"/>
+                                </Frame>
+
+
+                                <Grid Grid.Column="2" Grid.Row="1"
+                                      Style="{StaticResource SubGrid}">
+
+                                    <Frame Style="{StaticResource UrgesHeaderFrame}"
+                                       Grid.Column="0">
+                                        <Label Text="{x:Static resx:EntryResources.U_SelfHarm}"
+                                               Style="{StaticResource ColumnHeader}"/>
+                                    </Frame>
+                                    
+                                    <Frame Style="{StaticResource UrgesHeaderFrame}"
+                                       Grid.Column="1">
+                                        <Label Text="{x:Static resx:EntryResources.U_Suicide}"
+                                       Style="{StaticResource ColumnHeader}"/>
+                                    </Frame>
+                                    
+                                    <Frame Style="{StaticResource UrgesHeaderFrame}"
+                                       Grid.Column="2">
+                                        <Label Text="{x:Static resx:EntryResources.U_Drugs}"
+                                       Style="{StaticResource ColumnHeader}"/>
+                                    </Frame>
+
+                                    <Frame Style="{StaticResource UrgesHeaderFrame}"
+                                       Grid.Column="3">
+                                        <Label Text="{x:Static resx:EntryResources.U_Alcohol}"
+                                               Style="{StaticResource ColumnHeader}"/>
+                                    </Frame>
+
+                                </Grid>
+                            </Grid>
+
+                            <!-- Skills Header -->
+                            <Frame Style="{StaticResource CellFrame}"
+                                   Grid.Column="1"
+                                   BackgroundColor="#B3E5FC">
+                                <StackLayout Orientation="Horizontal"
+                                             HorizontalOptions="Center">
+                                    <Label Text="{x:Static resx:EntryResources.Skills}"
+                                           Style="{StaticResource ColumnHeader}"/>
+                                    <Button Style="{StaticResource BtnHelp}" VerticalOptions="Center"/>
+                                </StackLayout>
+                            </Frame>
+
+                        </Grid>
+
+                        <!-- Entries Data -->
+                        <!-- Entries Data -->
+                        <!-- Entries Data -->
+                        <StackLayout x:Name="stckEntries"
+                                     Grid.Row="1" Grid.Column="0"
+                                     BindableLayout.ItemsSource="{Binding Entries}"
+                                     Spacing="3"
+                                     BackgroundColor="{StaticResource TableInnerBorderColor}">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate x:DataType="{x:Null}">
+                                    <Grid RowSpacing="1" ColumnSpacing="5"
+                                          BackgroundColor="{StaticResource TableInnerBorderColor}"
+                                          HorizontalOptions="FillAndExpand"
+                                          VerticalOptions="FillAndExpand">
+
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="1500"/>
+                                            <ColumnDefinition Width="300"/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <Grid Grid.Column="0">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="0.5*"/>
+                                                <ColumnDefinition Width="0.7*"/>
+                                                <ColumnDefinition Width="0.5*"/>
+                                            </Grid.ColumnDefinitions>
+
+                                            <!-- Feelings -->
+                                            <Grid Grid.Column="0"
+                                              ColumnSpacing="3">
+
+                                                <Frame Grid.Column="0"
+                                                   Style="{StaticResource FeelingsCellFrame}">
+                                                    <Label Text="{Binding DayFeelings.EmotionMisery,
+                                                Converter={StaticResource ScaleToStringCvt},
+                                                FallbackValue='-'}"
+                                                       Style="{StaticResource CellData}"/>
+                                                </Frame>
+
+                                                <Frame Grid.Column="1"
+                                                   Style="{StaticResource FeelingsCellFrame}">
+                                                    <Label Text="{Binding DayFeelings.PhysicalMisery,
+                                                Converter={StaticResource ScaleToStringCvt},
+                                                FallbackValue='-'}"
+                                                       Style="{StaticResource CellData}"/>
+                                                </Frame>
+
+                                                <Frame Grid.Column="2"
+                                                   Style="{StaticResource FeelingsCellFrame}">
+                                                    <Label Text="{Binding DayFeelings.Excitation,
+                                                Converter={StaticResource ScaleToStringCvt},
+                                                FallbackValue='-'}"
+                                                       Style="{StaticResource CellData}"/>
+                                                </Frame>
+
+                                            </Grid>
+
+                                            <!-- Emotions -->
+                                            <Grid Grid.Column="1"
+                                              ColumnSpacing="3">
+
+                                                <Frame  Grid.Column="0"
+                                                    Style="{StaticResource EmotionsCellFrame}">
+                                                    <Label Text="{Binding DayEmotions.Anger,
+                                                Converter={StaticResource ScaleToStringCvt},
+                                                FallbackValue='-'}"
+                                                     Style="{StaticResource CellData}"/>
+                                                </Frame>
+
+                                                <Frame  Grid.Column="1"
+                                                    Style="{StaticResource EmotionsCellFrame}">
+                                                    <Label Text="{Binding DayEmotions.Sadness,
+                                                Converter={StaticResource ScaleToStringCvt},
+                                                FallbackValue='-'}"
+                                                       Style="{StaticResource CellData}"/>
+                                                </Frame>
+
+                                                <Frame  Grid.Column="2"
+                                                    Style="{StaticResource EmotionsCellFrame}">
+                                                    <Label Text="{Binding DayEmotions.Fear,
+                                                Converter={StaticResource ScaleToStringCvt},
+                                                FallbackValue='-'}"
+                                                       Style="{StaticResource CellData}"/>
+                                                </Frame>
+
+                                                <Frame  Grid.Column="3"
+                                                    Style="{StaticResource EmotionsCellFrame}">
+                                                    <Label Text="{Binding DayEmotions.Shame,
+                                                Converter={StaticResource ScaleToStringCvt},
+                                                FallbackValue='-'}"
+                                                       Style="{StaticResource CellData}"/>
+                                                </Frame>
+
+                                                <Frame  Grid.Column="4"
+                                                    Style="{StaticResource EmotionsCellFrame}">
+                                                    <Label Text="{Binding DayEmotions.Pride,
+                                                Converter={StaticResource ScaleToStringCvt},
+                                                FallbackValue='-'}"
+                                                       Style="{StaticResource CellData}"/>
+                                                </Frame>
+
+
+                                                <Frame  Grid.Column="5"
+                                                    Style="{StaticResource EmotionsCellFrame}">
+                                                    <Label Text="{Binding DayEmotions.Joy,
+                                                Converter={StaticResource ScaleToStringCvt},
+                                                FallbackValue='-'}"
+                                                       Style="{StaticResource CellData}"/>
+                                                </Frame>
+                                            </Grid>
+
+                                            <!-- Urges -->
+                                            <Grid Grid.Column="2"
+                                              ColumnSpacing="3">
+
+                                                <Frame  Grid.Column="0"
+                                                    Style="{StaticResource UrgesCellFrame}">
+                                                    <Label Text="{Binding DayUrges.SelfHarm,
+                                                Converter={StaticResource ScaleToStringCvt},
+                                                FallbackValue='-'}"
+                                                       Style="{StaticResource CellData}"/>
+                                                </Frame>
+
+                                                <Frame  Grid.Column="1"
+                                                    Style="{StaticResource UrgesCellFrame}">
+                                                    <Label Text="{Binding DayUrges.Suicide,
+                                                Converter={StaticResource ScaleToStringCvt},
+                                                FallbackValue='-'}"
+                                                       Style="{StaticResource CellData}"/>
+                                                </Frame>
+
+                                                <Frame  Grid.Column="2"
+                                                    Style="{StaticResource UrgesCellFrame}">
+                                                    <Label Text="{Binding DayUrges.Drugs,
+                                                Converter={StaticResource ScaleToStringCvt},
+                                                FallbackValue='-'}"
+                                                       Style="{StaticResource CellData}"/>
+                                                </Frame>
+
+                                                <Frame  Grid.Column="3"
+                                                    Style="{StaticResource UrgesCellFrame}">
+                                                    <Label Text="{Binding DayUrges.Alcohol,
+                                                Converter={StaticResource ScaleToStringCvt},
+                                                FallbackValue='-'}"
+                                                       Style="{StaticResource CellData}"/>
+                                                </Frame>
+                                            </Grid>
+
+                                        </Grid>
+
+                                        <!-- Skills -->
+                                        <ScrollView Grid.Column="1"
+                                                    Orientation="Vertical"
+                                                    VerticalOptions="FillAndExpand"
+                                                    HeightRequest="{Binding CellHeight, Source={x:Reference page}}">
+
+                                            <Frame Style="{StaticResource SkillsCellFrame}">
+                                                <StackLayout BindableLayout.ItemsSource="{Binding DaysDbtSkills}"
+                                                             HorizontalOptions="FillAndExpand">
+                                                    <BindableLayout.EmptyViewTemplate>
+                                                        <DataTemplate>
+                                                            <Label Text="{x:Static resx:ViewResources.EmptySkillsList}"/>
+                                                        </DataTemplate>
+                                                    </BindableLayout.EmptyViewTemplate>
+                                                    <BindableLayout.ItemTemplate>
+                                                        <DataTemplate>
+                                                            <StackLayout Orientation="Horizontal"
+                                                                         Margin="5">
+                                                                <Label Text="{Binding SkillName}"
+                                                                   Grid.Column="0"/>
+                                                                <Label Text="{Binding Usefulness,
+                                                                Converter={StaticResource UsefulnessToStringCvt}}"
+                                                                   Grid.Column="1"/>
+                                                            </StackLayout>
+                                                        </DataTemplate>
+                                                    </BindableLayout.ItemTemplate>
+                                                </StackLayout>
+                                            </Frame>
+                                            
+                                        </ScrollView>
+
+                                    </Grid>
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </StackLayout>
+                    </Grid>
+                </ScrollView>
+            </Grid>
+            
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

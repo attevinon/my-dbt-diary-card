@@ -25,6 +25,7 @@ namespace MyDbtDiaryCard
             NavigationService.Configure(nameof(DayEntryPage), typeof(DayEntryPage));
             NavigationService.Configure(nameof(AddDayEntryPage), typeof(AddDayEntryPage));
             NavigationService.Configure(nameof(OverviewPage), typeof(OverviewPage));
+            NavigationService.Configure(nameof(TableOverviewPage), typeof(TableOverviewPage));
             NavigationService.Configure(nameof(DbtSkillsPage), typeof(DbtSkillsPage));
             NavigationService.Configure(nameof(Views.MainPage), typeof(Views.MainPage));
 
