@@ -19,7 +19,7 @@ Unfortunately this app is only for andriod users (bc I don't have any Aplle prod
 **Application avalable in 2 languages:** Russian and English. You can't change it by yourself though.
 
 ## To-Do
-- [ ] Table Overview
+- [X] Table Overview
 - [ ] Average skills using of the day
 - [ ] Data export (pdf)
 - [ ] Meds
