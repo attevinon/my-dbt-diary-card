@@ -88,6 +88,33 @@ namespace MyDbtDiaryCard.Resx {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Entrie deleted.
+        /// </summary>
+        internal static string Alert_Deleted {
+            get {
+                return ResourceManager.GetString("Alert_Deleted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you really want to delete this entry?.
+        /// </summary>
+        internal static string Alert_DeleteQuestion {
+            get {
+                return ResourceManager.GetString("Alert_DeleteQuestion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Entry Saved :) Go on, champion! .
+        /// </summary>
+        internal static string Alert_Saved {
+            get {
+                return ResourceManager.GetString("Alert_Saved", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cancel.
         /// </summary>
         internal static string Cancel {
@@ -210,6 +237,15 @@ namespace MyDbtDiaryCard.Resx {
         internal static string TableOverviewPageTitle {
             get {
                 return ResourceManager.GetString("TableOverviewPageTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Yep.
+        /// </summary>
+        internal static string Yes {
+            get {
+                return ResourceManager.GetString("Yes", resourceCulture);
             }
         }
     }

@@ -120,6 +120,9 @@
   <data name="Additional" xml:space="preserve">
     <value>Additional</value>
   </data>
+  <data name="Date" xml:space="preserve">
+    <value>Date</value>
+  </data>
   <data name="Emotions" xml:space="preserve">
     <value>Emotions</value>
   </data>

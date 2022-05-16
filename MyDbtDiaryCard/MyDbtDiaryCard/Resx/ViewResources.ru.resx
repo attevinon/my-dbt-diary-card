@@ -126,6 +126,15 @@
   <data name="Alert_DayFromFuture" xml:space="preserve">
     <value>Этот день ещё не настал!</value>
   </data>
+  <data name="Alert_Deleted" xml:space="preserve">
+    <value>Запись успешно удалена</value>
+  </data>
+  <data name="Alert_DeleteQuestion" xml:space="preserve">
+    <value>Вы действительно хотите удалить эту запись?</value>
+  </data>
+  <data name="Alert_Saved" xml:space="preserve">
+    <value>Запись сохранена :) Продолжайте в том же духе, чемпион(ка)!</value>
+  </data>
   <data name="Cancel" xml:space="preserve">
     <value>Отмена</value>
   </data>
@@ -154,7 +163,7 @@
     <value>Недостаточно записей :(</value>
   </data>
   <data name="Ok" xml:space="preserve">
-    <value>Ладно</value>
+    <value>Хорошо</value>
   </data>
   <data name="OverviewPageTitle" xml:space="preserve">
     <value>Обзор</value>
@@ -167,5 +176,8 @@
   </data>
   <data name="TableOverviewPageTitle" xml:space="preserve">
     <value>Карточка Чемпиона(ки)!</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>Ага</value>
   </data>
 </root>

@@ -120,6 +120,9 @@
   <data name="Additional" xml:space="preserve">
     <value>Дополнительно</value>
   </data>
+  <data name="Date" xml:space="preserve">
+    <value>Дата</value>
+  </data>
   <data name="Emotions" xml:space="preserve">
     <value>Эмоции</value>
   </data>
