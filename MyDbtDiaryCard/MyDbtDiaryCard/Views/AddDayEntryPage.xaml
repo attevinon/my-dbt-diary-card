@@ -107,9 +107,8 @@
                         </StackLayout>
 
                         <Label Text="{x:Static resx:EntryResources.Additional}"/>
-                        <Editor Text="{Binding DayFeelings.Additional}"
-                                AutoSize="TextChanges"
-                                PlaceholderColor="Aquamarine"/>
+                        <Editor Text="{Binding Additional}"
+                                AutoSize="TextChanges"/>
 
                     </StackLayout>
                 </Frame>
