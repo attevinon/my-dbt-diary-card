@@ -141,8 +141,17 @@
   <data name="D_WillingnessAndHalfSmile" xml:space="preserve">
     <value>Willingness and HalfSmile</value>
   </data>
+  <data name="E_AccumulatePositiveEmotions" xml:space="preserve">
+    <value>Accumulate Positive Emotions</value>
+  </data>
+  <data name="E_BuildMastery" xml:space="preserve">
+    <value>Build Mastery</value>
+  </data>
   <data name="E_CheckTheFacts" xml:space="preserve">
     <value>Check The Facts</value>
+  </data>
+  <data name="E_CopeAhead" xml:space="preserve">
+    <value>Cope Ahead</value>
   </data>
   <data name="E_LabelingEmotions" xml:space="preserve">
     <value>Labeling Emotions</value>
@@ -156,6 +165,21 @@
   <data name="E_ProblemSloving" xml:space="preserve">
     <value>Problem sloving</value>
   </data>
+  <data name="I_Dear" xml:space="preserve">
+    <value>DEAR</value>
+  </data>
+  <data name="I_Fast" xml:space="preserve">
+    <value>FAST</value>
+  </data>
+  <data name="I_Give" xml:space="preserve">
+    <value>GIVE</value>
+  </data>
+  <data name="I_Man" xml:space="preserve">
+    <value>MAN</value>
+  </data>
+  <data name="I_Validation" xml:space="preserve">
+    <value>Validation</value>
+  </data>
   <data name="Module_DistressTolerance" xml:space="preserve">
     <value>Distress Tolerance</value>
   </data>
@@ -163,10 +187,13 @@
     <value>EmotionRegulation</value>
   </data>
   <data name="Module_InterpersonalEffectiveness" xml:space="preserve">
-    <value>InterpersonalEffectiveness</value>
+    <value>Interpersonal Effectiveness</value>
   </data>
   <data name="Module_Mindfulness" xml:space="preserve">
     <value>Mindfulness</value>
+  </data>
+  <data name="Module_Tools" xml:space="preserve">
+    <value>Tools</value>
   </data>
   <data name="M_Describe" xml:space="preserve">
     <value>Describe</value>
@@ -191,5 +218,8 @@
   </data>
   <data name="M_WiseMind" xml:space="preserve">
     <value>Wise Mind</value>
+  </data>
+  <data name="T_ChainAnalysis" xml:space="preserve">
+    <value>Chain Analysis</value>
   </data>
 </root>

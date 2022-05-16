@@ -141,8 +141,17 @@
   <data name="D_WillingnessAndHalfSmile" xml:space="preserve">
     <value>Полуулыбка и Ладони готовности</value>
   </data>
+  <data name="E_AccumulatePositiveEmotions" xml:space="preserve">
+    <value>Аккумуляция позитивных эмоций</value>
+  </data>
+  <data name="E_BuildMastery" xml:space="preserve">
+    <value>Вырабатывание мастерства</value>
+  </data>
   <data name="E_CheckTheFacts" xml:space="preserve">
     <value>Проверка фактов</value>
+  </data>
+  <data name="E_CopeAhead" xml:space="preserve">
+    <value>Совладать заблаговременно</value>
   </data>
   <data name="E_LabelingEmotions" xml:space="preserve">
     <value>Осознание текущих эмоций</value>
@@ -156,6 +165,21 @@
   <data name="E_ProblemSloving" xml:space="preserve">
     <value>Решение проблемы</value>
   </data>
+  <data name="I_Dear" xml:space="preserve">
+    <value>DEAR (ПРОСИ)</value>
+  </data>
+  <data name="I_Fast" xml:space="preserve">
+    <value>FAST (ЧЕСТЬ)</value>
+  </data>
+  <data name="I_Give" xml:space="preserve">
+    <value>GIVE (ДРУГ)</value>
+  </data>
+  <data name="I_Man" xml:space="preserve">
+    <value>MAN (ТАК)</value>
+  </data>
+  <data name="I_Validation" xml:space="preserve">
+    <value>Валидация</value>
+  </data>
   <data name="Module_DistressTolerance" xml:space="preserve">
     <value>Устойчивость к стрессу</value>
   </data>
@@ -167,6 +191,9 @@
   </data>
   <data name="Module_Mindfulness" xml:space="preserve">
     <value>Осознанность</value>
+  </data>
+  <data name="Module_Tools" xml:space="preserve">
+    <value>Инструменты</value>
   </data>
   <data name="M_Describe" xml:space="preserve">
     <value>Описание</value>
@@ -191,5 +218,11 @@
   </data>
   <data name="M_WiseMind" xml:space="preserve">
     <value>Мудрый разум</value>
+  </data>
+  <data name="String1" xml:space="preserve">
+    <value />
+  </data>
+  <data name="T_ChainAnalysis" xml:space="preserve">
+    <value>Цепной Анализ</value>
   </data>
 </root>
