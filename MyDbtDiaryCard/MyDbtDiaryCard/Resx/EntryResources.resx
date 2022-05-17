@@ -168,6 +168,30 @@
   <data name="Usefulness" xml:space="preserve">
     <value>Usefulness</value>
   </data>
+  <data name="Usefulness_0" xml:space="preserve">
+    <value>0 - Not thought about or used</value>
+  </data>
+  <data name="Usefulness_1" xml:space="preserve">
+    <value>1 - Thought about, not used, didn’t want to</value>
+  </data>
+  <data name="Usefulness_2" xml:space="preserve">
+    <value>2 - Thought about, not used, wanted to</value>
+  </data>
+  <data name="Usefulness_3" xml:space="preserve">
+    <value>3 - Tried but couldn’t use them</value>
+  </data>
+  <data name="Usefulness_4" xml:space="preserve">
+    <value>4 - Tried, could do them but they didn’t help</value>
+  </data>
+  <data name="Usefulness_5" xml:space="preserve">
+    <value>5 - Tried, could use them, helped</value>
+  </data>
+  <data name="Usefulness_6" xml:space="preserve">
+    <value>6 - Didn’t try, used them, didn’t help</value>
+  </data>
+  <data name="Usefulness_7" xml:space="preserve">
+    <value>7 - Didn’t try, used them, helped</value>
+  </data>
   <data name="U_Alcohol" xml:space="preserve">
     <value>Alcohol</value>
   </data>

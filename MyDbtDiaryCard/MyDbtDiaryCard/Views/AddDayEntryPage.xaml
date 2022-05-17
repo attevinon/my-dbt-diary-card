@@ -3,8 +3,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:MyDbtDiaryCard.ViewModels"
              xmlns:resx="clr-namespace:MyDbtDiaryCard.Resx"
-             x:DataType="local:AddDayEntryViewModel"
              x:Class="MyDbtDiaryCard.Views.AddDayEntryPage"
+             x:Name="pageAddEntry"
+             x:DataType="local:AddDayEntryViewModel"
              BackgroundColor="{StaticResource BackgroundPageColor}"
              NavigationPage.HasNavigationBar ="False">
     <ContentPage.Resources>
@@ -29,18 +30,6 @@
             <x:String>5</x:String>
         </x:Array>
 
-        <x:Array x:Key="UsefulnessScale" Type="{x:Type x:String}">
-            <x:String>-</x:String>
-            <x:String>0</x:String>
-            <x:String>1</x:String>
-            <x:String>2</x:String>
-            <x:String>3</x:String>
-            <x:String>4</x:String>
-            <x:String>5</x:String>
-            <x:String>6</x:String>
-            <x:String>7</x:String>
-        </x:Array>
-
         <Style TargetType="Picker" x:Key="GeneralPicker">
             <Setter Property="ItemsSource" Value="{StaticResource GeneralScale}"/>
             <Setter Property="Grid.Column" Value="2"/>
@@ -52,7 +41,7 @@
         </Style>
 
         <Style TargetType="Picker" x:Key="UsefulnessPicker">
-            <Setter Property="ItemsSource" Value="{StaticResource UsefulnessScale}"/>
+            <Setter Property="ItemsSource" Value="{Binding UsefulnessScale,  Source={x:Reference pageAddEntry}}"/>
             <Setter Property="Grid.Column" Value="2"/>
         </Style>
 
@@ -67,6 +56,7 @@
         <ScrollView Grid.Row="1">
             <StackLayout x:Name="Items">
 
+                <!--#region Feelngs-->
                 <Frame x:Name="Feelings">
                     <StackLayout  BindingContext="{Binding DayFeelings}" x:DataType="{x:Null}">
 
@@ -112,7 +102,9 @@
 
                     </StackLayout>
                 </Frame>
+                <!--#endregion-->
 
+                <!--#region Emotions-->
                 <Frame x:Name="Emotions">
                     <StackLayout  BindingContext="{Binding DayEmotions}" x:DataType="{x:Null}">
 
@@ -191,7 +183,9 @@
 
                     </StackLayout>
                 </Frame>
+                <!--#endregion-->
 
+                <!--#region Urges-->
                 <Frame>
                     <StackLayout  BindingContext="{Binding DayUrges}" x:DataType="{x:Null}">
 
@@ -239,7 +233,9 @@
 
                     </StackLayout>
                 </Frame>
+                <!--#endregion-->
 
+                <!--#region Skills-->
                 <Frame>
                     <StackLayout>
 
@@ -251,14 +247,17 @@
                             </BindableLayout.EmptyView>
                             <BindableLayout.ItemTemplate>
                                 <DataTemplate x:DataType="{x:Null}">
-                                    <StackLayout Orientation="Horizontal" x:DataType="{x:Null}">
-                                        <Label  Text="{Binding SkillName}"/>
-                                        <Picker Style="{StaticResource UsefulnessPicker}"
+                                    <Grid ColumnDefinitions="*, 0.4*">
+                                        <Label  Grid.Column="0"
+                                                Text="{Binding SkillName}"/>
+                                        <Picker Grid.Column="1"
+                                                HorizontalOptions="Center"
                                                 Title="{x:Static resx:EntryResources.Usefulness}"
-                                                HorizontalOptions="EndAndExpand"
+                                                Style="{StaticResource UsefulnessPicker}"
                                                 SelectedIndex="{Binding Usefulness,
-                                                    Converter={StaticResource ScaleToIndexCvt}}"/>
-                                    </StackLayout>
+                                                    Converter={StaticResource ScaleToIndexCvt}}"
+                                                WidthRequest="20"/>
+                                    </Grid>
                                 </DataTemplate>
                             </BindableLayout.ItemTemplate>
                         </StackLayout>
@@ -267,6 +266,7 @@
 
                     </StackLayout>
                 </Frame>
+                <!--#endregion-->
 
                 <Button x:Name="btnSave" Command="{Binding SaveCommand}" Text="{x:Static resx:ViewResources.Save}"/>
 

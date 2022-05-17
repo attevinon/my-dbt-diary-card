@@ -248,5 +248,77 @@ namespace MyDbtDiaryCard.Resx {
                 return ResourceManager.GetString("Usefulness", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 0 - Not thought about or used.
+        /// </summary>
+        internal static string Usefulness_0 {
+            get {
+                return ResourceManager.GetString("Usefulness_0", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 1 - Thought about, not used, didn’t want to.
+        /// </summary>
+        internal static string Usefulness_1 {
+            get {
+                return ResourceManager.GetString("Usefulness_1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 2 - Thought about, not used, wanted to.
+        /// </summary>
+        internal static string Usefulness_2 {
+            get {
+                return ResourceManager.GetString("Usefulness_2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 3 - Tried but couldn’t use them.
+        /// </summary>
+        internal static string Usefulness_3 {
+            get {
+                return ResourceManager.GetString("Usefulness_3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 4 - Tried, could do them but they didn’t help.
+        /// </summary>
+        internal static string Usefulness_4 {
+            get {
+                return ResourceManager.GetString("Usefulness_4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 5 - Tried, could use them, helped.
+        /// </summary>
+        internal static string Usefulness_5 {
+            get {
+                return ResourceManager.GetString("Usefulness_5", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 6 - Didn’t try, used them, didn’t help.
+        /// </summary>
+        internal static string Usefulness_6 {
+            get {
+                return ResourceManager.GetString("Usefulness_6", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 7 - Didn’t try, used them, helped.
+        /// </summary>
+        internal static string Usefulness_7 {
+            get {
+                return ResourceManager.GetString("Usefulness_7", resourceCulture);
+            }
+        }
     }
 }

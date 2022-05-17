@@ -168,6 +168,30 @@
   <data name="Usefulness" xml:space="preserve">
     <value>Полезность</value>
   </data>
+  <data name="Usefulness_0" xml:space="preserve">
+    <value>0 - Не думал(а) о навыках и не использовал(а)</value>
+  </data>
+  <data name="Usefulness_1" xml:space="preserve">
+    <value>1 - Думал(а) о навыке, не хотел(а) применять, не использовал(а)</value>
+  </data>
+  <data name="Usefulness_2" xml:space="preserve">
+    <value>2 - Думал(а) о навыке, хотел(а) применить, но не использовал(а)</value>
+  </data>
+  <data name="Usefulness_3" xml:space="preserve">
+    <value>3 - Старался(ась), но не смог(ла) применить навык</value>
+  </data>
+  <data name="Usefulness_4" xml:space="preserve">
+    <value>4 - Старался(ась),  смог(ла) применить навык, но он не помог</value>
+  </data>
+  <data name="Usefulness_5" xml:space="preserve">
+    <value>5 - Старался(ась),  смог(ла) применить навык, он помог</value>
+  </data>
+  <data name="Usefulness_6" xml:space="preserve">
+    <value>6 - Использовал(а) навык не стараясь (автоматически), они не помогли</value>
+  </data>
+  <data name="Usefulness_7" xml:space="preserve">
+    <value>7 - Использовал(а) навык не стараясь (автоматически), они не помогли</value>
+  </data>
   <data name="U_Alcohol" xml:space="preserve">
     <value>Алкоголь</value>
   </data>
