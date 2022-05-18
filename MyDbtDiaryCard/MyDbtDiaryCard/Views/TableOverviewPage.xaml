@@ -211,11 +211,11 @@
 
                         <!-- Table Header -->
                         <Grid x:Name="grdTableHeader" Grid.Row="0" Grid.Column="0"
-                              ColumnSpacing="3"
+                              ColumnSpacing="5"
                               Style="{StaticResource BorderGrid}">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="1500"/>
-                                <ColumnDefinition Width="300" x:Name="grdclmnSkillsHeader"/>
+                                <ColumnDefinition Width="260" x:Name="grdclmnSkillsHeader"/>
                             </Grid.ColumnDefinitions>
 
                             <!-- Feelings, Emotions, Urges Header -->
@@ -384,7 +384,7 @@
 
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="1500"/>
-                                            <ColumnDefinition Width="300"/>
+                                            <ColumnDefinition Width="260"/>
                                         </Grid.ColumnDefinitions>
 
                                         <Grid Grid.Column="0">
@@ -525,7 +525,8 @@
 
                                             <Frame Style="{StaticResource SkillsCellFrame}">
                                                 <StackLayout BindableLayout.ItemsSource="{Binding DaysDbtSkills}"
-                                                             HorizontalOptions="FillAndExpand">
+                                                             HorizontalOptions="FillAndExpand"
+                                                             Spacing="1">
                                                     <BindableLayout.EmptyViewTemplate>
                                                         <DataTemplate>
                                                             <Label Text="{x:Static resx:ViewResources.EmptySkillsList}"/>
@@ -533,14 +534,16 @@
                                                     </BindableLayout.EmptyViewTemplate>
                                                     <BindableLayout.ItemTemplate>
                                                         <DataTemplate>
-                                                            <StackLayout Orientation="Horizontal"
+                                                            <Grid BackgroundColor="#f0f8ff"
+                                                                  ColumnDefinitions="8*, *"
                                                                          Margin="5">
-                                                                <Label Text="{Binding SkillName}"
-                                                                   Grid.Column="0"/>
-                                                                <Label Text="{Binding Usefulness,
-                                                                Converter={StaticResource UsefulnessToStringCvt}}"
-                                                                   Grid.Column="1"/>
-                                                            </StackLayout>
+                                                                <Label Grid.Column="0"
+                                                                       Text="{Binding SkillName}"/>
+                                                                <Label Grid.Column="1"
+                                                                       HorizontalOptions="Start"
+                                                                       Text="{Binding Usefulness,
+                                                                    Converter={StaticResource UsefulnessToStringCvt}}"/>
+                                                            </Grid>
                                                         </DataTemplate>
                                                     </BindableLayout.ItemTemplate>
                                                 </StackLayout>
