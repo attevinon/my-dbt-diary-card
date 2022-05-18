@@ -116,6 +116,7 @@
                 </Grid.ColumnDefinitions>
 
                 <Button Grid.Column="0"
+                        Command="{Binding GetPreviousRangeCommand}"
                         Text="&lt;-"
                         Style="{StaticResource BtnToolBar}"/>
 
@@ -133,6 +134,8 @@
                             IsEnabled="False"/>
 
                 <Button Grid.Column="4"
+                        Command="{Binding GetNextRangeCommand}"
+                        CommandParameter="{Binding EndDate}"
                         Text="->"
                         Style="{StaticResource BtnToolBar}"/>
 

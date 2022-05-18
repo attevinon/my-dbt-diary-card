@@ -14,9 +14,7 @@ namespace MyDbtDiaryCard.ViewModels
         public int DaysRange
         {
             get { return daysRange; }
-            set { SetProperty(ref daysRange, value);
-                Console.WriteLine(" public int DaysRange SET");
-            }
+            set { SetProperty(ref daysRange, value);}
         }
 
         private DateTime startDate ;
@@ -29,7 +27,6 @@ namespace MyDbtDiaryCard.ViewModels
                     throw new Exception("Start date must not be from future");
 
                 SetProperty(ref startDate, value);
-                Console.WriteLine(" public DateTime StartDate SET");
                 EndDate = value.AddDays(DaysRange);
 
             } 
@@ -45,7 +42,6 @@ namespace MyDbtDiaryCard.ViewModels
                     value = DateTime.Today;
 
                 SetProperty(ref endDate, value);
-                Console.WriteLine(" public DateTime EndDate SET");
                 RefreshTable();
             } 
         }
@@ -62,14 +58,18 @@ namespace MyDbtDiaryCard.ViewModels
         }
 
         public ICommand GoBackCommand { get; }
-        //public ICommand GetPreviousRangeCommand { get; }
-        //public ICommand GetNextRangeCommand { get; }
+
+        public ICommand GetPreviousRangeCommand { get; }
+        public ICommand GetNextRangeCommand { get; }
 
         public TableViewModel(INavigationService navigation) : base(navigation)
         {
             StartDate = DateTime.Today.AddDays(-DaysRange);
 
             GoBackCommand = new ActionCommand(async () => await NavigationService.GoBackAsync());
+
+            GetNextRangeCommand = new DateCommand(() => StartDate = StartDate.AddDays(DaysRange));
+            GetPreviousRangeCommand = new ActionCommand(GetPreviousRange);
         }
 
         private async void RefreshTable()
@@ -100,5 +100,19 @@ namespace MyDbtDiaryCard.ViewModels
 
         }
 
+        private void GetPreviousRange()
+        {
+            var date = StartDate.Ticks;
+            var days = TimeSpan.FromDays(DaysRange).Ticks;
+
+            if (date - days < DateTime.MinValue.Ticks)
+            {
+                StartDate = DateTime.MinValue;
+                return;
+            }
+
+            StartDate = StartDate.AddDays(-DaysRange);
+
+        }
     }
 }
