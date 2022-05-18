@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows.Input;
 
 namespace MyDbtDiaryCard.Services.Commands
@@ -13,7 +11,6 @@ namespace MyDbtDiaryCard.Services.Commands
         {
             action = act;
         }
-
 
         public bool CanExecute(object parameter)
         {
