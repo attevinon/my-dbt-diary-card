@@ -41,19 +41,18 @@ namespace MyDbtDiaryCard.ViewModels
             set { SetProperty(ref skillsUsed, value); }
         }
 
-        public ICommand AddEntryCommand { get; set; }
-        public ICommand GetNextDayCommand { get; set; }
-        public ICommand GetPreviousDayCommand { get; set; }
+        public ICommand AddEntryCommand { get; }
+        public ICommand GetNextDayCommand { get; }
+        public ICommand GetPreviousDayCommand { get; }
 
         public DayEntryViewModel(INavigationService navigation) : base(navigation)
         {
             AddEntryCommand = new ActionCommand(async () => await ShowAddDayEntryPage());
-            GetNextDayCommand = new ActionCommand(() => PickedDate = PickedDate.AddDays(1));
-            GetPreviousDayCommand = new ActionCommand(() => PickedDate = PickedDate.AddDays(-1));
+
+            GetNextDayCommand = new DateCommand(() => PickedDate = PickedDate.AddDays(1));
+            GetPreviousDayCommand = new ActionCommand(GetPreviousDay);
 
             DataService.GetDataManager().DayEntryData.EntryDataUpdated += DataUpdated;
-
-            IsLoading = true;
         }
 
         private DateTime pickedDate = DateTime.Today;
@@ -65,7 +64,6 @@ namespace MyDbtDiaryCard.ViewModels
                 if (value > DateTime.Today)
                 {
                     WrongDataPicked?.Invoke(this, null);
-                    //and nothing changes!!!!!
                     return;
                 }
 
@@ -73,11 +71,6 @@ namespace MyDbtDiaryCard.ViewModels
                 SetProperty(ref pickedDate, value);
                 FindDay();
             }
-        }
-
-        private async Task ShowAddDayEntryPage()
-        {
-            await NavigationService.NavigateAsync("AddDayEntryPage", pickedDate);
         }
 
         private void DataUpdated(object sender, EventArgs e)
@@ -106,6 +99,15 @@ namespace MyDbtDiaryCard.ViewModels
             }
         }
 
+        private void GetPreviousDay()
+        {
+            if (PickedDate > DateTime.MinValue)
+                PickedDate = PickedDate.AddDays(-1);
+        }
 
+        private async Task ShowAddDayEntryPage()
+        {
+            await NavigationService.NavigateAsync("AddDayEntryPage", pickedDate);
+        }
     }
 }
