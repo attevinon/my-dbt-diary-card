@@ -359,7 +359,9 @@
                                              HorizontalOptions="Center">
                                     <Label Text="{x:Static resx:EntryResources.Skills}"
                                            Style="{StaticResource ColumnHeader}"/>
-                                    <Button Style="{StaticResource BtnHelp}" VerticalOptions="Center"/>
+                                    <Button BackgroundColor="#B3E5FC"
+                                            Style="{StaticResource BtnHelp}"
+                                            VerticalOptions="Center"/>
                                 </StackLayout>
                             </Frame>
 
