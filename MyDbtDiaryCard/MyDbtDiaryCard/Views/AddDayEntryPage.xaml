@@ -53,7 +53,12 @@
             <Label Text="{Binding Date, Converter={StaticResource DateTimeCvt}}" Style="{StaticResource PageTitleStyle}"/>
         </Grid>
 
-        <ScrollView Grid.Row="1">
+        <ActivityIndicator Grid.Row="1"
+                           IsRunning="{Binding IsLoading}"
+                           IsVisible="{Binding IsLoading}"/>
+
+        <ScrollView Grid.Row="1"
+                    IsVisible="{Binding IsLoading, Converter={StaticResource ReverseBoolCvt}}">
             <StackLayout x:Name="Items">
 
                 <!--#region Feelngs-->
@@ -268,10 +273,20 @@
                 </Frame>
                 <!--#endregion-->
 
-                <Button x:Name="btnSave" Command="{Binding SaveCommand}" Text="{x:Static resx:ViewResources.Save}"/>
+                <StackLayout HorizontalOptions="Center"
+                             Orientation="Horizontal">
 
-                <Button x:Name="btnDelete" Command="{Binding DeleteCommand}" Text="{x:Static resx:ViewResources.Delete}"
-                        IsVisible="{Binding IsEntryExistsInDb}"/>
+                    <Button x:Name="btnSave"
+                            Command="{Binding SaveCommand}"
+                            Text="{x:Static resx:ViewResources.Save}"/>
+
+                    <Button x:Name="btnDelete"
+                            Clicked="btnDelete_Clicked"
+                            IsVisible="{Binding IsEntryExistsInDb}"
+                            Text="{x:Static resx:ViewResources.Delete}"/>
+                    
+                </StackLayout>
+
 
             </StackLayout>
         </ScrollView>

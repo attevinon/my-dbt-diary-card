@@ -17,10 +17,13 @@ namespace MyDbtDiaryCard.ViewModels
     internal class AddDayEntryViewModel : BaseViewModel
     {
         private static readonly IDayEntryRepository _dayEntryData;
-
         private DayEntry day;
 
         public DateTime Date { get; }
+
+        public event EventHandler EntrySaved;
+        public event EventHandler EntryDeleted;
+
         public ICommand SaveCommand { get; set; }
         public ICommand DeleteCommand { get; set; }
         public ICommand CancelCommand { get; set; }
@@ -145,6 +148,8 @@ namespace MyDbtDiaryCard.ViewModels
 
             await _dayEntryData.AddDayEntryAsync(day);
 
+            EntrySaved?.Invoke(this, null);
+
             IsLoading = false;
 
             await NavigationService.GoBackAsync();
@@ -156,6 +161,8 @@ namespace MyDbtDiaryCard.ViewModels
                 return;
 
             await _dayEntryData.DeleteDayEntryAsync(day);
+
+            EntryDeleted?.Invoke(this, null);
 
             await NavigationService.GoBackAsync();
         }

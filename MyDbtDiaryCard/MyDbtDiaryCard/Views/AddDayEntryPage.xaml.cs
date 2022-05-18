@@ -14,7 +14,7 @@ namespace MyDbtDiaryCard.Views
     public partial class AddDayEntryPage : ContentPage
     {
         public List<string> UsefulnessScale { get; }
-        AddDayEntryViewModel addDayEntryViewModel;
+        AddDayEntryViewModel vm;
         public AddDayEntryPage()
         {
             UsefulnessScale = new List<string>
@@ -35,7 +35,34 @@ namespace MyDbtDiaryCard.Views
 
         public AddDayEntryPage(DateTime date) : this()
         {
-            BindingContext = addDayEntryViewModel = new AddDayEntryViewModel(App.NavigationService, date);
+            BindingContext = vm = new AddDayEntryViewModel(App.NavigationService, date);
+
+            vm.EntryDeleted += ShowDeletedAlert;
+            vm.EntrySaved += ShowSavedAlert;
         }
+
+        private async void btnDelete_Clicked(object sender, EventArgs e)
+        {
+            bool result = await DisplayAlert(
+                Resx.ViewResources.Alert,
+                Resx.ViewResources.Alert_DeleteQuestion,
+                Resx.ViewResources.Yes,
+                Resx.ViewResources.Cancel);
+
+            if (result)
+            {
+                vm.DeleteCommand.Execute(null);
+            }
+        }
+        private async void ShowDeletedAlert(object sender, EventArgs e)
+        {
+            await DisplayAlert(Resx.ViewResources.Alert, Resx.ViewResources.Alert_Deleted, Resx.ViewResources.Ok);
+        }
+
+        private async void ShowSavedAlert(object sender, EventArgs e)
+        {
+            await DisplayAlert(Resx.ViewResources.Alert, Resx.ViewResources.Alert_Saved, Resx.ViewResources.Ok);
+        }
+
     }
 }
