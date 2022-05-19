@@ -7,8 +7,10 @@ My first experience in mobile developing. I hope people who go through DBT thera
 - Visual Studio 2022
 - Xamarin Forms
 - [OxyPlot](https://github.com/oxyplot/oxyplot)
+- [Rg.Plugins.Popup](https://github.com/rotorgames/Rg.Plugins.Popup)
 - Prism
 - SQLite
+- AwesomeFonts
 - Paint tool SAI 2 (app icon)
 
 ## Features
