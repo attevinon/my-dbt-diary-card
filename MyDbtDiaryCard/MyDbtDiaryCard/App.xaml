@@ -13,6 +13,7 @@
         <cvt:ScaleToStringConverter x:Key="ScaleToStringCvt"/>
         <cvt:UsefulnessToStringConverter x:Key="UsefulnessToStringCvt"/>
         <cvt:DateTimeConverter x:Key="DateTimeCvt"/>
+        <cvt:AndBooleanMultiConverter x:Key="AndBoolMultiCvt"/>
         <!--#endregion-->
 
         <!--#region Colors -->
