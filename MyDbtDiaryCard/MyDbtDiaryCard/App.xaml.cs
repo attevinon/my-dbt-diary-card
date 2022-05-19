@@ -4,6 +4,7 @@ using MyDbtDiaryCard.Services.Navigation;
 using MyDbtDiaryCard.Services.DataService;
 using System.IO;
 using System.Globalization;
+using MyDbtDiaryCard.Views.PopupPages;
 
 namespace MyDbtDiaryCard
 {
@@ -20,13 +21,19 @@ namespace MyDbtDiaryCard
 
             DataService.GetDataManager().InitializeAsync(
                 Path.Combine(Environment.GetFolderPath(
-                        Environment.SpecialFolder.LocalApplicationData), "MyDbtDiaryDb.db3")); ;
+                        Environment.SpecialFolder.LocalApplicationData), "MyDbtDiaryDb.db3"));
 
+            //popup pages
+            NavigationService.Configure(nameof(UsefulnessHelpPage), typeof(UsefulnessHelpPage));
+
+            //general pages
             NavigationService.Configure(nameof(DayEntryPage), typeof(DayEntryPage));
             NavigationService.Configure(nameof(AddDayEntryPage), typeof(AddDayEntryPage));
             NavigationService.Configure(nameof(OverviewPage), typeof(OverviewPage));
             NavigationService.Configure(nameof(TableOverviewPage), typeof(TableOverviewPage));
             NavigationService.Configure(nameof(DbtSkillsPage), typeof(DbtSkillsPage));
+
+            //main page
             NavigationService.Configure(nameof(Views.MainPage), typeof(Views.MainPage));
 
             try
@@ -35,7 +42,8 @@ namespace MyDbtDiaryCard
             }
             catch(Exception ex)
             {
-                Console.WriteLine(ex.StackTrace);
+                Console.WriteLine(ex.Message, ex.StackTrace);
+                this.Quit();
             }
         }
 

@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<pages:PopupPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+             xmlns:resx="clr-namespace:MyDbtDiaryCard.Resx"
+             x:Class="MyDbtDiaryCard.Views.PopupPages.UsefulnessHelpPage">
+    <StackLayout>
+        
+        <Label Text="{x:Static resx:EntryResources.Usefulness}"/>
+        
+        <StackLayout Spacing="5">
+            
+            <Label Text="{x:Static resx:EntryResources.Usefulness_0}"/>
+            <Label Text="{x:Static resx:EntryResources.Usefulness_1}"/>
+            <Label Text="{x:Static resx:EntryResources.Usefulness_2}"/>
+            <Label Text="{x:Static resx:EntryResources.Usefulness_3}"/>
+            <Label Text="{x:Static resx:EntryResources.Usefulness_4}"/>
+            <Label Text="{x:Static resx:EntryResources.Usefulness_5}"/>
+            <Label Text="{x:Static resx:EntryResources.Usefulness_6}"/>
+            <Label Text="{x:Static resx:EntryResources.Usefulness_7}"/>
+            
+        </StackLayout>
+    </StackLayout>
+</pages:PopupPage>
