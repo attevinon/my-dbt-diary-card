@@ -11,16 +11,15 @@ using System.Windows.Input;
 
 namespace MyDbtDiaryCard.ViewModels
 {
-    internal class OverviewViewModel : BaseViewModel
+    //make common parent class for overviews?
+    internal class OverviewViewModel : BaseOverviewViewModel
     {
-
-        private int daysRange = 7;
-        public int DaysRange
+        public override int DaysRange
         {
-            get { return daysRange; }
+            get { return base.DaysRange; }
             set 
             {
-                SetProperty(ref daysRange, value);
+                base.DaysRange = value;
                 RefreshCharts();
             }
         }
@@ -45,13 +44,6 @@ namespace MyDbtDiaryCard.ViewModels
             get { return urgesChart; }
             set { SetProperty(ref urgesChart, value); }
         }
-        private bool isEnoughEntries;
-
-        public bool IsEnoughEntries
-        {
-            get { return isEnoughEntries; }
-            set { SetProperty(ref isEnoughEntries, value); }
-        }
 
         public ICommand ShowTableOverviewCommand { get; set; }
 
@@ -72,7 +64,7 @@ namespace MyDbtDiaryCard.ViewModels
             if (DataService.GetDataManager().DayEntryData.HasBeenInitialized == false)
                 return;
 
-            var entries = new Model.EntriesStats();
+            var entries = new Model.EntriesStats.DetailedEntriesStats();
             //change, not universal
             await entries.Initialize(DateTime.Today.AddDays(-DaysRange), DateTime.Today);
 

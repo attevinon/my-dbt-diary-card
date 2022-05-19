@@ -1,4 +1,4 @@
-﻿using MyDbtDiaryCard.Model;
+﻿using MyDbtDiaryCard.Model.EntriesStats;
 using MyDbtDiaryCard.Resx;
 using OxyPlot;
 using System;
@@ -9,8 +9,8 @@ namespace MyDbtDiaryCard.Services.ChartsService
 {
     internal class ChartsDirector
     {
-        private readonly EntriesStats _stats;
-        public ChartsDirector(EntriesStats entriesStats)
+        private readonly DetailedEntriesStats _stats;
+        public ChartsDirector(DetailedEntriesStats entriesStats)
         {
             _stats = entriesStats;
         }

@@ -1,41 +1,22 @@
-﻿using MyDbtDiaryCard.Model.Abstractions;
-using MyDbtDiaryCard.Model.EntryItems;
+﻿using MyDbtDiaryCard.Model.EntryItems;
 using MyDbtDiaryCard.Services.DataService;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
-namespace MyDbtDiaryCard.Model
+namespace MyDbtDiaryCard.Model.EntriesStats
 {
-    internal class EntriesStats
+    internal class DetailedEntriesStats : BaseEntriesStats
     {
-        private readonly IDayEntryRepository _dayEntryDataService;
-
-        private DateTime start;
-        private DateTime end;
-        public List<DayEntry> DaysOfPeriod { get; private set; }
-        public int DaysCount { get; private set; }
-        public DateTime[] Dates { get; private set; }
         public (int[] anger, int[] sadness, int[] fear, int[] shame, int[] pride, int[] joy) EmotionsStats { get; private set; }
         public (int[] emMisery, int[] phMisery, int[] excitation) FeelingsStats { get; private set; }
         public (int[] selfharm, int[] suicide, int[] drugs, int[] alcohol) UrgesStats { get; private set; }
 
-        public EntriesStats()
+        public DetailedEntriesStats() : base()
+        { }
+        public override async Task Initialize(DateTime startOfPeriod, DateTime endOfPeriod)
         {
-            _dayEntryDataService = DataService.GetDataManager().DayEntryData;
-        }
-        public async Task Initialize(DateTime startOfPeriod, DateTime endOfPeriod)
-        {
-            if (DaysOfPeriod != null)
-                return;
-
-            start = startOfPeriod;
-            end = endOfPeriod;
-
-            Dates = await GetDataStats();
-            await GetDaysPeriod();
-
+            await base.Initialize(startOfPeriod, endOfPeriod);
             await SetProperties();
         }
 
@@ -44,19 +25,6 @@ namespace MyDbtDiaryCard.Model
             EmotionsStats = await GetEmotionsStats();
             FeelingsStats = await GetFeelingsStats();
             UrgesStats = await GetUrgesStats();
-        }
-
-        private async Task GetDaysPeriod()
-        {
-            var daysOfPeriod = await _dayEntryDataService.GetDayEntriesPerPeriodAsync(start, end);
-            DaysCount = daysOfPeriod.Count;
-
-            this.DaysOfPeriod = new List<DayEntry>(Dates.Length);
-
-            foreach (var day in Dates)
-            {
-                this.DaysOfPeriod.Add(daysOfPeriod.Find(d => d.Date == day) ?? null);
-            }
         }
 
         private async Task<(int[], int[], int[], int[], int[], int[])> GetEmotionsStats()
@@ -131,20 +99,5 @@ namespace MyDbtDiaryCard.Model
         }
 
         //method to save days info
-
-        private async Task<DateTime[]> GetDataStats()
-        {
-            var dates = new DateTime[(end - start).Days];
-
-            await Task.Run(() => 
-            {
-                for (int i = 0; i < dates.Length; i++)
-                {
-                    dates[i] = start.AddDays(i);
-                }
-            });
-
-            return dates;
-        }
     }
 }

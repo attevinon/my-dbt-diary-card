@@ -30,15 +30,7 @@ namespace MyDbtDiaryCard.Views
         {
             DaysRangeList = new List<int> { 7, 14 };
 
-            try
-            {
-                InitializeComponent();
-            }
-            catch(Exception ex)
-            {
-
-            }
-            
+            InitializeComponent();
 
             vm = new TableViewModel(App.NavigationService);
             this.BindingContext = vm;

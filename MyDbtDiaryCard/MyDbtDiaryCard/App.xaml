@@ -13,6 +13,7 @@
         <cvt:ScaleToStringConverter x:Key="ScaleToStringCvt"/>
         <cvt:UsefulnessToStringConverter x:Key="UsefulnessToStringCvt"/>
         <cvt:DateTimeConverter x:Key="DateTimeCvt"/>
+        <cvt:AndBooleanMultiConverter x:Key="AndBoolMultiCvt"/>
         <!--#endregion-->
 
         <!--#region Colors -->
@@ -47,7 +48,8 @@
                 <Setter.Value>
                     <FontImageSource FontFamily="FAS"
                          Glyph="{x:Static icons:FontAwesomeIcons.ArrowLeft}"
-                         Size="Large" Color="{StaticResource TheLightestColor}"/>
+                         Color="{StaticResource TitleTextColor}"
+                         Size="Large"/>
                 </Setter.Value>
             </Setter>
         </Style>
