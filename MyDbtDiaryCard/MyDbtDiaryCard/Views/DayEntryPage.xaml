@@ -207,7 +207,15 @@
                     <!-- Skills -->
                     <Frame>
                         <StackLayout>
-                            <Label Style="{StaticResource ItemsTitleStyle}" Text="{x:Static resx:EntryResources.Skills}"/>
+
+                            <StackLayout HorizontalOptions="Center" 
+                                         Orientation="Horizontal">
+                                <Label Style="{StaticResource ItemsTitleStyle}"
+                                       Text="{x:Static resx:EntryResources.Skills}"/>
+                                <Button Command="{Binding ShowUsefulnessHelpCommand}"
+                                        Style="{StaticResource BtnHelp}"/>
+                            </StackLayout>
+                            
 
                             <StackLayout BindableLayout.ItemsSource="{Binding SkillsUsed}">
                                 <BindableLayout.EmptyView>

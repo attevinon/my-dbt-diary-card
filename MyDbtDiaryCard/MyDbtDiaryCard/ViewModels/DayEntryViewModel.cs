@@ -44,6 +44,7 @@ namespace MyDbtDiaryCard.ViewModels
         public ICommand AddEntryCommand { get; }
         public ICommand GetNextDayCommand { get; }
         public ICommand GetPreviousDayCommand { get; }
+        public ICommand ShowUsefulnessHelpCommand { get; }
 
         public DayEntryViewModel(INavigationService navigation) : base(navigation)
         {
@@ -51,6 +52,9 @@ namespace MyDbtDiaryCard.ViewModels
 
             GetNextDayCommand = new DateCommand(() => PickedDate = PickedDate.AddDays(1));
             GetPreviousDayCommand = new ActionCommand(GetPreviousDay);
+
+            ShowUsefulnessHelpCommand = new ActionCommand(
+                async () => await NavigationService.PushPopupAsync("UsefulnessHelpPage"));
 
             DataService.GetDataManager().DayEntryData.EntryDataUpdated += DataUpdated;
         }
