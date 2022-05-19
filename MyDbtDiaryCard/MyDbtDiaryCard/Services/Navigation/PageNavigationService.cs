@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using System.Linq;
 using System.Reflection;
+using Rg.Plugins.Popup.Extensions;
+using Rg.Plugins.Popup.Pages;
 
 namespace MyDbtDiaryCard.Services.Navigation
 {
@@ -54,8 +56,6 @@ namespace MyDbtDiaryCard.Services.Navigation
                 }
             }
         }
-
-
         public async Task NavigateAsync(string pageKey)
         {
             var page = GetPage(pageKey);
@@ -74,6 +74,12 @@ namespace MyDbtDiaryCard.Services.Navigation
             await CurrentNavigationPage.Navigation.PushAsync(page);
         }
 
+        public async Task PushPopupAsync(string pageKey)
+        {
+            var page = GetPage(pageKey);
+            if(page is PopupPage popupPage)
+                await CurrentNavigationPage.Navigation.PushPopupAsync(popupPage);
+        }
         public async Task GoBackAsync()
         {
             var navigationStack = CurrentNavigationPage.Navigation;
@@ -102,7 +108,7 @@ namespace MyDbtDiaryCard.Services.Navigation
                     throw new Exception();
 
                 var pageType = _pagesByKey[pageKey];
-                ConstructorInfo constructor; //???????????????????????????????????
+                ConstructorInfo constructor;
 
                 if (parameters == null)
                 {
@@ -180,6 +186,5 @@ namespace MyDbtDiaryCard.Services.Navigation
                 return page;
             }
         }
-
     }
 }

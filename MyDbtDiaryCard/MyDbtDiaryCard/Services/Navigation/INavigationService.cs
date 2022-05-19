@@ -12,6 +12,7 @@ namespace MyDbtDiaryCard.Services.Navigation
         Task NavigateAsync(string pageKey);
         Task NavigateAsync(string pageKey, object parameter);
         Task NavigateAsync(string pageKey, params object[] parameters);
+        Task PushPopupAsync(string pageKey);
         Task GoBackAsync();
 
     }
