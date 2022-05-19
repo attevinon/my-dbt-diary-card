@@ -47,24 +47,28 @@
             <Setter Property="ImageSource">
                 <Setter.Value>
                     <FontImageSource FontFamily="FAS"
-                         Glyph="{x:Static icons:FontAwesomeIcons.ArrowLeft}"
-                         Color="{StaticResource TitleTextColor}"
+                         Glyph="{x:Static icons:FontAwesomeIcons.ArrowLeftLong}"
+                         Color="{StaticResource TheLightestColor}"
                          Size="Large"/>
                 </Setter.Value>
             </Setter>
         </Style>
 
         <Style TargetType="Button" x:Key="BtnHelp">
+            <Setter Property="BackgroundColor" Value="Transparent"/>
             <Setter Property="ImageSource">
                 <Setter.Value>
                     <FontImageSource FontFamily="FAS"
                          Glyph="{x:Static icons:FontAwesomeIcons.CircleQuestion}"
-                         Size="Large" Color="{StaticResource DarkerAccentColor}"/>
+                         Size="Large" Color="{StaticResource NormalTextColor}"/>
                 </Setter.Value>
             </Setter>
+            <Setter Property="HeightRequest" Value="40"/>
+            <Setter Property="WidthRequest" Value="40"/>
+            <Setter Property="VerticalOptions" Value="Center"/>
         </Style>
-        
-        <!--#endregion-->
+
+        <!--#endregion Buttons-->
 
         <!--#region Labels -->
         <Style TargetType="Label">

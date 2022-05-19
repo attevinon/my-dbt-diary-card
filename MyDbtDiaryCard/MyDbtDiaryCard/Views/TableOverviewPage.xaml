@@ -7,6 +7,7 @@
              x:DataType="local:TableViewModel"
              x:Name="page"
              
+             BackgroundColor="{StaticResource BackgroundPageColor}"
              NavigationPage.HasNavigationBar="False">
 
     <ContentPage.Resources>
@@ -385,8 +386,7 @@
                                              HorizontalOptions="Center">
                                     <Label Text="{x:Static resx:EntryResources.Skills}"
                                            Style="{StaticResource ColumnHeader}"/>
-                                    <Button BackgroundColor="#B3E5FC"
-                                            Command="{Binding ShowUsefulnessHelpCommand}"
+                                    <Button Command="{Binding ShowUsefulnessHelpCommand}"
                                             Style="{StaticResource BtnHelp}"
                                             VerticalOptions="Center"/>
                                 </StackLayout>

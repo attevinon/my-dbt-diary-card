@@ -30,6 +30,8 @@
 
         <Button BackgroundColor="{StaticResource BackgroundPageColor}"
                 Clicked="Button_Clicked"
+                FontSize="Medium"
+                HorizontalOptions="End"
                 Text="{x:Static resx:ViewResources.Ok}"/>
     </StackLayout>
 </pages:PopupPage>
