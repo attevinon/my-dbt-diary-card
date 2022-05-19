@@ -3,11 +3,18 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
              xmlns:resx="clr-namespace:MyDbtDiaryCard.Resx"
-             x:Class="MyDbtDiaryCard.Views.PopupPages.UsefulnessHelpPage">
-    <StackLayout>
+             x:Class="MyDbtDiaryCard.Views.PopupPages.UsefulnessHelpPage"
+                 
+             Padding="20, 90">
+
+    <StackLayout BackgroundColor="{StaticResource BackgroundPageColor}"
+                 Padding="10"
+                 HorizontalOptions="Center"
+                 VerticalOptions="Center">
         
-        <Label Text="{x:Static resx:EntryResources.Usefulness}"/>
-        
+        <Label Text="{x:Static resx:EntryResources.Usefulness}"
+               Style="{StaticResource ItemsTitleStyle}"/>
+
         <StackLayout Spacing="5">
             
             <Label Text="{x:Static resx:EntryResources.Usefulness_0}"/>
@@ -20,5 +27,9 @@
             <Label Text="{x:Static resx:EntryResources.Usefulness_7}"/>
             
         </StackLayout>
+
+        <Button BackgroundColor="{StaticResource BackgroundPageColor}"
+                Clicked="Button_Clicked"
+                Text="{x:Static resx:ViewResources.Ok}"/>
     </StackLayout>
 </pages:PopupPage>
