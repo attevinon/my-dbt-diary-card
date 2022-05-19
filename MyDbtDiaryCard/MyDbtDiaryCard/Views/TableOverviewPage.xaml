@@ -122,7 +122,7 @@
 
                 <DatePicker x:Name="startDatePicker"
                             Grid.Column="1" 
-                            Date="{Binding StartDate}" />
+                            Date="{Binding StartDate, Mode=TwoWay}" />
 
                 <Label Grid.Column="2"
                        HorizontalOptions="Center"
@@ -130,7 +130,7 @@
                 
                 <DatePicker x:Name="endDatePicker"
                             Grid.Column="3"
-                            Date="{Binding EndDate}"
+                            Date="{Binding EndDate, Mode=OneWayToSource}"
                             IsEnabled="False"/>
 
                 <Button Grid.Column="4"
@@ -152,12 +152,30 @@
             <ActivityIndicator Grid.Row="2"
                                IsRunning="{Binding IsLoading}"/>
 
+            <Label Grid.Row="2"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center"
+                   Text="{x:Static resx:ViewResources.NotEnoughEntries}">
+                <Label.IsVisible>
+                    <MultiBinding Converter="{StaticResource AndBoolMultiCvt}">
+                        <Binding Path="IsLoading" Converter="{StaticResource ReverseBoolCvt}"/>
+                        <Binding Path="IsEnoughEntries" Converter="{StaticResource ReverseBoolCvt}"/>
+                    </MultiBinding>
+                </Label.IsVisible>
+            </Label>
+
             <!-- Table -->
             <Grid Grid.Row="2"
                   Margin="4, 0" Padding="3"
                   ColumnSpacing="3"
-                  Style="{StaticResource BorderGrid}"
-                  IsVisible="{Binding IsLoading, Converter={StaticResource ReverseBoolCvt}}">
+                  Style="{StaticResource BorderGrid}">
+                <Grid.IsVisible>
+                    <MultiBinding Converter="{StaticResource AndBoolMultiCvt}">
+                        <Binding Path="IsLoading" Converter="{StaticResource ReverseBoolCvt}"/>
+                        <Binding Path="IsEnoughEntries"/>
+                    </MultiBinding>
+                </Grid.IsVisible>
+                
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="2.2 *"/>
@@ -205,7 +223,7 @@
                             Orientation="Horizontal"
                             HorizontalOptions="Fill"
                             HorizontalScrollBarVisibility="Always">
-                    
+
                     <Grid RowSpacing="4">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*"/>
@@ -213,7 +231,8 @@
                         </Grid.RowDefinitions>
 
                         <!-- Table Header -->
-                        <Grid x:Name="grdTableHeader" Grid.Row="0" Grid.Column="0"
+                        <Grid x:Name="grdTableHeader"
+                              Grid.Row="0" Grid.Column="0"
                               ColumnSpacing="5"
                               Style="{StaticResource BorderGrid}">
                             <Grid.ColumnDefinitions>
@@ -236,7 +255,7 @@
                                     <ColumnDefinition Width="0.5*"/>
                                 </Grid.ColumnDefinitions>
 
-                                <!-- Feelings Header Subcolumn -->
+                                <!--#region Feelings Header Subcolumn -->
                                 <Frame Style="{StaticResource FeelingsHeaderFrame}"
                                        Grid.Column="0" Grid.Row="0">
                                     <Label Text="{x:Static resx:EntryResources.Feelings}"
@@ -265,17 +284,19 @@
                                                Style="{StaticResource ColumnHeader}"/>
                                     </Frame>
                                 </Grid>
+                                <!--#endregion-->
 
-                                <!-- Emotions Header Subcolumn -->
-                                <Frame Style="{StaticResource EmotionsHeaderFrame}"
-                                       Grid.Column="1"  Grid.Row="0">
-                                        <Label Text="{x:Static resx:EntryResources.Emotions}"
-                                           HorizontalOptions="Center"/>
+                                <!--#region Emotions Header Subcolumn -->
+                                <Frame Grid.Column="1"
+                                       Grid.Row="0"
+                                       Style="{StaticResource EmotionsHeaderFrame}">
+
+                                    <Label HorizontalOptions="Center"
+                                           Text="{x:Static resx:EntryResources.Emotions}"/>
                                 </Frame>
 
 
                                 <Grid Grid.Column="1" Grid.Row="1"
-                                      ColumnDefinitions="Auto"
                                       Style="{StaticResource SubGrid}">
 
                                     <Frame Style="{StaticResource EmotionsHeaderFrame}"
@@ -313,10 +334,11 @@
                                         <Label Text="{x:Static resx:EntryResources.E_Joy}"
                                                Style="{StaticResource ColumnHeader}"/>
                                     </Frame>
-                                    
-                                </Grid>
 
-                                <!-- Urges Header Subcolumn -->
+                                </Grid>
+                                <!--#endregion-->
+
+                                <!--#region Urges Header Subcolumn -->
                                 <Frame Style="{StaticResource UrgesHeaderFrame}"
                                        Grid.Column="2" Grid.Row="0">
                                     <Label Text="{x:Static resx:EntryResources.Urges}"
@@ -332,13 +354,13 @@
                                         <Label Text="{x:Static resx:EntryResources.U_SelfHarm}"
                                                Style="{StaticResource ColumnHeader}"/>
                                     </Frame>
-                                    
+
                                     <Frame Style="{StaticResource UrgesHeaderFrame}"
                                        Grid.Column="1">
                                         <Label Text="{x:Static resx:EntryResources.U_Suicide}"
                                        Style="{StaticResource ColumnHeader}"/>
                                     </Frame>
-                                    
+
                                     <Frame Style="{StaticResource UrgesHeaderFrame}"
                                        Grid.Column="2">
                                         <Label Text="{x:Static resx:EntryResources.U_Drugs}"
@@ -353,6 +375,7 @@
 
                                 </Grid>
                             </Grid>
+                            <!--#endregion-->
 
                             <!-- Skills Header -->
                             <Frame Style="{StaticResource CellFrame}"
@@ -380,9 +403,9 @@
                                      BackgroundColor="{StaticResource TableInnerBorderColor}">
                             <BindableLayout.ItemTemplate>
                                 <DataTemplate x:DataType="{x:Null}">
-                                    <Grid RowSpacing="1" ColumnSpacing="5"
-                                          BackgroundColor="{StaticResource TableInnerBorderColor}"
-                                          HorizontalOptions="FillAndExpand"
+                                    <Grid BackgroundColor="{StaticResource TableInnerBorderColor}"
+                                          ColumnSpacing="5" RowSpacing="1" 
+                                          HorizontalOptions="FillAndExpand" 
                                           VerticalOptions="FillAndExpand">
 
                                         <Grid.ColumnDefinitions>
@@ -429,7 +452,7 @@
 
                                             <!-- Emotions -->
                                             <Grid Grid.Column="1"
-                                              ColumnSpacing="3">
+                                                  ColumnSpacing="3">
 
                                                 <Frame  Grid.Column="0"
                                                     Style="{StaticResource EmotionsCellFrame}">

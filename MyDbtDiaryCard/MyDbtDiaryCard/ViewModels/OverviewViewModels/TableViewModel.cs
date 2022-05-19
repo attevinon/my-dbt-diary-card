@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using MyDbtDiaryCard.Model;
 using System.Windows.Input;
 using MyDbtDiaryCard.Services.Commands;
+using System.Threading;
 
 namespace MyDbtDiaryCard.ViewModels
 {
@@ -45,13 +46,13 @@ namespace MyDbtDiaryCard.ViewModels
 
         private async void RefreshTable()
         {
+            IsLoading = true;
+
+            if (DataService.GetDataManager().DayEntryData.HasBeenInitialized == false)
+                return;
+
             try
             {
-                IsLoading = true;
-
-                if (DataService.GetDataManager().DayEntryData.HasBeenInitialized == false)
-                    return;
-
                 var entries = new Model.EntriesStats.BaseEntriesStats();
                 await entries.Initialize(StartDate, EndDate);
 
