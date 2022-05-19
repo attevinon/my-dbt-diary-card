@@ -32,12 +32,14 @@ namespace MyDbtDiaryCard.ViewModels
             get => startDate;
             set
             {
+                if (value == startDate)
+                    return;
+
                 if (value > DateTime.Today)
                     throw new Exception("Start date must not be from future");
 
                 SetProperty(ref startDate, value);
                 EndDate = value.AddDays(DaysRange);
-
             }
         }
 
