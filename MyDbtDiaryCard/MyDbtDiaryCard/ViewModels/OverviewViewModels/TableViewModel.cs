@@ -6,6 +6,7 @@ using MyDbtDiaryCard.Model;
 using System.Windows.Input;
 using MyDbtDiaryCard.Services.Commands;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace MyDbtDiaryCard.ViewModels
 {
@@ -38,10 +39,13 @@ namespace MyDbtDiaryCard.ViewModels
         }
 
         public ICommand GoBackCommand { get; }
+        public ICommand ShowUsefulnessHelpCommand { get; }
 
         public TableViewModel(INavigationService navigation) : base(navigation)
         {
             GoBackCommand = new ActionCommand(async () => await NavigationService.GoBackAsync());
+            ShowUsefulnessHelpCommand = new ActionCommand(
+                async () => await NavigationService.PushPopupAsync("UsefulnessHelpPage"));
         }
 
         private async void RefreshTable()
