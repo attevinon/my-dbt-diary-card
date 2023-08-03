@@ -1,4 +1,4 @@
-![image](https://github.com/attevinon/my-dbt-diary-card/assets/99335570/14fbd037-654c-4482-b883-c5c430519806)# DBT Diary Card (Xamarin.Forms app)
+# DBT Diary Card (Xamarin.Forms app)
 ### 📱🌱 Forget about printable diary cards!
 My first experience in mobile developing. I hope people who go through DBT therapy will find this app usefull :)
 
