@@ -1,4 +1,4 @@
-# DBT Diary Card (Xamarin.Forms app)
+![image](https://github.com/attevinon/my-dbt-diary-card/assets/99335570/14fbd037-654c-4482-b883-c5c430519806)# DBT Diary Card (Xamarin.Forms app)
 ### 📱🌱 Forget about printable diary cards!
 My first experience in mobile developing. I hope people who go through DBT therapy will find this app usefull :)
 
@@ -16,7 +16,10 @@ My first experience in mobile developing. I hope people who go through DBT thera
 ## Features
 The main idea of the DBT Diary Card app is to make diarize easier.
 Here you can note your mood, emotions, urges and used skills. If you add 2+ entries, you will be able to see charts represent your state.
-Unfortunately this app is only for andriod users (bc I don't have any Aplle products) 
+Unfortunately this app is only for andriod users (bc I don't have any Apple products) 
+
+![charts-overview](https://i.imgur.com/P3Cl3K3.jpg) ![day-overview](https://i.imgur.com/gvoWQ8W.jpg)
+![table-view](https://i.imgur.com/05jFAYq.jpg)
 
 **Application avalable in 2 languages:** Russian and English. You can't change it by yourself though.
 
@@ -27,6 +30,7 @@ Unfortunately this app is only for andriod users (bc I don't have any Aplle prod
 - [ ] Meds
 - [ ] Therapy check
 - [ ] Joys of the day
+- [ ] Get charts for the selected dates (like you can do with table) 
 - [ ] Belarusian translation
 - [ ] Description of entry items
 - [ ] Description of DBT skills
