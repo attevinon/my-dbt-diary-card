@@ -15,11 +15,16 @@ My first experience in mobile developing. I hope people who go through DBT thera
 
 ## Features
 The main idea of the DBT Diary Card app is to make diarize easier.
-Here you can note your mood, emotions, urges and used skills. If you add 2+ entries, you will be able to see charts represent your state.
-Unfortunately this app is only for andriod users (bc I don't have any Apple products) 
+- Daily note your mood, emotions, urges and used skills
+- Edit or delete your entries
+- Add 2+ entries and check out charts that represent your state
+- Show your psychoterapist table for 1-2 weeks of your diary (looks exactly the same as printable DBT diary card)
+- Localization (eng/rus)
 
 ![charts-overview](https://i.imgur.com/P3Cl3K3.jpg) ![day-overview](https://i.imgur.com/gvoWQ8W.jpg)
 ![table-view](https://i.imgur.com/05jFAYq.jpg)
+
+Unfortunately this app is only for andriod users (bc I don't have any Apple products) 
 
 **Application avalable in 2 languages:** Russian and English. You can't change it by yourself though.
 
